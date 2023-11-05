@@ -1,0 +1,53 @@
+{
+	"FloorUnits": [
+		{
+			"Guid": "1",
+			"Floor": "01",
+			"Units": "01/02/03",
+			"Company" : "ELLEZA DE MIDORI PTE. LTD.",
+			"Tenant": "MIDORI'S HAIR SALON",
+			"Trade" : "Lifestyle",
+			"StartDate": "02-Sep-2021", 
+			"LastDate": "01-Mar-2027",
+			"NoOfContract": "1",
+			"NoOfUnits": "3"			
+		},
+		{
+			"Guid": "2",
+			"Floor": "01",
+			"Units": "05/06",
+			"Company": "True Fitness Pte Ltd",
+			"Tenant": "True Fitness",
+			"Trade" : "Lifestyle",
+			"StartDate": "01-Oct-2022", 
+			"LastDate": "01-Oct-2027",
+			"NoOfContract": "2",
+			"NoOfUnits": "2"			
+		},
+		{
+			"Guid": "3",
+			"Floor": "02",
+			"Units": "01",
+			"Company": "PIXIE NAIL SPA (NVN) PTE. LTD.",
+			"Tenant": "PIXIE NAILS",
+			"Trade" : "Lifestyle",
+			"StartDate": "11-Sep-2022", 
+			"LastDate": "01-Jul-2027",
+			"NoOfContract": "3",
+			"NoOfUnits": "1"	
+		},
+		{
+			"Guid": "4",
+			"Floor": "02",
+			"Units": "05/07",
+			"Company": "Koufu Pte Ltd",
+			"Tenant": "Cookhouse By Koufu",
+			"Trade" : "Restaurant",
+			"StartDate": "02-Sep-2020", 
+			"LastDate": "01-Apr-2027",
+			"NoOfContract": "1",
+			"NoOfUnits": "2"
+		}
+    ]
+}
+			
