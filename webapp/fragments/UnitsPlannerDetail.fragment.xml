@@ -1,175 +1,207 @@
 <core:FragmentDefinition
-    xmlns="sap.m"
-    xmlns:f="sap.f"
-    xmlns:core="sap.ui.core"
-	xmlns:layout="sap.ui.layout"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:l="sap.ui.layout"
+	xmlns:lf="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	xmlns:suite="sap.suite.ui.commons"
 >
-    <f:DynamicPage id="dynamicPageId">
-        <f:title>
-            <f:DynamicPageTitle id="_IDGenDynamicPageTitle1">
-                <f:heading>
-                    <Title
-                        id="_IDGenTitle1"
-                        text="{selectedCustomer>/Tenant}"
-                        wrapping="true"
-                        class="sapUiSmallMarginEnd"
-                    />
-                </f:heading>
-
-					<f:expandedContent>
-						 <Link
-                            
-                            text="Unit No : {selectedCustomer>/Units}"
-                            emphasized="true"
+	<f:DynamicPage id="dynamicPageId">
+		<f:title>
+			<f:DynamicPageTitle id="_IDGenDynamicPageTitle1">
+				<f:heading>
+					<Title
+						id="_IDGenTitle1"
+						text="{selectedCustomer>/Tenant}"
+						wrapping="true"
+						class="sapUiSmallMarginEnd"
+						titleStyle="H3"
+					/>
+				</f:heading>
+				<f:expandedContent>					
+					 <GenericTag
+                            text="{selectedCustomer>/Units}"
+                            design="StatusIconHidden"
+                            status="Information"
+                            class=""
                             press="onListItemPress"
-                        />
-					</f:expandedContent>
-					<f:snappedContent>
-						 <Link
-                            
-                            text="Unit No : {selectedCustomer>/Units}"
-                            emphasized="true"
+                        >
+                            <ObjectNumber
+                                emphasized="false"
+                                number="{selectedCustomer>/NoOfUnits}"
+                                unit="Unit(s)"
+                            />
+                        </GenericTag>
+				</f:expandedContent>
+				<f:snappedContent>
+					<GenericTag
+                            text="{selectedCustomer>/Units}"
+                            design="StatusIconHidden"
+                            status="Information"
+                            class=""
                             press="onListItemPress"
-                        />
-					</f:snappedContent>
-               
-                <f:navigationActions>
-                    <OverflowToolbarButton
-                        id="midClose"
-                        type="Transparent"
-                        icon="sap-icon://decline"
-                        press="onMidClose"
-                        tooltip="Close middle column"
-                    />
-                </f:navigationActions>
-
-                <f:actions>                    
-                    <Button
-                        id="_IDGenButton2"
-                        text="Edit"
-                        type="Emphasized"
-                        
-                    />
-                    <Button
-                        id="_IDGenButton3"
-                        text="Copy"
-                        type="Transparent"
-                    />
-                    <Button
-                        id="_IDGenButton4"
-                        icon="sap-icon://action"
-                        type="Transparent"
-                    />
-                </f:actions>
-            </f:DynamicPageTitle>
-        </f:title>
-        <f:header>
-            <f:DynamicPageHeader id="_IDGenDynamicPageHeader1">
-                <FlexBox
-                    id="_IDGenFlexBox3"
-                    wrap="Wrap"
-                    fitContainer="true"
-                    alignItems="Stretch"
-                >
-                    <Avatar
-                        id="_IDGenAvatar2"
-                        src="../../../../../../../{products>/selectedProduct/ProductPicUrl}"
-                        displaySize="L"
-                        displayShape="Square"
-                        class="sapUiTinyMarginEnd"
-                    />
-                	<layout:HorizontalLayout allowWrapping="true">
-						<layout:VerticalLayout class="sapUiMediumMarginEnd">
-							<ObjectStatus title="Company" text="{selectedCustomer>/Company}"/>
-							<ObjectStatus title="No Of Unit(s)" text="{ path: 'selectedCustomer>/NoOfUnits' , type: 'sap.ui.model.type.Float', formatOptions: {showMeasure: false,decimals:0 } }"/>
-							<ObjectStatus title="Trade" text="{selectedCustomer>/Trade}"/>
-						</layout:VerticalLayout>
-
-						<layout:VerticalLayout>
+                        >
+                            <ObjectNumber
+                                emphasized="false"
+                                number="{selectedCustomer>/NoOfUnits}"
+                                unit="Unit(s)"
+                            />
+                        </GenericTag>
+				</f:snappedContent>
+				<f:navigationActions>
+					<OverflowToolbarButton
+						id="midClose"
+						type="Transparent"
+						icon="sap-icon://decline"
+						press="onMidClose"
+						tooltip="Close middle column"
+					/>
+				</f:navigationActions>
+				<f:actions>
+					<Button
+						id="_IDGenButton2"
+						text="Edit"
+						type="Emphasized"
+					/>
+					<Button
+						id="_IDGenButton3"
+						text="Copy"
+						type="Transparent"
+					/>
+					<Button
+						id="_IDGenButton4"
+						icon="sap-icon://action"
+						type="Transparent"
+					/>
+				</f:actions>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader id="_IDGenDynamicPageHeader1">
+				<FlexBox
+					id="_IDGenFlexBox3"
+					wrap="Wrap"
+					fitContainer="true"
+					alignItems="Stretch"
+				>
+					<Avatar
+						id="_IDGenAvatar2"
+						src="../../../../../../../{products>/selectedProduct/ProductPicUrl}"
+						displaySize="L"
+						displayShape="Square"
+						class="sapUiTinyMarginEnd"
+					/>
+					<l:HorizontalLayout allowWrapping="true">
+						<l:VerticalLayout class="sapUiMediumMarginEnd">
+							<ObjectStatus
+								title="Company"
+								text="{selectedCustomer>/Company}"
+							/>
+							<ObjectStatus
+								title="No Of Unit(s)"
+								text="{
+									path: 'selectedCustomer>/NoOfUnits',
+									type: 'sap.ui.model.type.Float',
+									formatOptions: {
+										showMeasure: false,
+										decimals: 0
+									}
+								}"
+							/>
+							<ObjectStatus
+								title="Trade"
+								text="{selectedCustomer>/Trade}"
+							/>
+						</l:VerticalLayout>
+						<l:VerticalLayout>
 							<ObjectAttribute title="Tenant Until"/>
-							<ObjectStatus text="{selectedCustomer>/Trade}" state="Success" />
-						</layout:VerticalLayout>
-					</layout:HorizontalLayout>
-                </FlexBox>
-            </f:DynamicPageHeader>
-        </f:header>
-        <f:content>
-            <List headerText="Suppliers">
-                <items>
-                    <StandardListItem
-                        id="_IDGenStandardListItem1"
-                        icon='slim-arrow-right'
-                        iconEnd="true"
-                        text="Titanium"
-                    />
-                    <StandardListItem
-                        id="_IDGenStandardListItem2"
-                        icon='slim-arrow-right'
-                        iconEnd="true"
-                        text="Technocom"
-                    />
-                    <StandardListItem
-                        id="_IDGenStandardListItem3"
-                        icon='slim-arrow-right'
-                        iconEnd="true"
-                        text="Red Point Stores"
-                    />
-                    <StandardListItem
-                        id="_IDGenStandardListItem4"
-                        icon='slim-arrow-right'
-                        iconEnd="true"
-                        text="Very Best Screens"
-                    />
-                    <StandardListItem
-                        id="_IDGenStandardListItem5"
-                        icon='slim-arrow-right'
-                        iconEnd="true"
-                        text="Smartcards"
-                    />
-                    <StandardListItem
-                        id="_IDGenStandardListItem6"
-                        icon='slim-arrow-right'
-                        iconEnd="true"
-                        text="Alpha Printers"
-                    />
-                    <StandardListItem
-                        id="_IDGenStandardListItem7"
-                        icon='slim-arrow-right'
-                        iconEnd="true"
-                        text="Printer for All"
-                    />
-                    <StandardListItem
-                        id="_IDGenStandardListItem8"
-                        icon='slim-arrow-right'
-                        iconEnd="true"
-                        text="Oxynum"
-                    />
-                    <StandardListItem
-                        id="_IDGenStandardListItem9"
-                        icon='slim-arrow-right'
-                        iconEnd="true"
-                        text="Fasttech"
-                    />
-                    <StandardListItem
-                        id="_IDGenStandardListItem10"
-                        icon='slim-arrow-right'
-                        iconEnd="true"
-                        text="Ultrasonic United"
-                    />
-                    <StandardListItem
-                        id="_IDGenStandardListItem11"
-                        icon='slim-arrow-right'
-                        iconEnd="true"
-                        text="Speaker Experts"
-                    />
-                    <StandardListItem
-                        id="_IDGenStandardListItem12"
-                        icon='slim-arrow-right'
-                        iconEnd="true"
-                        text="Brainsoft"
-                    />
-                </items>
-            </List>
-        </f:content>
-    </f:DynamicPage>
+							<ObjectStatus
+								text="{selectedCustomer>/Trade}"
+								state="Success"
+							/>
+						</l:VerticalLayout>
+					</l:HorizontalLayout>
+				</FlexBox>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<suite:Timeline
+				id="idTimeline"
+				enableDoubleSided="false"
+				groupBy="StartDate"
+				growingThreshold="0"
+				filterTitle="StartDate"
+				sortOldestFirst="true"
+				content="{/Staggered}"
+				enableScroll="true"
+			>
+				<suite:content>
+					<suite:TimelineItem
+						id="idTemplateItem"
+						dateTime="{
+							path: 'StartDate',
+							formatter: '.formatDateTime'
+						}"
+						title="{Company}"
+						userNameClickable="true"
+						userNameClicked="onUserNameClick"
+						select="onPressItems"
+						userPicture="{Photo}"
+						text="{Text}"
+						userName="{Tenant}"
+						filterValue="{StartDate}"
+						icon="{Icon}"
+					>
+						<suite:embeddedControl>
+							<VBox>
+								<lf:SimpleForm
+									id="SimpleFormDisplay480_12120Dual"
+									editable="false"
+									layout="GridLayout"
+									title="{No}: {REContractNo}"
+									labelSpanXL="4"
+									labelSpanL="4"
+									labelSpanM="12"
+									labelSpanS="12"
+									adjustLabelSpan="false"
+									emptySpanXL="0"
+									emptySpanL="0"
+									emptySpanM="0"
+									emptySpanS="0"
+									columnsXL="2"
+									columnsL="2"
+									columnsM="2"
+									singleContainerFullSize="false"
+								>
+									<lf:content>
+										<core:Title text="Basic"/>
+										<Label text="Start Date"/>
+										<Text text="{
+											path: 'StartDate',
+											formatter: '.formatDateTime'
+										}"/>
+										<Label text="End Date"/>
+										<Text text="{
+											path: 'EndDate',
+											formatter: '.formatDateTime'
+										}"/>
+										<Label text="Unit Size"/>
+										<Text text="{AreaSize} {UOM}"/>
+										
+										<core:Title text="Rent"/>
+										<Label text="Base Rent $"/>
+										<Text text="{BaseRent}"/>
+										<Label text="Svc Rent $"/>
+										<Text text="{SvcRent}"/>
+										<Label text="A&amp;P Rent $"/>
+										<Text text="{ANPRent}"/>
+									</lf:content>
+								</lf:SimpleForm>
+							</VBox>
+						</suite:embeddedControl>
+					</suite:TimelineItem>
+				</suite:content>
+			</suite:Timeline>
+		</f:content>
+	</f:DynamicPage>
 </core:FragmentDefinition>

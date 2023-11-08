@@ -1,4 +1,39 @@
 {
+
+	"Staggered": [
+		{
+			"No": "1",
+			"Tenant": "MIDORI'S HAIR SALON",
+			"Company": "ELLEZA DE MIDORI PTE. LTD.",
+			"REContractNo" : "IS00100017585",
+			"Photo": "/images/Laurent_Dubois.png",
+			"Icon": "sap-icon://activity-individual",
+			"BaseRent": "5.00",
+			"SvcRent": "1.00",
+			"ANPRent": "1.00",
+			"AreaSize": "220",
+			"UOM": "SF",
+			"StartDate":"2021-09-01",
+			"EndDate":"2022-08-31"
+		},
+		{
+			"No": "2",
+			"Tenant": "MIDORI'S HAIR SALON",
+			"Company": "ELLEZA DE MIDORI PTE. LTD.",
+			"REContractNo" : "IS00100017585",
+			"Photo": "/images/Laurent_Dubois.png",
+			"Icon": "sap-icon://activity-individual",
+			"BaseRent": "6.00",
+			"SvcRent": "1.00",
+			"ANPRent": "1.00",
+			"AreaSize": "220",
+			"UOM": "SF",
+			"StartDate":"2023-09-01",
+			"EndDate":"2024-08-31"
+		}
+	
+	],
+
 	"FloorUnits": [
 		{
 			"Guid": "1",

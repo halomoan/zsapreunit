@@ -74,8 +74,8 @@
 
                         <GenericTag
                             text="{Units}"
-                            design="Full"
-                            status="Success"
+                            design="StatusIconHidden"
+                            status="Information"
                             class="sapUiSmallMarginBottom"
                             press="onListItemPress"
                         >
