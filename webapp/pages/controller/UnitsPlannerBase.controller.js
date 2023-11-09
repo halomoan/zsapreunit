@@ -1,14 +1,15 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
-    "sap/f/library",
-    "sap/ui/core/format/DateFormat",
-    "sap/ui/model/json/JSONModel"
+    "zsapreunit/controller/BaseController",
+    "sap/f/library",    
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator"
     
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller,fioriLibrary,DateFormat,JSONModel) {
+    function (BaseController,fioriLibrary,Filter,FilterOperator,JSONModel) {
         "use strict";
 
         
@@ -16,39 +17,56 @@ sap.ui.define([
             return sap.ui.require.toUrl("sap/suite/ui/commons/sample/Timeline");
         }
 
-        function convertData(oEvent) {
-            var oData,
-                oModel = oEvent.getSource(),
-                sBasePath = getBasePath();
+        // function convertData(oEvent) {
+        //     var oData,
+        //         oModel = oEvent.getSource(),
+        //         sBasePath = getBasePath();
 
-            if (!oEvent.getParameters().success) {
-                return;
-            }            
+        //     if (!oEvent.getParameters().success) {
+        //         return;
+        //     }            
 
             
-            oData = oModel.getData();
+        //     oData = oModel.getData();
             
-            oData.Staggered.forEach(function (oStaggered) {
-                //oStaggered.StartDate = DateUtils.parseDate(oStaggered.StartDate);
-                //oStaggered.StartDate = new Date(oStaggered.StartDate);
-                oStaggered.Photo = sBasePath + oStaggered.Photo;
-            });
+        //     oData.Staggered.forEach(function (oStaggered) {
+        //         //oStaggered.StartDate = DateUtils.parseDate(oStaggered.StartDate);
+        //         //oStaggered.StartDate = new Date(oStaggered.StartDate);
+        //         oStaggered.Photo = sBasePath + oStaggered.Photo;
+        //     });
 
            
             
-            oModel.updateBindings(true);
-        }
+        //     oModel.updateBindings(true);
+        // }
 
-        return Controller.extend("zsapreunit.pages.controller.UnitsPlannerBase", {
+        return BaseController.extend("zsapreunit.pages.controller.UnitsPlannerBase", {
             
 
 
             onInit: function () {
                 //this.oView = this.getView();
-                var oModel = new JSONModel(sap.ui.require.toUrl("zsapreunit/mockdata/unitplannermaster.json"));
-                oModel.attachRequestCompleted(convertData);
-			    this.getView().setModel(oModel);                
+                //var oModel = new JSONModel(sap.ui.require.toUrl("zsapreunit/mockdata/unitplannermaster.json"));
+                //oModel.attachRequestCompleted(convertData);
+			    //this.getView().setModel(oModel);                
 
+            },
+
+            onListSearch: function (oEvent) {
+                // add filter for search
+                var aFilters = [];
+                var sQuery = oEvent.getSource().getValue();
+                if (sQuery && sQuery.length > 0) {
+                    var ofilter1 = new Filter("Tenant", FilterOperator.Contains, sQuery);
+                    aFilters.push(ofilter1);
+                    var ofilter2 = new Filter("Company", FilterOperator.Contains, sQuery);
+                    aFilters.push(ofilter2);
+                }
+    
+                // update list binding
+                var oList = sap.ui.core.Fragment.byId("container-zsapreunit---UnitsPlannerBase","sfloorunit");
+                var oBinding = oList.getBinding("items");
+                oBinding.filter(aFilters, "Application");
             },
             onListItemPress: function (oEvent) {
                 
@@ -66,10 +84,7 @@ sap.ui.define([
                 this.getView().byId("fcl").setLayout(fioriLibrary.LayoutType.StartColumnFullScreen);
             },
 
-            formatDateTime: function(dateTime) {
-                var oDateInstance = DateFormat.getDateInstance();                
-                return oDateInstance.format(oDateInstance.parse(dateTime));
-            },
+         
             onOpen: function(){
                 // forward compact/cozy style into Dialog
 			    jQuery.sap.syncStyleClass(oView.getController().getOwnerComponent().getContentDensityClass(), oView, oDialog);

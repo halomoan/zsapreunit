@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZSAPREUNIT_SRV" xml:lang="zh" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="SFloorUnit" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Bukrs"/>
+                    <PropertyRef Name="Busentity"/>
+                    <PropertyRef Name="Contrtype"/>
+                    <PropertyRef Name="Keydate"/>
+                    <PropertyRef Name="Guid"/>
+                </Key>
+                <Property Name="Bukrs" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="公司代码" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Busentity" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="商业实体" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Contrtype" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="合同类型" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Keydate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="日期" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Guid" Type="Edm.Guid" Nullable="false" sap:unicode="false" sap:label="通用唯一标识符" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Floor" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Unitno" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Tenant" Type="Edm.String" Nullable="false" MaxLength="80" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Company" Type="Edm.String" Nullable="false" MaxLength="80" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Startdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Lastdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Noofunit" Type="Edm.Byte" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Noofcontr" Type="Edm.Byte" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityContainer Name="ZSAPREUNIT_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="SFloorUnitSet" EntityType="ZSAPREUNIT_SRV.SFloorUnit" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+            </EntityContainer>
+            <atom:link rel="self" href="https://clavon.uol.com.sg:8095/sap/opu/odata/sap/ZSAPREUNIT_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://clavon.uol.com.sg:8095/sap/opu/odata/sap/ZSAPREUNIT_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

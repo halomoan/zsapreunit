@@ -8,12 +8,12 @@
 >
     <FlexibleColumnLayout
         id="fcl"
-        backgroundDesign="Solid"
+        
     >
         <beginColumnPages>            
             <core:Fragment
 				fragmentName="zsapreunit.fragments.UnitsPlannerMaster"
-				type="XML"/>
+				type="XML"/>            
         </beginColumnPages>
         <midColumnPages>
           	<core:Fragment

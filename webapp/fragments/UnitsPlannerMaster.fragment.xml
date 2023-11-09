@@ -1,122 +1,102 @@
 <core:FragmentDefinition
-    xmlns="sap.m"
-    xmlns:f="sap.f"
-    xmlns:core="sap.ui.core"
-
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
     
 >
-    <List
-        id="_IDGenList1"
-        headerText="{i18n>UnitsPlannerMaster.title}"
-        mode="None"
-        items="{path: '/FloorUnits'}"        
-    >
+<Page showHeader="false" >
 
-    	<headerToolbar>
+		<List
+			id="sfloorunit"		
+			items="{/SFloorUnitSet}"
+			sticky="HeaderToolbar"            
+		>
+
+        <headerToolbar>
 			<OverflowToolbar>
-				<Title text="Products" level="H2" />
-				<ToolbarSpacer />
-				<MultiComboBox id="idSticky"
-					placeholder="Sticky options"
-					selectionFinish="onSelectionFinish"
-					width="15%">
-					<items>
-						<core:Item  text="Header Toolbar"
-							key="HeaderToolbar"/>
-						<core:Item  text="Info Toolbar"
-							key="InfoToolbar"/>
-					</items>
-				</MultiComboBox>
-				<ToggleButton id="toggleInfoToolbar"
-					text="Hide/Show InfoToolbar"
-					press="onToggleInfoToolbar" />
-				<Button
-					icon="sap-icon://settings"
-					press="handleButtonPress" />
-				<Button
-					icon="sap-icon://person-placeholder"
-					press="handleButtonPress" />
-				<Button
-					icon="sap-icon://drop-down-list"
-					press="handleButtonPress" />
+				<Title text="{i18n>UnitsPlannerMaster.title}" level="H2" />
+				<ToolbarSpacer />				
+				<SearchField liveChange=".onListSearch" width="15%"/>
 			</OverflowToolbar>
 		</headerToolbar>
-        
-        <CustomListItem id="_IDGenCustomListItem1">
-            <HBox id="_IDGenHBox1">
-                <Label
-                    id="_IDGenLabel3"
-                    text="fl"
-                    class="sapUiSmallMarginTopBottom sapUiSmallMarginBegin"
-                />
-                <Label
-                    id="_IDGenLabel4"
-                    text="{Floor}"
-                    class="floorFont sapUiSmallMarginTopBottom sapUiTinyMarginBegin"
-                />
 
-                <HBox
-                    id="_IDGenHBox2"
-                    alignItems="Center"
-                    justifyContent="SpaceBetween"
-                    width="100%"
-                >
-                    <VBox
-                        id="_IDGenVBox2"
-                        class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
-                    >
-                        <Title
-                            text="{Tenant}"
-                            wrapping="true"
-                            titleStyle="H3"
-                            class=""
-                        />
-
-                        <GenericTag
-                            text="{Units}"
-                            design="StatusIconHidden"
-                            status="Information"
-                            class="sapUiSmallMarginBottom"
-                            press="onListItemPress"
-                        >
-                            <ObjectNumber
-                                emphasized="false"
-                                number="{NoOfUnits}"
-                                unit="Unit(s)"
-                            />
-                        </GenericTag>
-
-                        <Label
-                            id="_IDGenLabel1"
-                            text="{Company}"
-                        />
-                    </VBox>
-                    <VBox
-                        class="sapUiSmallMarginEnd"
-                        alignContent="Start"
-                    >
-                        <Title
-                            text="Occupation:"
-                            wrapping="true"
-                            titleStyle=""
-                            class=""
-                        />
-                        <Label
-                            text="From: {StartDate}"
-                            wrapping="true"
-                        />
-                        <Label
-                            text="To: {LastDate}"
-                            wrapping="true"
-                        />
-                        <ObjectNumber
-                            emphasized="false"
-                            number="{NoOfContract}"
-                            unit="Staggered(s)"
-                        />
-                    </VBox>
-                </HBox>
-                <!-- <HBox
+			<CustomListItem id="_IDGenCustomListItem1">
+				<HBox id="_IDGenHBox1">
+					<Label
+						id="_IDGenLabel3"
+						text="fl"
+						class="sapUiSmallMarginTopBottom sapUiSmallMarginBegin"
+					/>
+					<Label
+						id="_IDGenLabel4"
+						text="{Floor}"
+						class="floorFont sapUiSmallMarginTopBottom sapUiTinyMarginBegin"
+					/>
+					<HBox
+						id="_IDGenHBox2"
+						alignItems="Center"
+						justifyContent="SpaceBetween"
+						width="100%"
+					>
+						<VBox
+							id="_IDGenVBox2"
+							class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
+						>
+							<Title
+								text="{Tenant}"
+								wrapping="true"
+								titleStyle="H3"
+								class=""
+							/>
+							<GenericTag
+								text="{Unitno}"
+								design="StatusIconHidden"
+								status="Information"
+								class="sapUiSmallMarginBottom"
+								press="onListItemPress"
+							>
+								<ObjectNumber
+									emphasized="false"
+									number="{Noofunit}"
+									unit="Unit(s)"
+								/>
+							</GenericTag>
+							<Label
+								id="_IDGenLabel1"
+								text="{Company}"
+							/>
+						</VBox>
+						<VBox
+							class="sapUiSmallMarginEnd"
+							alignContent="Start"
+						>
+							<Title
+								text="Occupation:"
+								wrapping="true"
+								titleStyle=""
+								class=""
+							/>
+							<Label
+								text="From: {
+									path: 'Startdate',
+									formatter: '.formatDateTime'
+								}"
+								wrapping="true"
+							/>
+							<Label
+								text="To: {
+									path: 'Lastdate',
+									formatter: '.formatDateTime'
+								}"
+								wrapping="true"
+							/>
+							<ObjectNumber
+								emphasized="false"
+								number="{Noofcontr}"
+								unit="Contract(s)"
+							/>
+						</VBox>
+					</HBox>
+					<!-- <HBox
                     id="_IDGenHBox3"
                     alignItems="Center"
                     justifyContent="Center"
@@ -129,7 +109,8 @@
                         color="#E69A17"
                     />
                 </HBox> -->
-            </HBox>
-        </CustomListItem>
-    </List>
+				</HBox>
+			</CustomListItem>
+		</List>	
+</Page>
 </core:FragmentDefinition>

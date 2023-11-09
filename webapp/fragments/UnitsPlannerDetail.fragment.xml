@@ -132,7 +132,7 @@
 				growingThreshold="0"
 				filterTitle="StartDate"
 				sortOldestFirst="true"
-				content="{/Staggered}"
+				content="{Staggered}"
 				enableScroll="true"
 			>
 				<suite:content>

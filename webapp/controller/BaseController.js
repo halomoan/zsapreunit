@@ -1,8 +1,9 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/routing/History",
+    "sap/ui/core/format/DateFormat",
     "sap/ui/core/UIComponent"
-  ], function(Controller, History, UIComponent) {
+  ], function(Controller, History,DateFormat, UIComponent) {
   
     "use strict";
     return Controller.extend("zsapreunit.controller.BaseController", {
@@ -10,6 +11,21 @@ sap.ui.define([
       getRouter : function () {
         return UIComponent.getRouterFor(this);
       },
+
+      formatDateTime: function(oDateTime) {
+        
+        var oDateInstance = DateFormat.getDateInstance(
+          {
+            pattern: "yyyy-MMM-dd"
+          }
+        );                
+        if (oDateTime instanceof Date) {
+          return oDateInstance.format(oDateTime);
+        } else {
+          return oDateInstance.format(oDateInstance.parse(oDateTime));
+        }
+        
+    },
       
       onNavBack: function () {
         var oHistory, sPreviousHash;
