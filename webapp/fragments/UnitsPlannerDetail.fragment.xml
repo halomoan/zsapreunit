@@ -15,12 +15,12 @@
 						text="{selectedCustomer>/Tenant}"
 						wrapping="true"
 						class="sapUiSmallMarginEnd"
-						titleStyle="H3"
+						titleStyle="H1"
 					/>
 				</f:heading>
 				<f:expandedContent>					
 					 <GenericTag
-                            text="{selectedCustomer>/Units}"
+                            text="{selectedCustomer>/Unitno}"
                             design="StatusIconHidden"
                             status="Information"
                             class=""
@@ -28,14 +28,14 @@
                         >
                             <ObjectNumber
                                 emphasized="false"
-                                number="{selectedCustomer>/NoOfUnits}"
+                                number="{selectedCustomer>/Noofunit}"
                                 unit="Unit(s)"
                             />
                         </GenericTag>
 				</f:expandedContent>
 				<f:snappedContent>
 					<GenericTag
-                            text="{selectedCustomer>/Units}"
+                            text="{selectedCustomer>/Unitno}"
                             design="StatusIconHidden"
                             status="Information"
                             class=""
@@ -43,7 +43,7 @@
                         >
                             <ObjectNumber
                                 emphasized="false"
-                                number="{selectedCustomer>/NoOfUnits}"
+                                number="{selectedCustomer>/Noofunit}"
                                 unit="Unit(s)"
                             />
                         </GenericTag>
@@ -94,31 +94,34 @@
 					<l:HorizontalLayout allowWrapping="true">
 						<l:VerticalLayout class="sapUiMediumMarginEnd">
 							<ObjectStatus
-								title="Company"
+								title="{i18n>Company}"
 								text="{selectedCustomer>/Company}"
 							/>
 							<ObjectStatus
-								title="No Of Unit(s)"
-								text="{
-									path: 'selectedCustomer>/NoOfUnits',
-									type: 'sap.ui.model.type.Float',
-									formatOptions: {
-										showMeasure: false,
-										decimals: 0
-									}
-								}"
-							/>
+								title="{i18n>Business Partner No}"
+								text="{selectedCustomer>/Bupano}"
+							/>	
+							
 							<ObjectStatus
 								title="Trade"
 								text="{selectedCustomer>/Trade}"
+								state="Success"
 							/>
 						</l:VerticalLayout>
 						<l:VerticalLayout>
-							<ObjectAttribute title="Tenant Until"/>
+							<ObjectAttribute title="Occupancy"/>
+							<HBox>		
 							<ObjectStatus
-								text="{selectedCustomer>/Trade}"
-								state="Success"
-							/>
+								title="{i18n>From}"
+								text="{path: 'selectedCustomer>/Startdate', formatter: '.formatDateTime'}"
+								class="sapUiTinyMarginEnd"
+							/>			
+							<ObjectStatus
+								
+								title="{i18n>Until}"
+								text="{path: 'selectedCustomer>/Lastdate', formatter: '.formatDateTime'}"
+							/>			
+							</HBox>
 						</l:VerticalLayout>
 					</l:HorizontalLayout>
 				</FlexBox>

@@ -15,7 +15,7 @@
 			<OverflowToolbar>
 				<Title text="{i18n>UnitsPlannerMaster.title}" level="H2" />
 				<ToolbarSpacer />				
-				<SearchField liveChange=".onListSearch" width="15%"/>
+				<SearchField liveChange=".onListSearch" width="25%"/>
 			</OverflowToolbar>
 		</headerToolbar>
 
