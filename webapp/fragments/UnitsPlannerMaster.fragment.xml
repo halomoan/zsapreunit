@@ -72,7 +72,7 @@
 							<Title
 								text="Occupation:"
 								wrapping="true"
-								titleStyle=""
+								titleStyle="Auto"
 								class=""
 							/>
 							<Label

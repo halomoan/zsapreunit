@@ -13,7 +13,7 @@ sap.ui.define([
       },
 
       formatDateTime: function(oDateTime) {
-        
+                
         var oDateInstance = DateFormat.getDateInstance(
           {
             pattern: "yyyy-MMM-dd"
@@ -21,10 +21,20 @@ sap.ui.define([
         );                
         if (oDateTime instanceof Date) {
           return oDateInstance.format(oDateTime);
-        } else {
+        } else {          
           return oDateInstance.format(oDateInstance.parse(oDateTime));
         }
         
+    },
+
+    formatNoDecimals: function(Number){
+        var oFormat = sap.ui.core.format.NumberFormat.getFloatInstance({
+          "groupingEnabled": true,  // grouping is enabled
+          //"groupingSeparator": '.', // grouping separator is '.'
+          "groupingSize": 3,        // the amount of digits to be grouped (here: thousand)
+          //"decimalSeparator": ","   // the decimal separator must be different from the grouping separator
+      });
+      return oFormat.format(Number);
     },
       
       onNavBack: function () {

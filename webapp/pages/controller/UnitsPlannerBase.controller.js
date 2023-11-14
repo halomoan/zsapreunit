@@ -10,34 +10,7 @@ sap.ui.define([
      */
     function (BaseController,fioriLibrary,Filter,FilterOperator) {
         "use strict";
-
-        
-        function getBasePath() {
-            return sap.ui.require.toUrl("sap/suite/ui/commons/sample/Timeline");
-        }
-
-        // function convertData(oEvent) {
-        //     var oData,
-        //         oModel = oEvent.getSource(),
-        //         sBasePath = getBasePath();
-
-        //     if (!oEvent.getParameters().success) {
-        //         return;
-        //     }            
-
-            
-        //     oData = oModel.getData();
-            
-        //     oData.Staggered.forEach(function (oStaggered) {
-        //         //oStaggered.StartDate = DateUtils.parseDate(oStaggered.StartDate);
-        //         //oStaggered.StartDate = new Date(oStaggered.StartDate);
-        //         oStaggered.Photo = sBasePath + oStaggered.Photo;
-        //     });
-
-           
-            
-        //     oModel.updateBindings(true);
-        // }
+          
 
         return BaseController.extend("zsapreunit.pages.controller.UnitsPlannerBase", {
             
@@ -58,8 +31,8 @@ sap.ui.define([
                 if (sQuery && sQuery.length > 0) {
                    
                     var oFilter = new sap.ui.model.Filter([
-                        new sap.ui.model.Filter("Tenant", FilterOperator.Contains, sQuery)
-                        //new sap.ui.model.Filter("Company", FilterOperator.Contains, sQuery)
+                        new sap.ui.model.Filter("Tenant", FilterOperator.Contains, sQuery),
+                        new sap.ui.model.Filter("Company", FilterOperator.Contains, sQuery)
                     ],false);
                     aFilters.push(oFilter)
                 }
@@ -75,6 +48,9 @@ sap.ui.define([
                
                 var oModel = new sap.ui.model.json.JSONModel(oItem);                    
                 this.getView().setModel(oModel,"selectedCustomer");
+              
+                this._refreshTimeline(oItem.Rentalkeys);
+            
 
                 //var oFCL = this.oView.getParent().getParent();
                 var oFCL =  this.getView().byId("fcl");
@@ -82,11 +58,32 @@ sap.ui.define([
                 oFCL.setLayout(fioriLibrary.LayoutType.TwoColumnsMidExpanded);
                 
             },
+
+            onTimelinePress: function(oEvent){
+                var oItem = oEvent.getSource().getBindingContext().getObject();
+                                
+                var oFCL =  this.getView().byId("fcl");
+    
+                oFCL.setLayout(fioriLibrary.LayoutType.ThreeColumnsMidExpanded);
+            },
             onMidClose: function(){
                 this.getView().byId("fcl").setLayout(fioriLibrary.LayoutType.StartColumnFullScreen);
             },
 
-         
+            _refreshTimeline: function(keys){
+
+                var aFilters = [
+                    new Filter("Rentalkeys", FilterOperator.EQ, keys)                    
+                ];
+
+                var oTimeline = sap.ui.core.Fragment.byId("container-zsapreunit---UnitsPlannerBase","idTimeline");
+                 
+                var oBinding = oTimeline.getBinding("content");           
+                
+                oBinding.filter(aFilters, sap.ui.model.FilterType.Control);
+
+            },
+
             onOpen: function(){
                 // forward compact/cozy style into Dialog
 			    jQuery.sap.syncStyleClass(oView.getController().getOwnerComponent().getContentDensityClass(), oView, oDialog);

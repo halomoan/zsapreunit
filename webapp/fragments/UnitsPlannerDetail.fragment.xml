@@ -131,75 +131,57 @@
 			<suite:Timeline
 				id="idTimeline"
 				enableDoubleSided="false"
-				groupBy="StartDate"
+				axisOrientation="Horizontal"
+				groupBy="Startdate"
+				groupByType="Year"
 				growingThreshold="0"
-				filterTitle="StartDate"
+				filterTitle="Contract No"
 				sortOldestFirst="true"
-				content="{Staggered}"
+				content="{/REConditionSet}"
 				enableScroll="true"
 			>
 				<suite:content>
 					<suite:TimelineItem
 						id="idTemplateItem"
 						dateTime="{
-							path: 'StartDate',
+							path: 'Startdate',
 							formatter: '.formatDateTime'
 						}"
-						title="{Company}"
+						title="Group: {Contridx}"
 						userNameClickable="true"
 						userNameClicked="onUserNameClick"
-						select="onPressItems"
+						select="onTimelinePress"
 						userPicture="{Photo}"
 						text="{Text}"
-						userName="{Tenant}"
-						filterValue="{StartDate}"
-						icon="{Icon}"
+						userName="Start Date"
+						filterValue="{Contractno}"																						
 					>
 						<suite:embeddedControl>
+							
 							<VBox>
-								<lf:SimpleForm
-									id="SimpleFormDisplay480_12120Dual"
-									editable="false"
-									layout="GridLayout"
-									title="{No}: {REContractNo}"
-									labelSpanXL="4"
-									labelSpanL="4"
-									labelSpanM="12"
-									labelSpanS="12"
-									adjustLabelSpan="false"
-									emptySpanXL="0"
-									emptySpanL="0"
-									emptySpanM="0"
-									emptySpanS="0"
-									columnsXL="2"
-									columnsL="2"
-									columnsM="2"
-									singleContainerFullSize="false"
-								>
-									<lf:content>
-										<core:Title text="Basic"/>
-										<Label text="Start Date"/>
-										<Text text="{
-											path: 'StartDate',
+							<Title text="Contract No: {Contractno}" class="sapUiSmallMarginBottom"/>
+							<HBox alignItems="Start" width="100%">
+							
+							<VBox  width="50%" >
+								
+								<Label text="End Date" design="Bold"/>
+								<Text text="{
+											path: 'Enddate',
 											formatter: '.formatDateTime'
-										}"/>
-										<Label text="End Date"/>
-										<Text text="{
-											path: 'EndDate',
-											formatter: '.formatDateTime'
-										}"/>
-										<Label text="Unit Size"/>
-										<Text text="{AreaSize} {UOM}"/>
-										
-										<core:Title text="Rent"/>
-										<Label text="Base Rent $"/>
-										<Text text="{BaseRent}"/>
-										<Label text="Svc Rent $"/>
-										<Text text="{SvcRent}"/>
-										<Label text="A&amp;P Rent $"/>
-										<Text text="{ANPRent}"/>
-									</lf:content>
-								</lf:SimpleForm>
+								}"/>
+								<Label text="Unit Size"  design="Bold"/>
+								<Text text="{path: 'Areasize', formatter: '.formatNoDecimals' } {Uom}"/>
+							</VBox>
+
+							<VBox width="50%" >
+								<Label text="Base Rent $"  design="Bold"/>
+								<Text text="{Baserent}"/>
+								<Label text="Svc Rent $"  design="Bold"/>
+								<Text text="{Svcrent}"/>
+								<Label text="A&amp;P Rent $"  design="Bold"/>
+								<Text text="{Anprent}"/>
+							</VBox>
+							</HBox>
 							</VBox>
 						</suite:embeddedControl>
 					</suite:TimelineItem>
