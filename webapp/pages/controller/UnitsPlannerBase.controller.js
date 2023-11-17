@@ -171,13 +171,21 @@ sap.ui.define([
                     new Filter("Keydate", FilterOperator.EQ, this.getKeyDate())                            
                 ];
 
+                var oViewdata = this.getView().getModel("viewData");                            
+                    oViewdata.setProperty("/TotalRent",0.00);
+                    oViewdata.setProperty("/TBaseRent",0.00);
+                    oViewdata.setProperty("/TSvcRent",0.00);
+                    oViewdata.setProperty("/TAnpRent",0.00);
+                    oViewdata.setProperty("/Startdate","");
+                    oViewdata.setProperty("/Enddate","");
+
                 var oModel = this.getView().getModel();
                 oModel.read("/ZSCFDataSet",{
                     filters: aFilters,
                     success: function(oData, oResponse) {
                         if (oData && oData.results.length > 0){
                             var oData = oData.results[0];
-                            var oViewdata = this.getView().getModel("viewData");                            
+                            oViewdata = this.getView().getModel("viewData");                            
                             oViewdata.setProperty("/TotalRent",oData.Trent);
                             oViewdata.setProperty("/TBaseRent",oData.Baserent);
                             oViewdata.setProperty("/TSvcRent",oData.Svcrent);
