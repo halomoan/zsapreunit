@@ -19,6 +19,11 @@
           	<core:Fragment
 				fragmentName="zsapreunit.fragments.UnitsPlannerDetail"
 				type="XML"/>
-        </midColumnPages>
+        </midColumnPages>  
+        <endColumnPages>
+        <core:Fragment
+				fragmentName="zsapreunit.fragments.UnitsPlannerCF"
+				type="XML"/>
+        </endColumnPages>
     </FlexibleColumnLayout>
 </mvc:View>

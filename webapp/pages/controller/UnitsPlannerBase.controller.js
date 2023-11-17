@@ -1,5 +1,6 @@
 sap.ui.define([
     "zsapreunit/controller/BaseController",
+    "sap/ui/model/json/JSONModel",
     "sap/f/library",        
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator"
@@ -8,7 +9,7 @@ sap.ui.define([
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (BaseController,fioriLibrary,Filter,FilterOperator) {
+    function (BaseController,JSONModel,fioriLibrary,Filter,FilterOperator) {
         "use strict";
           
 
@@ -17,7 +18,15 @@ sap.ui.define([
 
 
             onInit: function () {
-                //this.oView = this.getView();
+                var oViewModel = new JSONModel({                    
+                    "MMM-YYYY": "MMM-YYYY"                    
+                });
+                
+                var oView = this.getView();
+                oView.setModel(oViewModel,"viewData");
+
+                
+                
                 //var oModel = new JSONModel(sap.ui.require.toUrl("zsapreunit/mockdata/unitplannermaster.json"));
                 //oModel.attachRequestCompleted(convertData);
 			    //this.getView().setModel(oModel);                
@@ -61,18 +70,37 @@ sap.ui.define([
 
             onTimelinePress: function(oEvent){
                 var oItem = oEvent.getSource().getBindingContext().getObject();
+                var oModel = new sap.ui.model.json.JSONModel(oItem);                                    
+                this.getView().setModel(oModel,"selectedCond");
                                 
                 var oFCL =  this.getView().byId("fcl");
     
                 oFCL.setLayout(fioriLibrary.LayoutType.ThreeColumnsMidExpanded);
+
+                this._refershCFEndTable();
             },
             onMidClose: function(){
                 this.getView().byId("fcl").setLayout(fioriLibrary.LayoutType.StartColumnFullScreen);
             },
 
+            onEndClose: function(){
+                
+                this.getView().byId("fcl").setLayout(fioriLibrary.LayoutType.TwoColumnsMidExpanded);
+                
+
+            },
+
             _refreshTimeline: function(keys){
 
+
+                var oModel = this.getView().getModel("selectedCustomer");
+
+                var sBukrs = oModel.getProperty("/Bukrs");
+                var sBusentity = oModel.getProperty("/Busentity");                
+
                 var aFilters = [
+                    new Filter("Bukrs",FilterOperator.EQ,sBukrs),
+                    new Filter("Busentity",FilterOperator.EQ,sBusentity),
                     new Filter("Rentalkeys", FilterOperator.EQ, keys)                    
                 ];
 
@@ -82,6 +110,30 @@ sap.ui.define([
                 
                 oBinding.filter(aFilters, sap.ui.model.FilterType.Control);
 
+            },
+
+            _refershCFEndTable: function(){
+                var oModel = this.getView().getModel("selectedCond");
+
+                var sBukrs = oModel.getProperty("/Bukrs");
+                var sBusentity = oModel.getProperty("/Busentity"); 
+                var sRentalkey = oModel.getProperty("/Rentalkeys");
+                var sStartdate = oModel.getProperty("/Startdate");
+                var sEnddate = oModel.getProperty("/Enddate");
+                sRentalkey = sRentalkey.replace(/-\d$/,'');
+
+               
+                var aFilters = [
+                    new Filter("Bukrs",FilterOperator.EQ,sBukrs),
+                    new Filter("Busentity",FilterOperator.EQ,sBusentity),
+                    new Filter("Rentalkey", FilterOperator.EQ, sRentalkey),
+                    new Filter("Startdate", FilterOperator.EQ, sStartdate),
+                    new Filter("Enddate", FilterOperator.EQ, sEnddate)           
+                ];
+
+                var oCFEndTable = sap.ui.core.Fragment.byId("container-zsapreunit---UnitsPlannerBase","idCFEndTable");
+                var oBinding = oCFEndTable.getBinding("items");
+                oBinding.filter(aFilters, sap.ui.model.FilterType.Application);
             },
 
             onOpen: function(){

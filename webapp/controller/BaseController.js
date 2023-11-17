@@ -5,6 +5,23 @@ sap.ui.define([
     "sap/ui/core/UIComponent"
   ], function(Controller, History,DateFormat, UIComponent) {
   
+    function getMonthDifference(startDate, endDate) {
+      // return (
+      //   endDate.getMonth() -
+      //   startDate.getMonth() +
+      //   12 * (endDate.getFullYear() - startDate.getFullYear())
+      // );
+      var months;
+      months = (endDate.getFullYear() - startDate.getFullYear()) * 12;
+      months -= startDate.getMonth();
+      months += endDate.getMonth();
+      return months <= 0 ? 0 : months;
+    }
+
+    function getYearDiff(date1, date2) {
+      return Math.abs(date2.getFullYear() - date1.getFullYear());
+    }
+
     "use strict";
     return Controller.extend("zsapreunit.controller.BaseController", {
   
@@ -12,11 +29,27 @@ sap.ui.define([
         return UIComponent.getRouterFor(this);
       },
 
-      formatDateTime: function(oDateTime) {
+      yearDiff: function(oSDate,oEDate){
+        var oDate = new Date(oEDate);
+        oDate.setDate(oEDate.getDate()+1);
+        var diff = getYearDiff(oSDate,oDate);
+        if (diff == 1) {
+          return diff + " yr";
+        } else if (diff > 1) {
+          return diff + " yrs";
+        } else {
+          return getMonthDifference(oSDate,oDate) + " mths";
+        }
+      },
+
+      formatDateTime: function(oDateTime,sFormat) {
                 
+        if (!sFormat) {
+          sFormat = "yyyy-MMM-dd";
+        }
         var oDateInstance = DateFormat.getDateInstance(
           {
-            pattern: "yyyy-MMM-dd"
+            pattern: sFormat
           }
         );                
         if (oDateTime instanceof Date) {
@@ -25,7 +58,7 @@ sap.ui.define([
           return oDateInstance.format(oDateInstance.parse(oDateTime));
         }
         
-    },
+    },    
 
     formatNoDecimals: function(Number){
         var oFormat = sap.ui.core.format.NumberFormat.getFloatInstance({

@@ -2,7 +2,6 @@
 	xmlns="sap.m"
 	xmlns:f="sap.f"
 	xmlns:l="sap.ui.layout"
-	xmlns:lf="sap.ui.layout.form"
 	xmlns:core="sap.ui.core"
 	xmlns:suite="sap.suite.ui.commons"
 >
@@ -18,35 +17,35 @@
 						titleStyle="H1"
 					/>
 				</f:heading>
-				<f:expandedContent>					
-					 <GenericTag
-                            text="{selectedCustomer>/Unitno}"
-                            design="StatusIconHidden"
-                            status="Information"
-                            class=""
-                            press="onListItemPress"
-                        >
-                            <ObjectNumber
-                                emphasized="false"
-                                number="{selectedCustomer>/Noofunit}"
-                                unit="Unit(s)"
-                            />
-                        </GenericTag>
+				<f:expandedContent>
+					<GenericTag
+						text="{selectedCustomer>/Unitno}"
+						design="StatusIconHidden"
+						status="Information"
+						class=""
+						press="onListItemPress"
+					>
+						<ObjectNumber
+							emphasized="false"
+							number="{selectedCustomer>/Noofunit}"
+							unit="Unit(s)"
+						/>
+					</GenericTag>
 				</f:expandedContent>
 				<f:snappedContent>
 					<GenericTag
-                            text="{selectedCustomer>/Unitno}"
-                            design="StatusIconHidden"
-                            status="Information"
-                            class=""
-                            press="onListItemPress"
-                        >
-                            <ObjectNumber
-                                emphasized="false"
-                                number="{selectedCustomer>/Noofunit}"
-                                unit="Unit(s)"
-                            />
-                        </GenericTag>
+						text="{selectedCustomer>/Unitno}"
+						design="StatusIconHidden"
+						status="Information"
+						class=""
+						press="onListItemPress"
+					>
+						<ObjectNumber
+							emphasized="false"
+							number="{selectedCustomer>/Noofunit}"
+							unit="Unit(s)"
+						/>
+					</GenericTag>
 				</f:snappedContent>
 				<f:navigationActions>
 					<OverflowToolbarButton
@@ -100,8 +99,7 @@
 							<ObjectStatus
 								title="{i18n>Business Partner No}"
 								text="{selectedCustomer>/Bupano}"
-							/>	
-							
+							/>
 							<ObjectStatus
 								title="Trade"
 								text="{selectedCustomer>/Trade}"
@@ -110,24 +108,29 @@
 						</l:VerticalLayout>
 						<l:VerticalLayout>
 							<ObjectAttribute title="Occupancy"/>
-							<HBox>		
-							<ObjectStatus
-								title="{i18n>From}"
-								text="{path: 'selectedCustomer>/Startdate', formatter: '.formatDateTime'}"
-								class="sapUiTinyMarginEnd"
-							/>			
-							<ObjectStatus
-								
-								title="{i18n>Until}"
-								text="{path: 'selectedCustomer>/Lastdate', formatter: '.formatDateTime'}"
-							/>			
+							<HBox>
+								<ObjectStatus
+									title="{i18n>From}"
+									text="{
+										path: 'selectedCustomer>/Startdate',
+										formatter: '.formatDateTime'
+									}"
+									class="sapUiTinyMarginEnd"
+								/>
+								<ObjectStatus
+									title="{i18n>Until}"
+									text="{
+										path: 'selectedCustomer>/Lastdate',
+										formatter: '.formatDateTime'
+									}"
+								/>
 							</HBox>
 						</l:VerticalLayout>
 					</l:HorizontalLayout>
 				</FlexBox>
 			</f:DynamicPageHeader>
 		</f:header>
-		<f:content>
+		<f:content>			
 			<suite:Timeline
 				id="idTimeline"
 				enableDoubleSided="false"
@@ -139,12 +142,14 @@
 				sortOldestFirst="true"
 				content="{/REConditionSet}"
 				enableScroll="true"
+					
 			>
 				<suite:content>
 					<suite:TimelineItem
 						id="idTemplateItem"
 						dateTime="{
 							path: 'Startdate',
+							type: 'sap.ui.model.odata.type.DateTime',
 							formatter: '.formatDateTime'
 						}"
 						title="Group: {Contridx}"
@@ -152,41 +157,143 @@
 						userNameClicked="onUserNameClick"
 						select="onTimelinePress"
 						userPicture="{Photo}"
-						text="{Text}"
+						text="{Contractno}"
 						userName="Start Date"
-						filterValue="{Contractno}"																						
+						filterValue="{Contractno}"
 					>
 						<suite:embeddedControl>
-							
 							<VBox>
-							<Title text="Contract No: {Contractno}" class="sapUiSmallMarginBottom"/>
-							<HBox alignItems="Start" width="100%">
-							
-							<VBox  width="50%" >
-								
-								<Label text="End Date" design="Bold"/>
-								<Text text="{
+								<Title
+									text="Contract No: {Contractno}"
+									class="sapUiSmallMarginBottom"
+								/>
+								<HBox
+									alignItems="Start"
+									width="100%"
+								>
+									<VBox width="50%">
+										<Label
+											text="End Date"
+											design="Bold"
+										/>
+										<Text text="{
 											path: 'Enddate',
 											formatter: '.formatDateTime'
-								}"/>
-								<Label text="Unit Size"  design="Bold"/>
-								<Text text="{path: 'Areasize', formatter: '.formatNoDecimals' } {Uom}"/>
-							</VBox>
-
-							<VBox width="50%" >
-								<Label text="Base Rent $"  design="Bold"/>
-								<Text text="{Baserent}"/>
-								<Label text="Svc Rent $"  design="Bold"/>
-								<Text text="{Svcrent}"/>
-								<Label text="A&amp;P Rent $"  design="Bold"/>
-								<Text text="{Anprent}"/>
-							</VBox>
-							</HBox>
+										}"/>
+										<Label
+											text="Duration"
+											design="Bold"
+										/>
+										<Text text="{
+											parts: [{
+												path: 'Startdate'
+											}, {
+												path: 'Enddate'
+											}],
+											formatter: '.yearDiff'
+										}"/>
+										<Label
+											text="Unit Size"
+											design="Bold"
+										/>
+										<Text text="{
+											path: 'Areasize',
+											formatter: '.formatNoDecimals'
+										} {Uom}"/>
+									</VBox>
+									<VBox
+										width="50%"
+										alignItems="End"
+									>
+										<Label
+											text="Base Rent $"
+											design="Bold"
+										/>
+										<Text text="{Baserent}"/>
+										<Label
+											text="Svc Rent $"
+											design="Bold"
+										/>
+										<Text text="{Svcrent}"/>
+										<Label
+											text="A&amp;P Rent $"
+											design="Bold"
+										/>
+										<Text text="{Anprent}"/>
+									</VBox>
+								</HBox>
+								<VBox alignItems="End">
+									<ObjectNumber
+										class="sapUiSmallMarginTop"
+										number="{
+											parts: [{
+												path: 'Tbasenet'
+											}, {
+												path: 'Currency'
+											}],
+											type: 'sap.ui.model.type.Currency',
+											formatOptions: {
+												showMeasure: false
+											}
+										}"
+										unit="{Currency}"
+										state="Information"
+									/>
+									<ObjectNumber
+										class=""
+										number="{
+											parts: [{
+												path: 'Tsvcnet'
+											}, {
+												path: 'Currency'
+											}],
+											type: 'sap.ui.model.type.Currency',
+											formatOptions: {
+												showMeasure: false
+											}
+										}"
+										unit="{Currency}"
+										state="Warning"
+									/>
+									<ObjectNumber
+										class=""
+										number="{
+											parts: [{
+												path: 'Tanpnet'
+											}, {
+												path: 'Currency'
+											}],
+											type: 'sap.ui.model.type.Currency',
+											formatOptions: {
+												showMeasure: false
+											}
+										}"
+										unit="{Currency}"
+										state="Warning"
+									/>
+									<Label text="+ ____________________"/>
+									<ObjectNumber
+										class=""
+										number="{
+											parts: [{
+												path: 'Totalnet'
+											}, {
+												path: 'Currency'
+											}],
+											type: 'sap.ui.model.type.Currency',
+											formatOptions: {
+												showMeasure: false
+											}
+										}"
+										unit="{Currency}"
+										state="Success"
+									/>
+								</VBox>
 							</VBox>
 						</suite:embeddedControl>
 					</suite:TimelineItem>
 				</suite:content>
-			</suite:Timeline>
+			</suite:Timeline>			
 		</f:content>
 	</f:DynamicPage>
 </core:FragmentDefinition>
