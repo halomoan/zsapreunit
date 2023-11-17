@@ -71,6 +71,7 @@
 						id="_IDGenButton4"
 						icon="sap-icon://action"
 						type="Transparent"
+						press="onDisplayCF"
 					/>
 				</f:actions>
 			</f:DynamicPageTitle>

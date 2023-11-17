@@ -19,13 +19,27 @@ sap.ui.define([
 
             onInit: function () {
                 var oViewModel = new JSONModel({                    
-                    "MMM-YYYY": "MMM-YYYY"                    
+                    "MMM-YYYY": "MMM-YYYY",
+                    "CFHeader": "Cash Flow"                   
                 });
                 
                 var oView = this.getView();
                 oView.setModel(oViewModel,"viewData");
 
                 
+
+                //var oCFEndTable = sap.ui.core.Fragment.byId("container-zsapreunit---UnitsPlannerBase","idCFEndTable");
+                // oCFEndTable.attachUpdateFinished(function(oEvent){
+                //     var oSource = oEvent.oSource;  
+                    
+                //     var oData = oSource.getBinding("items").getModel().oData;
+                    
+                //     for (const key in oData) {
+
+                //         if(key )
+                //         console.log(`${key}: ${oData[key]}`);
+                //     }
+                // });
                 
                 //var oModel = new JSONModel(sap.ui.require.toUrl("zsapreunit/mockdata/unitplannermaster.json"));
                 //oModel.attachRequestCompleted(convertData);
@@ -53,7 +67,8 @@ sap.ui.define([
             },
             onListItemPress: function (oEvent) {
                 
-                var oItem = oEvent.getSource().getBindingContext().getObject();                              
+                var oItem = oEvent.getSource().getBindingContext().getObject();  
+                
                
                 var oModel = new sap.ui.model.json.JSONModel(oItem);                    
                 this.getView().setModel(oModel,"selectedCustomer");
@@ -68,16 +83,29 @@ sap.ui.define([
                 
             },
 
+            onDisplayCF: function(oEvent){
+                
+                var oData = this.getView().getModel("selectedCustomer").getData();
+                
+                this._refershCFEndTable(oData.Bukrs,oData.Busentity,oData.Rentalkeys,oData.Startdate,oData.Lastdate);
+
+                var oFCL =  this.getView().byId("fcl");
+    
+                oFCL.setLayout(fioriLibrary.LayoutType.ThreeColumnsEndExpanded);
+              
+            },
+
             onTimelinePress: function(oEvent){
-                var oItem = oEvent.getSource().getBindingContext().getObject();
+                var oItem = oEvent.getSource().getBindingContext().getObject(); 
+                                
                 var oModel = new sap.ui.model.json.JSONModel(oItem);                                    
                 this.getView().setModel(oModel,"selectedCond");
                                 
                 var oFCL =  this.getView().byId("fcl");
     
-                oFCL.setLayout(fioriLibrary.LayoutType.ThreeColumnsMidExpanded);
+                oFCL.setLayout(fioriLibrary.LayoutType.ThreeColumnsEndExpanded);
 
-                this._refershCFEndTable();
+                this._refershCFEndTable(oItem.Bukrs,oItem.Busentity,oItem.Rentalkeys,oItem.Startdate,oItem.Enddate);
             },
             onMidClose: function(){
                 this.getView().byId("fcl").setLayout(fioriLibrary.LayoutType.StartColumnFullScreen);
@@ -112,28 +140,57 @@ sap.ui.define([
 
             },
 
-            _refershCFEndTable: function(){
-                var oModel = this.getView().getModel("selectedCond");
+            _refershCFEndTable: function(Bukrs,Busentity,Rentalkeys,StartDate,EndDate){                
 
-                var sBukrs = oModel.getProperty("/Bukrs");
-                var sBusentity = oModel.getProperty("/Busentity"); 
-                var sRentalkey = oModel.getProperty("/Rentalkeys");
-                var sStartdate = oModel.getProperty("/Startdate");
-                var sEnddate = oModel.getProperty("/Enddate");
-                sRentalkey = sRentalkey.replace(/-\d$/,'');
+                var sBukrs = Bukrs;
+                var sBusentity = Busentity; 
+                var sRentalkeys = Rentalkeys;
+                var sStartdate = StartDate;
+                var sEnddate = EndDate;
+                sRentalkeys = sRentalkeys.replace(/-\d$/,'');
 
                
                 var aFilters = [
                     new Filter("Bukrs",FilterOperator.EQ,sBukrs),
                     new Filter("Busentity",FilterOperator.EQ,sBusentity),
-                    new Filter("Rentalkey", FilterOperator.EQ, sRentalkey),
+                    new Filter("Rentalkeys", FilterOperator.EQ, sRentalkeys),
                     new Filter("Startdate", FilterOperator.EQ, sStartdate),
-                    new Filter("Enddate", FilterOperator.EQ, sEnddate)           
+                    new Filter("Enddate", FilterOperator.EQ, sEnddate),
+                    new Filter("Keydate", FilterOperator.EQ, this.getKeyDate())                   
                 ];
 
                 var oCFEndTable = sap.ui.core.Fragment.byId("container-zsapreunit---UnitsPlannerBase","idCFEndTable");
                 var oBinding = oCFEndTable.getBinding("items");
                 oBinding.filter(aFilters, sap.ui.model.FilterType.Application);
+
+                aFilters = [
+                    new Filter("Bukrs",FilterOperator.EQ,sBukrs),
+                    new Filter("Busentity",FilterOperator.EQ,sBusentity),
+                    new Filter("Rentalkeys", FilterOperator.EQ, sRentalkeys),
+                    new Filter("Startdate", FilterOperator.EQ, sStartdate),
+                    new Filter("Enddate", FilterOperator.EQ, sEnddate),
+                    new Filter("Keydate", FilterOperator.EQ, this.getKeyDate())                            
+                ];
+
+                var oModel = this.getView().getModel();
+                oModel.read("/ZSCFDataSet",{
+                    filters: aFilters,
+                    success: function(oData, oResponse) {
+                        if (oData && oData.results.length > 0){
+                            var oData = oData.results[0];
+                            var oViewdata = this.getView().getModel("viewData");                            
+                            oViewdata.setProperty("/TotalRent",oData.Trent);
+                            oViewdata.setProperty("/TBaseRent",oData.Baserent);
+                            oViewdata.setProperty("/TSvcRent",oData.Svcrent);
+                            oViewdata.setProperty("/TAnpRent",oData.Anprent);
+                        }
+
+                    }.bind(this),
+                    error: function(oError) {
+                        // BusyIndicator.hide();
+                        // MessageBox.error("{i18n>msgErr}");
+                    } 
+                })
             },
 
             onOpen: function(){

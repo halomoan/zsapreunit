@@ -25,7 +25,7 @@ sap.ui.define([
                     new Filter("Bukrs", FilterOperator.EQ, "1001"),
                     new Filter("Busentity", FilterOperator.EQ, "00001001"),
                     new Filter("Contrtype", FilterOperator.EQ, "L002"),
-                    new Filter("Keydate", FilterOperator.EQ, new Date("2017-08-01")),
+                    new Filter("Keydate", FilterOperator.EQ, this.getKeyDate()),
                 ];
 
                 var oList = sap.ui.core.Fragment.byId("container-zsapreunit---UnitsPlannerBase","sfloorunit");

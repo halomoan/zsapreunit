@@ -3,13 +3,50 @@
 	xmlns:core="sap.ui.core"
 >
 	<Page title="{i18n>CashFlow}">
-		<headerContent>
+		<headerContent>			
 			<Button
 				icon="sap-icon://decline"
 				tooltip="Close"
 				press="onEndClose"
 			/>
+			
 		</headerContent>
+		<HeaderContainer id="container2" >
+			<TileContent unit="{selectedCond>/Currency}" footer="{i18n>CashFlow.TotalRent}">
+				<content>
+					<NumericContent 
+						icon="sap-icon://lead"
+						tooltip="{path: 'viewData>/TotalRent', formatter:'.formatNumber'}"
+						value="{path : 'viewData>/TotalRent', formatter: '.formatNumeric'}" 
+						scale="{path : 'viewData>/TotalRent', formatter: '.formatNumericScale'}" valueColor="Good"
+						withMargin="true"/>
+				</content>
+			</TileContent>	
+			<TileContent unit="{selectedCond>/Currency}" footer="{i18n>CashFlow.BaseRent}">
+				<content>
+					<NumericContent 
+						tooltip="{path: 'viewData>/TBaseRent', formatter:'.formatNumber'}"
+						value="{path : 'viewData>/TBaseRent', formatter: '.formatNumeric'}" scale="{path : 'viewData>/TBaseRent', formatter: '.formatNumericScale'}"
+						withMargin="true"/>
+				</content>
+			</TileContent>		
+			<TileContent unit="{selectedCond>/Currency}" footer="{i18n>CashFlow.SvcRent}">
+				<content>
+					<NumericContent 
+						tooltip="{path: 'viewData>/TSvcRent', formatter:'.formatNumber'}"						
+						value="{path : 'viewData>/TSvcRent', formatter: '.formatNumeric'}"  scale="{path : 'viewData>/TSvcRent', formatter: '.formatNumericScale'}"
+						withMargin="true"/>
+				</content>
+			</TileContent>	
+			<TileContent unit="{selectedCond>/Currency}" footer="{i18n>CashFlow.AnpRent}">
+				<content>
+					<NumericContent 
+						tooltip="{path: 'viewData>/TAnpRent', formatter:'.formatNumber'}"	
+						value="{path : 'viewData>/TAnpRent', formatter: '.formatNumeric'}" scale="{path : 'viewData>/TAnpRent', formatter: '.formatNumericScale'}"
+						withMargin="false"/>
+				</content>
+			</TileContent>		
+		</HeaderContainer>
 		<Table
 			id="idCFEndTable"
 			inset="false"
@@ -21,32 +58,38 @@
 			}"
 			sticky="ColumnHeaders"
 		>
-			<!-- <headerToolbar>
+			<headerToolbar>
 				<OverflowToolbar>
-					<content>
-						<Title
-							text="{i18n>Monthly}"
-							level="H2"
-						/>
+					<content>						
+						<!-- <ObjectIdentifier
+							title="{i18n>Period}"
+							text="{ path: 'selectedCond>/Startdate', formatter: '.formatDateTime'} to { path: 'selectedCond>/Enddate', formatter: '.formatDateTime'}"/> -->
+						<Title text="{i18n>Period}" />
 						<ToolbarSpacer />
 					</content>
 				</OverflowToolbar>
 			</headerToolbar>
+
+			
 			<infoToolbar>
 				<OverflowToolbar>
-					<Label text="Wide range of available products"/>
+					<Label text="{ path: 'selectedCond>/Startdate', formatter: '.formatDateTime'} to { path: 'selectedCond>/Enddate', formatter: '.formatDateTime'}"/>
 				</OverflowToolbar>
-			</infoToolbar> -->
+			</infoToolbar> 
 			
 			<columns>
 				<Column width="12em">
 					<Text text="Month/Year"/>
 				</Column>
+				<Column hAlign="End">
+					<Text text="{i18n>CashFlow.TotalRent}"/>
+				</Column>
 				<Column
 					hAlign="End"
 					demandPopin="true"
 					minScreenWidth="Tablet"
-				>
+					
+				>				
 					<Text text="{i18n>CashFlow.BaseRent}"/>
 				</Column>
 				<Column
@@ -63,15 +106,28 @@
 				>
 					<Text text="{i18n>CashFlow.AnpRent}"/>
 				</Column>
-				<Column hAlign="End">
-					<Text text="{i18n>CashFlow.TotalRent}"/>
-				</Column>
+				
 			</columns>
 			<items>
 				<ColumnListItem vAlign="Middle">
 					<cells>
 						<ObjectIdentifier
 							title="{parts: [{path: 'Startdate'}, {path: 'viewData>/MMM-YYYY'}], formatter: '.formatDateTime'}"							
+						/>
+						<ObjectNumber
+							number="{
+								parts: [{
+									path: 'Trent'
+								}, {
+									path: 'Currency'
+								}],
+								type: 'sap.ui.model.type.Currency',
+								formatOptions: {
+									showMeasure: false
+								}
+							}"
+							unit="{Currency}"
+							state="Success"
 						/>
 						<ObjectNumber
 							number="{
@@ -118,36 +174,10 @@
 							unit="{Currency}"
 							state="Warning"
 						/>
-						<ObjectNumber
-							number="{
-								parts: [{
-									path: 'Trent'
-								}, {
-									path: 'Currency'
-								}],
-								type: 'sap.ui.model.type.Currency',
-								formatOptions: {
-									showMeasure: false
-								}
-							}"
-							unit="{Currency}"
-							state="Success"
-						/>
+						
 					</cells>
 				</ColumnListItem>
 			</items>
-		</Table>
-		<footer>
-			<OverflowToolbar>
-				<ToolbarSpacer/>
-				<Button
-					text="Order"
-					enabled="{
-						path: 'Order>/',
-						formatter: 'sap.m.sample.TableBreadcrumb.Formatter.isAnyProductSelected'
-					}"
-					press="handleOrderPress" />
-			</OverflowToolbar>
-		</footer>
+		</Table>	
 	</Page>
 </core:FragmentDefinition>

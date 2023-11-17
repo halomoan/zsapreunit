@@ -29,6 +29,10 @@ sap.ui.define([
         return UIComponent.getRouterFor(this);
       },
 
+      getKeyDate: function(){
+        return new Date("2017-08-01");
+      },
+
       yearDiff: function(oSDate,oEDate){
         var oDate = new Date(oEDate);
         oDate.setDate(oEDate.getDate()+1);
@@ -60,9 +64,40 @@ sap.ui.define([
         
     },    
 
+    formatNumeric: function(Number){
+        var oFormatOptions = {
+          style: "short",
+          decimals: 1,
+          shortDecimals: 2
+      };
+      var oFloatFormat = sap.ui.core.format.NumberFormat.getFloatInstance(oFormatOptions);
+      return oFloatFormat.format(Number);
+    },
+    formatNumericScale: function(Number){
+      if (Number > 1000000) {
+          return "M";
+      } else if (Number > 1000){
+          return "K";
+      } else {
+        return "";
+      }
+
+    },
+
     formatNoDecimals: function(Number){
         var oFormat = sap.ui.core.format.NumberFormat.getFloatInstance({
           "groupingEnabled": true,  // grouping is enabled
+          //"groupingSeparator": '.', // grouping separator is '.'
+          "groupingSize": 3,        // the amount of digits to be grouped (here: thousand)
+          //"decimalSeparator": ","   // the decimal separator must be different from the grouping separator
+      });
+      return oFormat.format(Number);
+    },
+
+    formatNumber: function(Number){
+      var oFormat = sap.ui.core.format.NumberFormat.getFloatInstance({
+          "groupingEnabled": true,  // grouping is enabled
+          "decimals": 2,
           //"groupingSeparator": '.', // grouping separator is '.'
           "groupingSize": 3,        // the amount of digits to be grouped (here: thousand)
           //"decimalSeparator": ","   // the decimal separator must be different from the grouping separator
