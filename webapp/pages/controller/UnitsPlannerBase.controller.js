@@ -19,8 +19,7 @@ sap.ui.define([
 
             onInit: function () {
                 var oViewModel = new JSONModel({                    
-                    "MMM-YYYY": "MMM-YYYY",
-                    "CFHeader": "Cash Flow"                   
+                    "MMM-YYYY": "MMM-YYYY"                  
                 });
                 
                 var oView = this.getView();
@@ -183,6 +182,9 @@ sap.ui.define([
                             oViewdata.setProperty("/TBaseRent",oData.Baserent);
                             oViewdata.setProperty("/TSvcRent",oData.Svcrent);
                             oViewdata.setProperty("/TAnpRent",oData.Anprent);
+                            oViewdata.setProperty("/Startdate",oData.Startdate);
+                            oViewdata.setProperty("/Enddate",oData.Enddate);
+                            
                         }
 
                     }.bind(this),

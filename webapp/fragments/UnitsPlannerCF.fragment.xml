@@ -73,7 +73,7 @@
 			
 			<infoToolbar>
 				<OverflowToolbar>
-					<Label text="{ path: 'selectedCond>/Startdate', formatter: '.formatDateTime'} to { path: 'selectedCond>/Enddate', formatter: '.formatDateTime'}"/>
+					<Label text="{ path: 'viewData>/Startdate', formatter: '.formatDateTime'} to { path: 'viewData>/Enddate', formatter: '.formatDateTime'}"/>
 				</OverflowToolbar>
 			</infoToolbar> 
 			
