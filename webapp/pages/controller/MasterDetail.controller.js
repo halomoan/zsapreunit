@@ -14,8 +14,28 @@ sap.ui.define([
                 this._oRouter = this.getRouter();
                 this._oRouter.getRoute("RouteMainView").attachPatternMatched(this.__onRouteMatched, this);
             },
+
+            onToggleSideNavPress: function(){
+                var oToolPage = this.byId("toolPage");
+                var bSideExpanded = oToolPage.getSideExpanded();
+    
+                this._setToggleButtonTooltip(bSideExpanded);
+    
+                oToolPage.setSideExpanded(!oToolPage.getSideExpanded());
+
+            }, 
             __onRouteMatched: function(oEvent){
-                this._refreshSloorUnit();               
+               // this._refreshSloorUnit(); 
+                   
+            },
+
+            _setToggleButtonTooltip: function(bLarge) {
+                var oToggleButton = this.byId('sideNavigationToggleButton');
+                if (bLarge) {
+                    oToggleButton.setTooltip('Expand');
+                } else {
+                    oToggleButton.setTooltip('Collapse');
+                }
             },
 
             _refreshSloorUnit: function(){

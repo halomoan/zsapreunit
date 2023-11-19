@@ -1,0 +1,314 @@
+<mvc:View
+    controllerName="zsapreunit.pages.controller.FloorUnitPlanner"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.uxap"
+    xmlns:ui="sap.ui.table"
+    xmlns:m="sap.m"
+    xmlns:u="sap.ui.unified"
+    xmlns:core="sap.ui.core"
+    height="100%"
+>
+    <ObjectPageLayout
+        id="FUPlannerLayout"
+        enableLazyLoading="true"
+        upperCaseAnchorBar="false"
+        sections="{/Floor}"
+        headerContentPinned="true"
+    >
+        <headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <heading>
+                    <m:Title text="ObjectPage with LazyLoading" />
+                </heading>
+                <snappedTitleOnMobile>
+                    <m:Title text="ObjectPage with LazyLoading" />
+                </snappedTitleOnMobile>
+                <actions>
+                    <m:Button
+                        text="Edit"
+                        type="Emphasized"
+                    />
+                    <m:Button
+                        type="Transparent"
+                        text="Delete"
+                    />
+                    <m:Button
+                        type="Transparent"
+                        text="Copy"
+                    />
+                    <m:OverflowToolbarButton
+                        icon="sap-icon://action"
+                        type="Transparent"
+                        text="Share"
+                        tooltip="action"
+                    />
+                </actions>
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
+        <sections>
+            <ObjectPageSection
+                titleUppercase="false"
+                title="{Floor}"
+            >
+                <subSections>
+                    <ObjectPageSubSection
+                        title=""
+                        mode="Expanded"
+                        titleUppercase="false"
+                    >
+                        <blocks>
+                            <ui:Table
+                                id="table"
+                                rows=""
+                                selectionMode="MultiToggle"
+                                ariaLabelledBy="title"
+                                enableColumnFreeze="true"
+                            >
+                                <ui:extension>
+                                    <m:OverflowToolbar style="Clear">
+                                        <m:ToolbarSpacer                                            
+                                        >
+                                            
+                                        </m:ToolbarSpacer>
+                                        <m:Button                                           
+                                            icon="sap-icon://close-command-field"
+                                            textDirection="Inherit"
+                                            type="Default"
+                                            press="onGotoFirstColumn"
+                                           
+                                        >
+                                            
+                                        </m:Button>
+                                       
+                                    </m:OverflowToolbar>
+                                </ui:extension>
+                                <ui:columns>
+                                    <ui:Column width="4rem">
+                                        <m:Label text="Unit No" />
+                                        <ui:template>
+                                            <m:Label
+                                                text="{UnitNo}"
+                                                design="{= ${Main} ? 'Bold': 'Standard'}"
+                                                textAlign="{= ${Main} ? 'Begin': 'End'}"
+                                                width="100%"
+                                            />
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column
+                                        width="18rem"
+                                        headerSpan="5"
+                                        filterProperty="Term1/Company"
+                                    >
+                                        <ui:multiLabels>
+                                            <m:Label
+                                                text="First Term"
+                                                textAlign="Center"
+                                                width="100%"
+                                            />
+                                            <m:Label
+                                                text="Company"
+                                                textAlign="Center"
+                                                width="100%"
+                                            />
+                                        </ui:multiLabels>
+                                        <ui:template>
+                                            <m:Label
+                                                text="{Term1/Company}"
+                                                design="{= ${Main} ? 'Bold': 'Standard'}"
+                                            />
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column
+                                        width="12rem"
+                                        filterProperty="Term1/Tenant"
+                                    >
+                                        <ui:multiLabels>
+                                            <m:Label text="First Term" />
+                                            <m:Label
+                                                text="Tenant"
+                                                textAlign="Center"
+                                                width="100%"
+                                            />
+                                        </ui:multiLabels>
+                                        <ui:template>
+                                            <m:Label
+                                                text="{Term1/Tenant}"
+                                                design="{= ${Main} ? 'Bold': 'Standard'}"
+                                            />
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column width="8rem">
+                                        <ui:multiLabels>
+                                            <m:Label text="First Term" />
+                                            <m:Label
+                                                text="Trade"
+                                                textAlign="Center"
+                                                width="100%"
+                                            />
+                                        </ui:multiLabels>
+                                        <ui:template>
+                                            <m:Label
+                                                text="{Term1/Trade}"
+                                                design="{= ${Main} ? 'Bold': 'Standard'}"
+                                            />
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column
+                                        hAlign="End"
+                                        width="6rem"
+                                    >
+                                        <ui:multiLabels>
+                                            <m:Label text="First Term" />
+                                            <m:Label
+                                                text="Area Size"
+                                                textAlign="Center"
+                                                width="100%"
+                                            />
+                                        </ui:multiLabels>
+                                        <ui:template>
+                                            <m:Label
+                                                text="{
+                                                    path: 'Term1/Areasize',
+                                                    formatter: '.formatNoDecimals'
+                                                } {Term1/Uom}"
+                                                design="{= ${Main} ? 'Bold': 'Standard'}"
+                                                visible="{= ${Main}}"
+                                            />
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column
+                                        width="5rem"
+                                        hAlign="Center"
+                                    >
+                                        <ui:multiLabels>
+                                            <m:Label text="First Term" />
+                                            <m:Label
+                                                text="No Of Years"
+                                                textAlign="Center"
+                                                width="100%"
+                                                wrapping="true"
+                                            />
+                                        </ui:multiLabels>
+                                        <ui:template>
+                                            <m:Label
+                                                text="{Term1/Noofyear}"
+                                                design="{= ${Main} ? 'Bold': 'Standard'}"
+                                                visible="{= ${Main}}"
+                                            />
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column
+                                        hAlign="Center"
+                                        width="8rem"
+                                    >
+                                        <ui:multiLabels>
+                                            <m:Label text="First Term" />
+                                            <m:Label
+                                                text="Start Date"
+                                                textAlign="Center"
+                                                width="100%"
+                                            />
+                                        </ui:multiLabels>
+                                        <ui:template>
+                                            <m:Label
+                                                text="{
+                                                    path: 'Term1/Startdate',
+                                                    formatter: '.formatDateTime'
+                                                }"
+                                                design="{= ${Main} ? 'Bold': 'Standard'}"
+                                                visible="{= ${Main}}"
+                                            />
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column
+                                        hAlign="Center"
+                                        width="8rem"
+                                    >
+                                        <ui:multiLabels>
+                                            <m:Label text="First Term" />
+                                            <m:Label
+                                                text="End Date"
+                                                textAlign="Center"
+                                                width="100%"
+                                            />
+                                        </ui:multiLabels>
+                                        <ui:template>
+                                            <m:Label
+                                                text="{
+                                                    path: 'Term1/Enddate',
+                                                    formatter: '.formatDateTime'
+                                                }"
+                                                design="{= ${Main} ? 'Bold': 'Standard'}"
+                                                visible="{= ${Main}}"
+                                            />
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column
+                                        hAlign="Center"
+                                        width="8rem"
+                                    >
+                                        <ui:multiLabels>
+                                            <m:Label text="First Term" />
+                                            <m:Label
+                                                text="{i18n>Contract.BaseRent.Avg}"
+                                                textAlign="Center"
+                                                width="100%"
+                                            />
+                                        </ui:multiLabels>
+                                        <ui:template>
+                                            <m:Button
+                                                text="{Term1/Avgbaserent}"
+                                                press="onShowT1Detail"
+                                                visible="{= ${Main}}"
+                                            />
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column
+                                        hAlign="Center"
+                                        width="8rem"
+                                    >
+                                        <ui:multiLabels>
+                                            <m:Label text="First Term" />
+                                            <m:Label
+                                                text="{i18n>Contract.SvcRent}"
+                                                textAlign="Center"
+                                                width="100%"
+                                            />
+                                        </ui:multiLabels>
+                                        <ui:template>
+                                            <m:Label
+                                                text="{Term1/Svcrent}"
+                                                design="{= ${Main} ? 'Bold': 'Standard'}"
+                                                visible="{= ${Main}}"
+                                            />
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column
+                                        hAlign="Center"
+                                        width="8rem"
+                                    >
+                                        <ui:multiLabels>
+                                            <m:Label text="First Term" />
+                                            <m:Label
+                                                text="{i18n>Contract.AnpRent}"
+                                                textAlign="Center"
+                                                width="100%"
+                                            />
+                                        </ui:multiLabels>
+                                        <ui:template>
+                                            <m:Label
+                                                text="{Term1/Anprent}"
+                                                design="{= ${Main} ? 'Bold': 'Standard'}"
+                                                visible="{= ${Main}}"
+                                            />
+                                        </ui:template>
+                                    </ui:Column>
+                                </ui:columns>
+                            </ui:Table>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+        </sections>
+    </ObjectPageLayout>
+</mvc:View>

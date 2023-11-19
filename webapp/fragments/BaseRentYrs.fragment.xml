@@ -1,0 +1,193 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+>
+    <Popover
+        showHeader="false"
+        contentWidth="280px"
+        contentHeight="360px"
+        placement="Right"
+    >
+        <NavContainer id="baserentnv">
+            <Page title="{i18n>Contract.BaseRent}">
+                <HBox alignContent="SpaceBetween" alignItems="Stretch" width="100%">
+                   
+                        <l:VerticalLayout
+                            class="sapUiContentPadding"
+                            width="100%"
+                        >
+                            <l:content>
+                                <Label
+                                    design="Bold"
+                                    text="{i18n>Label.Yr1} :"
+                                />
+                                <Input
+                                    autocomplete="true"
+                                    description="{Term1/Currency}"
+                                    enableSuggestionsHighlighting="true"
+                                    fieldWidth="4rem"
+                                    filterSuggests="true"
+                                    maxLength="0"
+                                    maxSuggestionWidth=""
+                                    selectedKey="empty string"
+                                    showSuggestion="false"
+                                    showTableSuggestionValueHelp="true"
+                                    showValueHelp="false"
+                                    startSuggestion="1"
+                                    suggestionRowValidator="empty string"
+                                    textFormatMode="Value"
+                                    textFormatter="empty string"
+                                    type="Number"
+                                    valueHelpIconSrc="sap-icon://value-help"
+                                    valueHelpOnly="false"
+                                    valueLiveUpdate="false"
+                                >
+                        
+                                </Input>
+                                <!-- <ObjectNumber
+                                    inverted="false"
+                                    number="{
+                                        parts: [{
+                                            path: 'Term1/BaserentYr1'
+                                        }, {
+                                            path: 'Term1/Currency'
+                                        }],
+                                        type: 'sap.ui.model.type.Currency',
+                                        formatOptions: {
+                                            showMeasure: false
+                                        }
+                                    }"
+                                    unit="{Term1/Currency}"
+                                    state="Warning"
+                                /> -->
+                                <Label
+                                    design="Bold"
+                                    text="{i18n>Label.Yr2} :"
+                                />
+                                <ObjectNumber
+                                    inverted="false"
+                                    number="{
+                                        parts: [{
+                                            path: 'Term1/BaserentYr2'
+                                        }, {
+                                            path: 'Term1/Currency'
+                                        }],
+                                        type: 'sap.ui.model.type.Currency',
+                                        formatOptions: {
+                                            showMeasure: false
+                                        }
+                                    }"
+                                    unit="{Term1/Currency}"
+                                    state="Warning"
+                                />
+                                <Label
+                                    design="Bold"
+                                    text="{i18n>Label.Yr3} :"
+                                />
+                                <ObjectNumber
+                                    inverted="false"
+                                    number="{
+                                        parts: [{
+                                            path: 'Term1/BaserentYr3'
+                                        }, {
+                                            path: 'Term1/Currency'
+                                        }],
+                                        type: 'sap.ui.model.type.Currency',
+                                        formatOptions: {
+                                            showMeasure: false
+                                        }
+                                    }"
+                                    unit="{Term1/Currency}"
+                                    state="Warning"
+                                />
+                            </l:content>
+                        </l:VerticalLayout>
+                        <l:VerticalLayout
+                            class="sapUiContentPadding"
+                            width="100%"
+                        >
+                            <l:content>
+                                <Label
+                                    design="Bold"
+                                    text="{i18n>Label.Yr4} :"
+                                />
+                                <Input
+                                autocomplete="false"
+                                description="{Term1/Currency}"                                
+                                fieldWidth="4rem"
+                                value="{
+                                    parts: [
+                                        {path: 'Term1/Baserentyr4'},
+                                        {path: 'Term1/Currency'}
+                                    ],
+                                    type: 'sap.ui.model.type.Currency',
+							        formatOptions: {showMeasure: false}
+                                }"
+                            >
+                    
+                            </Input>
+                                <!-- <ObjectNumber
+                                    inverted="false"
+                                    number="{
+                                        parts: [{
+                                            path: 'Term1/BaserentYr4'
+                                        }, {
+                                            path: 'Term1/Currency'
+                                        }],
+                                        type: 'sap.ui.model.type.Currency',
+                                        formatOptions: {
+                                            showMeasure: false
+                                        }
+                                    }"
+                                    unit="{Term1/Currency}"
+                                    state="Warning"
+                                /> -->
+                                <Label
+                                    design="Bold"
+                                    text="{i18n>Label.Yr5} :"
+                                />
+                                <ObjectNumber
+                                    inverted="false"
+                                    number="{
+                                        parts: [{
+                                            path: 'Term1/BaserentYr5'
+                                        }, {
+                                            path: 'Term1/Currency'
+                                        }],
+                                        type: 'sap.ui.model.type.Currency',
+                                        formatOptions: {
+                                            showMeasure: false
+                                        }
+                                    }"
+                                    unit="{Term1/Currency}"
+                                    state="Warning"
+                                />
+                                <Label
+                                    design="Bold"
+                                    text="{i18n>Label.Yr6} :"
+                                />
+                                <ObjectNumber
+                                    inverted="false"
+                                    number="{
+                                        parts: [{
+                                            path: 'Term1/BaserentYr6'
+                                        }, {
+                                            path: 'Term1/Currency'
+                                        }],
+                                        type: 'sap.ui.model.type.Currency',
+                                        formatOptions: {
+                                            showMeasure: false
+                                        }
+                                    }"
+                                    unit="{Term1/Currency}"
+                                    state="Warning"
+                                />
+                            </l:content>
+                        </l:VerticalLayout>
+                    
+                </HBox>                                    
+            </Page>
+        </NavContainer>
+    </Popover>
+</core:FragmentDefinition>

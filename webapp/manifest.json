@@ -98,7 +98,7 @@
                     "name": "RouteMainView",
                     "pattern": ":?query:",
                     "target": [
-                        "UnitsPlannerBaseView"
+                        "FloorUnitPlannerView"
                     ]
                 }
             ],
@@ -117,6 +117,13 @@
                     "transition": "slide",
                     "viewId": "MainView",
                     "viewName": "MainView"
+                },
+                "FloorUnitPlannerView": {
+                    "parent": "BaseView",
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "viewId": "FloorUnitPlanner",
+                    "viewName": "FloorUnitPlanner"
                 },
                 "UnitsPlannerBaseView": {
                     "parent": "BaseView",
