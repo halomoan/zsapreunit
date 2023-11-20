@@ -4,16 +4,14 @@
     xmlns="sap.uxap"
     xmlns:ui="sap.ui.table"
     xmlns:m="sap.m"
-    xmlns:u="sap.ui.unified"
-    xmlns:core="sap.ui.core"
+    xmlns:plugins="sap.ui.table.plugins"
     height="100%"
 >
     <ObjectPageLayout
         id="FUPlannerLayout"
         enableLazyLoading="true"
         upperCaseAnchorBar="false"
-        sections="{/Floor}"
-        headerContentPinned="true"
+        sections="{/Floor}"        
     >
         <headerTitle>
             <ObjectPageDynamicHeaderTitle>
@@ -25,17 +23,15 @@
                 </snappedTitleOnMobile>
                 <actions>
                     <m:Button
-                        text="Edit"
-                        type="Emphasized"
+                        text="{i18n>Label.Show} {i18n>Label.SecondTerm}"
+                        type="Transparent"
+                        visible="{viewData>/showBtn2ndTerm}"
                     />
                     <m:Button
                         type="Transparent"
-                        text="Delete"
-                    />
-                    <m:Button
-                        type="Transparent"
-                        text="Copy"
-                    />
+                        text="{i18n>Label.Create} {i18n>Label.ThirdTerm}"
+                        visible="{viewData>/showBtn3rdTerm}"
+                    />                                        
                     <m:OverflowToolbarButton
                         icon="sap-icon://action"
                         type="Transparent"
@@ -58,12 +54,18 @@
                     >
                         <blocks>
                             <ui:Table
-                                id="table"
-                                rows=""
-                                selectionMode="MultiToggle"
+                                id="plantable"
+                                rows=""                                
                                 ariaLabelledBy="title"
-                                enableColumnFreeze="true"
+                                enableColumnFreeze="true"                                
                             >
+                            <ui:plugins>
+                                <plugins:MultiSelectionPlugin limit="20"
+                                    enableNotification="true"
+                                    showHeaderSelector="true"
+                                    selectionMode="MultiToggle"
+                                    selectionChange=".onUnitSelChange"/>
+                            </ui:plugins>
                                 <ui:extension>
                                     <m:OverflowToolbar style="Clear">
                                         <m:ToolbarSpacer                                            
@@ -94,9 +96,9 @@
                                             />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column
+                                    <ui:Column                                        
                                         width="18rem"
-                                        headerSpan="5"
+                                        headerSpan="2"
                                         filterProperty="Term1/Company"
                                     >
                                         <ui:multiLabels>
@@ -258,7 +260,7 @@
                                         <ui:template>
                                             <m:Button
                                                 text="{Term1/Avgbaserent}"
-                                                press="onShowT1Detail"
+                                                press="onShowT1Baserent"
                                                 visible="{= ${Main}}"
                                             />
                                         </ui:template>
@@ -303,6 +305,72 @@
                                             />
                                         </ui:template>
                                     </ui:Column>
+
+                                    <!-- 2nd Term-->
+                                    <ui:Column
+                                        width="18rem"
+                                        headerSpan="2"
+                                        filterProperty="Term2/Company"
+                                    >
+                                        <ui:multiLabels>
+                                            <m:Label
+                                                text="{i18n>Label.SecondTerm}"
+                                                textAlign="Center"
+                                                width="100%"
+                                            />
+                                            <m:Label
+                                                text="Company"
+                                                textAlign="Center"
+                                                width="100%"
+                                            />
+                                        </ui:multiLabels>
+                                        <ui:template>
+                                            <m:Input
+                                                value="{Term2/Company}"                                                
+                                                autocomplete="false"
+                                                visible="{= ${Main}}"
+                                            />
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column
+                                        width="12rem"
+                                        filterProperty="Term2/Tenant"
+                                    >
+                                        <ui:multiLabels>
+                                            <m:Label text="{i18n>Label.SecondTerm}" />
+                                            <m:Label
+                                                text="Tenant"
+                                                textAlign="Center"
+                                                width="100%"
+                                            />
+                                        </ui:multiLabels>
+                                        <ui:template>
+                                            <m:Input
+                                                value="{Term2/Tenant}"                                                
+                                                autocomplete="false"
+                                                visible="{= ${Main}}"
+                                            />
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column
+                                        width="12rem"
+                                        filterProperty="Term2/Tenant"
+                                    >
+                                        <ui:multiLabels>
+                                            <m:Label text="{i18n>Label.SecondTerm}" />
+                                            <m:Label
+                                                text="{i18n>Contract.Trade}"
+                                                textAlign="Center"
+                                                width="100%"
+                                            />
+                                        </ui:multiLabels>
+                                        <ui:template>
+                                            <m:Select                                                
+                                                items=""
+                                                visible="{= ${Main}}"
+                                            />
+                                        </ui:template>
+                                    </ui:Column>                                
                                 </ui:columns>
                             </ui:Table>
                         </blocks>
