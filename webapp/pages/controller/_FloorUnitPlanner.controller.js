@@ -13,7 +13,32 @@ sap.ui.define(
         onInit: function () {
           var oModel = new JSONModel(
             sap.ui.require.toUrl("zsapreunit/mockdata/floors.json")
-          );          
+          );
+
+          var oObjectPage = this.byId("FUPlannerLayout");
+
+          oObjectPage.addEventDelegate(
+            {
+              onAfterRendering: function () {
+                var aSection = oObjectPage.getSections();
+
+                if (aSection) {
+                  for (var i = 0; i < aSection.length; i++) {
+                    var oSection = aSection[i];
+                    var sTitle = oSection.getTitle();
+
+                    var oSubSection = oSection.getSubSections()[0];
+                    var oTable = oSubSection.getBlocks()[0];
+
+                    oTable.bindAggregation("rows", {
+                      path: "/" + sTitle,
+                    });
+                  }
+                }
+              },
+            },
+            this
+          );
 
           this.getView().setModel(oModel);
 
@@ -64,12 +89,12 @@ sap.ui.define(
             for(var i=0;i<iIndices.length;i++){
               
               var oItem = oTable.getContextByIndex(iIndices[i]).getObject();
-              
-                if (oItem.Term2.Startdate){
+             
+                if (oItem.Term2.Startdate !== "" ){
                   allow2ndTerm = false ;                  
                 }
 
-                if (oItem.Term3.Startdate){            
+                if (oItem.Term3.Startdate !== "" ){            
                   
                   allow3rdTerm = false;
                 } 
