@@ -4,20 +4,25 @@
     xmlns="sap.uxap"
     xmlns:ui="sap.ui.table"
     xmlns:m="sap.m"
-    
     xmlns:plugins="sap.ui.table.plugins"
+    xmlns:core="sap.ui.core"
     height="100%"
 >
     <m:Page>
         <m:headerContent>
-			<m:Button text="{i18n>Label.SecondTerm}" tooltip="Toggle 2nd Term" visible="{viewData>/showBtn2ndTerm}" press="onToggle2ndTerm" />
-		</m:headerContent>
+            <m:Button
+                text="{i18n>Label.SecondTerm}"
+                tooltip="Toggle 2nd Term"
+                visible="{viewData>/showBtn2ndTerm}"
+                press="onToggle2ndTerm"
+            />
+        </m:headerContent>
         <ui:Table
             id="planTable"
-            rows="{/FloorUnit}"
+            rows="{viewData>/floorData}"
             ariaLabelledBy="title"
             enableColumnFreeze="true"
-            visibleRowCount="12"            
+            visibleRowCount="12"
         >
             <ui:plugins>
                 <plugins:MultiSelectionPlugin
@@ -30,7 +35,7 @@
             </ui:plugins>
             <ui:extension>
                 <m:OverflowToolbar style="Clear">
-                    <m:ToolbarSpacer/>
+                    <m:ToolbarSpacer />
                     <m:Button
                         icon="sap-icon://close-command-field"
                         textDirection="Inherit"
@@ -41,22 +46,22 @@
             </ui:extension>
             <ui:columns>
                 <ui:Column width="4rem">
-                    <m:Label text="Floor" />
+                    <m:Label text="{i18n>Label.Floor}" />
                     <ui:template>
                         <m:Label
-                            text="{Floor}"
-                            design="{= ${Term1/Main} ? 'Bold': 'Standard'}"                            
+                            text="{viewData>Floor}"
+                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
                             width="100%"
                         />
                     </ui:template>
                 </ui:Column>
                 <ui:Column width="4rem">
-                    <m:Label text="Unit No" />
+                    <m:Label text="{i18n>Label.UnitNo}" />
                     <ui:template>
                         <m:Label
-                            text="{Unitno}"
-                            design="{= ${Term1/Main} ? 'Bold': 'Standard'}"
-                            textAlign="{= ${Term1/Main} ? 'Begin': 'End'}"
+                            text="{viewData>Unitno}"
+                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
+                            textAlign="{= ${viewData>Term1/Main} ? 'Begin': 'End'}"
                             width="100%"
                         />
                     </ui:template>
@@ -73,15 +78,15 @@
                             width="100%"
                         />
                         <m:Label
-                            text="Company"
+                            text="{i18n>Contract.Company}"
                             textAlign="Center"
                             width="100%"
                         />
                     </ui:multiLabels>
                     <ui:template>
                         <m:Label
-                            text="{Term1/Company}"
-                            design="{= ${Term1/Main} ? 'Bold': 'Standard'}"
+                            text="{viewData>Term1/Company}"
+                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
                         />
                     </ui:template>
                 </ui:Column>
@@ -92,21 +97,25 @@
                     <ui:multiLabels>
                         <m:Label text="First Term" />
                         <m:Label
-                            text="Tenant"
+                            text="{i18n>Contract.Tenant}"
                             textAlign="Center"
                             width="100%"
                         />
                     </ui:multiLabels>
                     <ui:template>
                         <m:Label
-                            text="{Term1/Tenant}"
-                            design="{= ${Term1/Main} ? 'Bold': 'Standard'}"
+                            text="{viewData>Term1/Tenant}"
+                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
                         />
                     </ui:template>
                 </ui:Column>
-                <ui:Column width="8rem">
+                <ui:Column width="10rem">
                     <ui:multiLabels>
-                        <m:Label text="First Term" />
+                        <m:Label
+                            text="First Term"
+                            textAlign="Center"
+                            width="100%"
+                        />
                         <m:Label
                             text="Trade"
                             textAlign="Center"
@@ -115,19 +124,20 @@
                     </ui:multiLabels>
                     <ui:template>
                         <m:Label
-                            text="{Term1/Trade}"
-                            design="{= ${Term1/Main} ? 'Bold': 'Standard'}"
+                            text="{viewData>Term1/Trade}"
+                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
                         />
                     </ui:template>
                 </ui:Column>
-                <ui:Column
-                    hAlign="End"
-                    width="6rem"
-                >
+                <ui:Column width="6rem">
                     <ui:multiLabels>
-                        <m:Label text="First Term" />
                         <m:Label
-                            text="Area Size"
+                            text="First Term"
+                            textAlign="Center"
+                            width="100%"
+                        />
+                        <m:Label
+                            text="{i18n>Contract.AreaSize}"
                             textAlign="Center"
                             width="100%"
                         />
@@ -135,11 +145,13 @@
                     <ui:template>
                         <m:Label
                             text="{
-                                path: 'Term1/Areasize',
+                                path: 'viewData>Term1/Areasize',
                                 formatter: '.formatNoDecimals'
                             } {Term1/Uom}"
-                            design="{= ${Term1/Main} ? 'Bold': 'Standard'}"
-                            visible="{= ${Term1/Main}}"
+                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
+                            visible="{= ${viewData>Term1/Main}}"
+                            textAlign="End"
+                            width="100%"
                         />
                     </ui:template>
                 </ui:Column>
@@ -150,7 +162,7 @@
                     <ui:multiLabels>
                         <m:Label text="First Term" />
                         <m:Label
-                            text="No Of Years"
+                            text="{i18n>Label.NoOfYears}"
                             textAlign="Center"
                             width="100%"
                             wrapping="true"
@@ -158,9 +170,9 @@
                     </ui:multiLabels>
                     <ui:template>
                         <m:Label
-                            text="{Term1/Noofyear}"
-                            design="{= ${Term1/Main} ? 'Bold': 'Standard'}"
-                            visible="{Term1/Main}"
+                            text="{viewData>Term1/Noofyears}"
+                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
+                            visible="{viewData>Term1/Main}"
                         />
                     </ui:template>
                 </ui:Column>
@@ -171,7 +183,7 @@
                     <ui:multiLabels>
                         <m:Label text="First Term" />
                         <m:Label
-                            text="Start Date"
+                            text="{i18n>Contract.StartDate}"
                             textAlign="Center"
                             width="100%"
                         />
@@ -179,11 +191,11 @@
                     <ui:template>
                         <m:Label
                             text="{
-                                path: 'Term1/Startdate',
+                                path: 'viewData>Term1/Startdate',
                                 formatter: '.formatDateTime'
                             }"
-                            design="{= ${Term1/Main} ? 'Bold': 'Standard'}"
-                            visible="{Term1/Main}"
+                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
+                            visible="{viewData>Term1/Main}"
                         />
                     </ui:template>
                 </ui:Column>
@@ -194,7 +206,7 @@
                     <ui:multiLabels>
                         <m:Label text="First Term" />
                         <m:Label
-                            text="End Date"
+                            text="{i18n>Contract.EndDate}"
                             textAlign="Center"
                             width="100%"
                         />
@@ -202,11 +214,11 @@
                     <ui:template>
                         <m:Label
                             text="{
-                                path: 'Term1/Enddate',
+                                path: 'viewData>Term1/Enddate',
                                 formatter: '.formatDateTime'
                             }"
-                            design="{= ${Term1/Main} ? 'Bold': 'Standard'}"
-                            visible="{Term1/Main}"
+                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
+                            visible="{viewData>Term1/Main}"
                         />
                     </ui:template>
                 </ui:Column>
@@ -224,49 +236,12 @@
                     </ui:multiLabels>
                     <ui:template>
                         <m:Button
-                            text="{Term1/Avgbaserent}"
+                            text="{
+                                path: 'viewData>Term1/Avgbaserent',
+                                formatter: '.formatNumber'
+                            }"
                             press="onShowT1Baserent"
-                            visible="{Term1/Main}"
-                        />
-                    </ui:template>
-                </ui:Column>
-                <ui:Column
-                    hAlign="Center"
-                    width="8rem"
-                >
-                    <ui:multiLabels>
-                        <m:Label text="First Term" />
-                        <m:Label
-                            text="{i18n>Contract.SvcRent}"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                    </ui:multiLabels>
-                    <ui:template>
-                        <m:Label
-                            text="{Term1/Svcrent}"
-                            design="{= ${Term1/Main} ? 'Bold': 'Standard'}"
-                            visible="{Term1/Main}"
-                        />
-                    </ui:template>
-                </ui:Column>
-                <ui:Column
-                    hAlign="Center"
-                    width="8rem"
-                >
-                    <ui:multiLabels>
-                        <m:Label text="First Term" />
-                        <m:Label
-                            text="{i18n>Contract.AnpRent}"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                    </ui:multiLabels>
-                    <ui:template>
-                        <m:Label
-                            text="{Term1/Anprent}"
-                            design="{= ${Term1/Main} ? 'Bold': 'Standard'}"
-                            visible="{Term1/Main}"
+                            visible="{viewData>Term1/Main}"
                         />
                     </ui:template>
                 </ui:Column>
@@ -283,16 +258,21 @@
                             width="100%"
                         />
                         <m:Label
-                            text="Company"
+                            text="{i18n>Contract.Company}"
                             textAlign="Center"
                             width="100%"
                         />
                     </ui:multiLabels>
                     <ui:template>
                         <m:Input
-                            value="{Term2/Company}"
+                            value="{viewData>Term2/Company}"
                             autocomplete="false"
-                            visible="{Term2/Main}"
+                            visible="{viewData>Term2/IsInput}"
+                        />
+                        <m:Label
+                            text="{viewData>Term2/Company}"
+                            design="{= ${viewData>Term2/Main} ? 'Bold': 'Standard'}"
+                            visible="{=!${viewData>Term2/IsInput}}"
                         />
                     </ui:template>
                 </ui:Column>
@@ -310,9 +290,14 @@
                     </ui:multiLabels>
                     <ui:template>
                         <m:Input
-                            value="{Term2/Tenant}"
+                            value="{viewData>Term2/Tenant}"
                             autocomplete="false"
-                            visible="{Term2/Main}"
+                            visible="{viewData>Term2/IsInput}"
+                        />
+                        <m:Label
+                            text="{viewData>Term2/Tenant}"
+                            design="{= ${viewData>Term2/Main} ? 'Bold': 'Standard'}"
+                            visible="{=!${viewData>Term2/IsInput}}"
                         />
                     </ui:template>
                 </ui:Column>
@@ -321,7 +306,7 @@
                     filterProperty="Term2/Tenant"
                 >
                     <ui:multiLabels>
-                        <m:Label text="{i18n>Label.SecondTerm}" />
+                        <m:Label text="{i18n>Label.SecondTerm}" width="100%" textAlign="Center"/>
                         <m:Label
                             text="{i18n>Contract.Trade}"
                             textAlign="Center"
@@ -329,10 +314,14 @@
                         />
                     </ui:multiLabels>
                     <ui:template>
-                        <m:Select
-                            items=""
-                            visible="{Term2/Main}"
-                        />
+                        <m:Select  items="{viewData>/industryData}" >
+                            <core:Item key="{viewData>IndustrySector}" text="{viewData>IndustryKeyDescription}" />
+                        </m:Select>
+                        <!-- <m:Label
+                            text="{viewData>Term2/Trade}"
+                            design="{= ${viewData>Term2/Main} ? 'Bold': 'Standard'}"
+                            visible="{=!${viewData>Term2/IsInput}}"
+                        /> -->
                     </ui:template>
                 </ui:Column>
             </ui:columns>

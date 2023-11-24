@@ -37,9 +37,20 @@ sap.ui.define(
         return UIComponent.getRouterFor(this);
       },
 
+     
       getKeyDate: function () {
         return new Date("2017-08-01");
       },
+
+      getServiceKeys: function() {
+        var oKeys = {
+          "Bukrs" : "1001",
+          "Busentity": "1001",
+          "Contrtype": "L002",
+          "Keydate": this.getKeyDate()
+        }
+        return oKeys;
+    },
 
       yearDiff: function (oSDate, oEDate) {
         var oDate = new Date(oEDate);
@@ -93,7 +104,8 @@ sap.ui.define(
           groupingEnabled: true, // grouping is enabled
           //"groupingSeparator": '.', // grouping separator is '.'
           groupingSize: 3, // the amount of digits to be grouped (here: thousand)
-          //"decimalSeparator": ","   // the decimal separator must be different from the grouping separator
+          //"decimalSeparator": ","   // the decimal separator must be different from the grouping separator,
+          decimals: 0
         });
         return oFormat.format(Number);
       },
