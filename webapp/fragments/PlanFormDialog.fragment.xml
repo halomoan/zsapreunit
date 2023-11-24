@@ -1,0 +1,136 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+>
+	<Dialog
+		id="PlanTermForm"
+		title="{i18n>Label.Planning}"
+	>
+		<content>
+			<VBox
+				class="sapUiSmallMargin"
+				id="formContainer"
+				items="{
+					path: 'PlanFormData>/forms'
+				}"
+			>
+				<f:SimpleForm
+					editable="true"
+					layout="ColumnLayout"
+					title="{PlanFormData>Term}"
+					columnsM="2"
+					columnsL="2"
+					columnsXL="2"
+				>
+					<f:content>
+						<core:Title text="{i18n>Label.Information}"/>
+						<Label text="{i18n>Contract.Company}"/>
+						<Input
+							required="true"
+							value="{
+								path: 'PlanFormData>Company',
+								type: 'sap.ui.model.type.String'
+							}"
+						/>
+						<Label text="{i18n>Contract.Tenant}"/>
+						<Input value="{PlanFormData>Tenant}"/>
+						<Label text="{i18n>Contract.Trade}"/>
+						<Select selectedKey="{Trade}">
+							<items>
+								<core:Item
+									text="England"
+									key="England"
+								/>
+								<core:Item
+									text="Germany"
+									key="Germany"
+								/>
+								<core:Item
+									text="USA"
+									key="USA"
+								/>
+							</items>
+						</Select>
+						<core:Title text="{i18n>Label.Contract}"/>
+						<Label text="{i18n>Contract.StartDate}"/>
+						<DatePicker
+							placeholder="Enter Date"
+							value="{
+								path: 'PlanFormData>Startdate',
+								type: 'sap.ui.model.type.Date',
+								'formatOptions': {
+									pattern: 'yyyy-MM-dd'
+								}
+							}"
+							showFooter="false"
+						/>
+						<Label text="{i18n>Contract.EndDate}"/>
+						<DatePicker
+							placeholder="Enter Date"
+							value="{
+								path: 'PlanFormData>Enddate',
+								type: 'sap.ui.model.type.Date',
+								'formatOptions': {
+									pattern: 'yyyy-MM-dd'
+								}
+							}"
+							minDate="{path: 'PlanFormData>Startdate',
+								type: 'sap.ui.model.type.Date'}"
+						/>					
+						<Label text="Personal website"/>
+						<Input value="{website}"/>
+					</f:content>
+				</f:SimpleForm>
+			</VBox>
+			<VBox
+				class="sapUiSmallMargin"
+				id="formContainerEmployment"
+				items="{
+					path: '/employment'
+				}"
+			>
+				<f:SimpleForm
+					editable="true"
+					layout="ColumnLayout"
+					title="Personal"
+					columnsM="2"
+					columnsL="2"
+					columnsXL="2"
+				>
+					<f:content>
+						<core:Title text="Information"/>
+						<Label text="Job Classification"/>
+						<Input value="{jobTitle}"/>
+						<Label text="Pay Grade"/>
+						<Input value="{payGrade}"/>
+						<Label text="Unit"/>
+						<Input value="{unit}"/>
+						<core:Title text="Rating"/>
+						<Label text="Employee Class"/>
+						<Input value="{class}"/>
+						<Label text="FTE"/>
+						<Input value="{fte}"/>
+						<Label text="Standard Weekly Hours"/>
+						<Input
+							change="onChange"
+							value="{
+								path: 'weeklyHours',
+								type: 'sap.ui.model.type.Integer',
+								constraints: {
+									maximum: 40
+								}
+							}"
+						/>
+					</f:content>
+				</f:SimpleForm>
+			</VBox>
+		</content>
+		<footer>
+			<Toolbar>
+				<content>
+				</content>
+			</Toolbar>
+		</footer>
+	</Dialog>
+</core:FragmentDefinition>

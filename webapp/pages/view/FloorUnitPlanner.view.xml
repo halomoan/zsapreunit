@@ -10,14 +10,14 @@
 >
     <m:Page>
         <m:headerContent>
-			<m:Button text="{i18n>Label.SecondTerm}" tooltip="Share" visible="{viewData>/showBtn2ndTerm}"/>
+			<m:Button text="{i18n>Label.SecondTerm}" tooltip="Toggle 2nd Term" visible="{viewData>/showBtn2ndTerm}" press="onToggle2ndTerm" />
 		</m:headerContent>
         <ui:Table
-            id="plantable"
-            rows="{/F01}"
+            id="planTable"
+            rows="{/FloorUnit}"
             ariaLabelledBy="title"
             enableColumnFreeze="true"
-            visibleRowCount="20"            
+            visibleRowCount="12"            
         >
             <ui:plugins>
                 <plugins:MultiSelectionPlugin
@@ -41,10 +41,20 @@
             </ui:extension>
             <ui:columns>
                 <ui:Column width="4rem">
+                    <m:Label text="Floor" />
+                    <ui:template>
+                        <m:Label
+                            text="{Floor}"
+                            design="{= ${Term1/Main} ? 'Bold': 'Standard'}"                            
+                            width="100%"
+                        />
+                    </ui:template>
+                </ui:Column>
+                <ui:Column width="4rem">
                     <m:Label text="Unit No" />
                     <ui:template>
                         <m:Label
-                            text="{UnitNo}"
+                            text="{Unitno}"
                             design="{= ${Term1/Main} ? 'Bold': 'Standard'}"
                             textAlign="{= ${Term1/Main} ? 'Begin': 'End'}"
                             width="100%"

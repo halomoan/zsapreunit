@@ -6,6 +6,11 @@ sap.ui.define(
     "sap/ui/core/UIComponent",
   ],
   function (Controller, History, DateFormat, UIComponent) {
+
+    var sDateFormat = "yyyy-MMM-dd";
+
+    
+
     function getMonthDifference(startDate, endDate) {
       // return (
       //   endDate.getMonth() -
@@ -25,6 +30,9 @@ sap.ui.define(
 
     ("use strict");
     return Controller.extend("zsapreunit.controller.BaseController", {
+
+      DATEFORMAT: sDateFormat,
+
       getRouter: function () {
         return UIComponent.getRouterFor(this);
       },
@@ -48,7 +56,7 @@ sap.ui.define(
 
       formatDateTime: function (oDateTime, sFormat) {
         if (!sFormat) {
-          sFormat = "yyyy-MMM-dd";
+          sFormat = sDateFormat;
         }
         var oDateInstance = DateFormat.getDateInstance({
           pattern: sFormat,
@@ -108,6 +116,10 @@ sap.ui.define(
       showPopOverFragment : function(oView,oSource, _formFragments,sFragmentName,oThis) {
         return this.getFormFragment(oView, _formFragments,sFragmentName,oThis).openBy(oSource);
 
+      },
+      
+      showFormDialogFragment : function (oView, _formFragments,sFragmentName,oThis) {
+        this.getFormFragment(oView, _formFragments,sFragmentName,oThis).open();
       },
 
       getFormFragment: function (oView, _formFragments, sFragmentName,oThis) {

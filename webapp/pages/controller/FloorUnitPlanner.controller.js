@@ -9,13 +9,15 @@ sap.ui.define(
     return BaseController.extend(
       "zsapreunit.pages.controller.FloorUnitPlanner",
       {
-        _formFragments: {},
+        _formFragments: {},        
+
         onInit: function () {
-          var oModel = new JSONModel(
+
+          this.oTableModel = new JSONModel(
             sap.ui.require.toUrl("zsapreunit/mockdata/floors.json")
           );          
 
-          this.getView().setModel(oModel);
+          this.getView().setModel(this.oTableModel);
 
           var oViewModel = new JSONModel({                    
             "MMM-YYYY": "MMM-YYYY",
@@ -54,16 +56,16 @@ sap.ui.define(
           var oTable = oEvent.getSource().getParent();
           var oModel = this.getView().getModel("viewData");
 
-          var iIndices = oPlugin.getSelectedIndices();
+          var aIndices = oPlugin.getSelectedIndices();
 
           
-          if (iIndices.length > 0) {          
+          if (aIndices.length > 0) {          
             var allow2ndTerm = true;
             var allow3rdTerm = true;
 
-            for(var i=0;i<iIndices.length;i++){
+            for(var i=0;i<aIndices.length;i++){
               
-              var oItem = oTable.getContextByIndex(iIndices[i]).getObject();
+              var oItem = oTable.getContextByIndex(aIndices[i]).getObject();
               
                 if (oItem.Term2.Startdate){
                   allow2ndTerm = false ;                  
@@ -81,6 +83,58 @@ sap.ui.define(
             oModel.setProperty("/showBtn3rdTerm",false);
           }
 
+        },
+
+        onToggle2ndTerm: function(oEvent){
+          var oTable = this.byId("planTable");
+          var oPlugin = oTable.getPlugins()[0];
+			    var aIndices = oPlugin.getSelectedIndices();          
+
+          
+          var oForms = 
+            {
+              "forms" : [
+                  
+              ],
+              "floorunit" : [
+
+              ]
+          };
+
+         
+
+          // var oDateInstance = sap.ui.core.format.DateFormat.getDateInstance({
+          //   pattern:  this.DATEFORMAT
+          // });
+
+
+          for(var i=0;i<aIndices.length;i++){
+            var oItem = oTable.getContextByIndex(aIndices[i]).getObject();
+
+            console.log(oItem);
+            if (i === 0) {              
+              
+              oItem.Main = true;              
+              oItem.Term2.Term = "2nd Term";
+              oItem.Term3.Term = "3rd Term";
+              oItem.Term2.Startdate = oItem.Term1.Enddate;
+
+              oForms.forms.push(oItem.Term2);
+              oForms.forms.push(oItem.Term3);
+            } 
+            oForms.floorunit.push({ "Floor": oItem.Floor, "Unitno": oItem.Unitno});
+
+            
+          }
+                    
+
+          var oModel = new JSONModel(oForms);          
+          this.getView().setModel(oModel,"PlanFormData")
+          
+          this.showFormDialogFragment(this.getView(), this._formFragments, "zsapreunit.fragments.PlanFormDialog", this);
+
+          console.log(oForms);
+          
         },
 
         onGotoFirstColumn: function(){
