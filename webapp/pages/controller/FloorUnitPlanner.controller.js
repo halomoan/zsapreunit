@@ -45,7 +45,8 @@ sap.ui.define(
             showBtn2ndTerm: false,
             showBtn3rdTerm: false,
             showBtnDel2ndTerm: false,
-            industryData: [],
+            ChangeAreaSize: false,
+            industryData: [],            
           });
 
           var oView = this.getView();
@@ -207,6 +208,7 @@ sap.ui.define(
           var oPlugin = oTable.getPlugins()[0];
           var aIndices = oPlugin.getSelectedIndices();
 
+          
           var sUnitNos = "";
           var oMainTerm;
 
@@ -267,8 +269,7 @@ sap.ui.define(
 
           //if (!_oForms.mainTerm[0].Unitnos) {
           _oForms.mainTerm[0].Unitnos = sUnitNos;
-          //}
-          _oForms.mainTerm[0].Areasize = "1012";
+          //}          
 
           _oForms.floorUnits.push({
             Floor: oItem.Floor,
@@ -281,6 +282,10 @@ sap.ui.define(
 
           var oModel = new JSONModel(_oForms);
           this.getView().setModel(oModel, "PlanFormData");
+
+          var oViewModel = this.getView().getModel("viewData");
+          oViewModel.setProperty("/ChangeAreaSize", false);
+
 
           this.showFormDialogFragment(
             this.getView(),
@@ -322,10 +327,6 @@ sap.ui.define(
         },
 
         onNewTermCreate: function () {
-
-          var oModel = this.getView().getModel("PlanFormData");
-          var oData = oModel.getData();
-          console.log(oData);
           
           this._refreshTable();
 
@@ -439,6 +440,13 @@ sap.ui.define(
               MessageBox.error("{i18n>Error.FailLoad}");
             },
           });
+        },
+
+        onChangeAreaSize: function(oEvent){          
+          var oSource = oEvent.getSource();
+          var oBindingContext = oSource.getBindingContext("PlanFormData");
+          var oData = oBindingContext.getObject();
+          oData.Areasize = 0;          
         },
 
         _delete2ndTerm: function(){

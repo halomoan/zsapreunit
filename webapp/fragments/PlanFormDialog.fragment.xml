@@ -49,6 +49,11 @@
 							/>
 						</Select>
 
+						
+						<Label text="{i18n>Label.ChangeSize}" />
+						<Switch state="{viewData>/ChangeAreaSize}" change=".onChangeAreaSize"/>
+							
+
 						<Label text="{i18n>Contract.AreaSize} ( {i18n>Label.Optional} )" />						
 						<!-- <Input value="{PlanFormData>Areasize}" description="{PlanFormData>Uom}"/> -->
 						<Input value="{
@@ -58,7 +63,8 @@
 							],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {showMeasure: false, decimals: 0}
-						}" description="{PlanFormData>Uom}"/>
+						}" description="{PlanFormData>Uom}" enabled="{viewData>/ChangeAreaSize}"/>
+
 
 						<core:Title text="{i18n>Label.Contract}" />
 						<Label text="{i18n>Contract.StartDate}" />
