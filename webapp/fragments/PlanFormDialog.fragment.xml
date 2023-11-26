@@ -5,14 +5,14 @@
 >
 	<Dialog
 		id="PlanTermForm"
-		title="{i18n>Label.Planning}"
+		title="{i18n>Label.Asset} #{PlanFormData>/floorUnits/0/Floor} - {PlanFormData>/floorUnits/0/Unitnos}"
 	>
 		<content>
 			<VBox
 				class="sapUiSmallMargin"
 				id="formContainer"
 				items="{
-					path: 'PlanFormData>/forms'
+					path: 'PlanFormData>/mainTerm'
 				}"
 			>
 				<f:SimpleForm
@@ -24,8 +24,8 @@
 					columnsXL="2"
 				>
 					<f:content>
-						<core:Title text="{i18n>Label.Information}"/>
-						<Label text="{i18n>Contract.Company}"/>
+						<core:Title text="{PlanFormData>xId}" />
+						<Label text="{i18n>Contract.Company}" />
 						<Input
 							required="true"
 							value="{
@@ -33,95 +33,63 @@
 								type: 'sap.ui.model.type.String'
 							}"
 						/>
-						<Label text="{i18n>Contract.Tenant}"/>
-						<Input value="{PlanFormData>Tenant}"/>
-						<Label text="{i18n>Contract.Trade}"/>
-						<Select selectedKey="{Trade}">
-							<items>
-								<core:Item
-									text="England"
-									key="England"
-								/>
-								<core:Item
-									text="Germany"
-									key="Germany"
-								/>
-								<core:Item
-									text="USA"
-									key="USA"
-								/>
-							</items>
+						<Label text="{i18n>Contract.Tenant}" />
+						<Input value="{PlanFormData>Tenant}" />
+						<Label text="{i18n>Contract.Trade}" />
+						<Select
+							items="{path:'viewData>/industryData',templateShareable: false}"
+							selectedKey="{PlanFormData>Tradekey}"
+							showSecondaryValues="true"
+							change=".onTradeChanged"
+						>
+							<core:ListItem
+								key="{viewData>IndustrySector}"
+								text="{viewData>IndustryKeyDescription}"
+								additionalText="{viewData>IndustrySector}"
+							/>
 						</Select>
-						<core:Title text="{i18n>Label.Contract}"/>
-						<Label text="{i18n>Contract.StartDate}"/>
+
+						<Label text="{i18n>Contract.AreaSize} ( {i18n>Label.Optional} )" />						
+						<!-- <Input value="{PlanFormData>Areasize}" description="{PlanFormData>Uom}"/> -->
+						<Input value="{
+							parts: [
+								{path: 'PlanFormData>Areasize'},
+								{path: 'PlanFormData>Uom'}
+							],
+							type: 'sap.ui.model.type.Currency',
+							formatOptions: {showMeasure: false, decimals: 0}
+						}" description="{PlanFormData>Uom}"/>
+
+						<core:Title text="{i18n>Label.Contract}" />
+						<Label text="{i18n>Contract.StartDate}" />
 						<DatePicker
 							placeholder="Enter Date"
 							value="{
 								path: 'PlanFormData>Startdate',
 								type: 'sap.ui.model.type.Date',
-								'formatOptions': {
+								formatOptions: {
 									pattern: 'yyyy-MM-dd'
 								}
 							}"
 							showFooter="false"
 						/>
-						<Label text="{i18n>Contract.EndDate}"/>
+						<Label text="{i18n>Contract.EndDate}" />
 						<DatePicker
 							placeholder="Enter Date"
 							value="{
 								path: 'PlanFormData>Enddate',
 								type: 'sap.ui.model.type.Date',
-								'formatOptions': {
+								formatOptions: {
 									pattern: 'yyyy-MM-dd'
 								}
 							}"
-							minDate="{path: 'PlanFormData>Startdate',
-								type: 'sap.ui.model.type.Date'}"
-						/>					
-						<Label text="Personal website"/>
-						<Input value="{website}"/>
-					</f:content>
-				</f:SimpleForm>
-			</VBox>
-			<VBox
-				class="sapUiSmallMargin"
-				id="formContainerEmployment"
-				items="{
-					path: '/employment'
-				}"
-			>
-				<f:SimpleForm
-					editable="true"
-					layout="ColumnLayout"
-					title="Personal"
-					columnsM="2"
-					columnsL="2"
-					columnsXL="2"
-				>
-					<f:content>
-						<core:Title text="Information"/>
-						<Label text="Job Classification"/>
-						<Input value="{jobTitle}"/>
-						<Label text="Pay Grade"/>
-						<Input value="{payGrade}"/>
-						<Label text="Unit"/>
-						<Input value="{unit}"/>
-						<core:Title text="Rating"/>
-						<Label text="Employee Class"/>
-						<Input value="{class}"/>
-						<Label text="FTE"/>
-						<Input value="{fte}"/>
-						<Label text="Standard Weekly Hours"/>
-						<Input
-							change="onChange"
-							value="{
-								path: 'weeklyHours',
-								type: 'sap.ui.model.type.Integer',
-								constraints: {
-									maximum: 40
-								}
+							minDate="{
+								path: 'PlanFormData>Startdate',
+								type: 'sap.ui.model.type.Date'
 							}"
 						/>
+						<Label text="Personal website" />
+						<Input value="{website}" />
 					</f:content>
 				</f:SimpleForm>
 			</VBox>
@@ -129,6 +97,15 @@
 		<footer>
 			<Toolbar>
 				<content>
+					<ToolbarSpacer />
+					<Button
+						text="{i18n>Label.Create}"
+						press="onNewTermCreate"
+					/>
+					<Button
+						text="{i18n>Label.Cancel}"
+						press="onNewTermCancel"
+					/>
 				</content>
 			</Toolbar>
 		</footer>

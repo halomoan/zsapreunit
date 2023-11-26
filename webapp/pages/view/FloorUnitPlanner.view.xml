@@ -6,23 +6,33 @@
     xmlns:m="sap.m"
     xmlns:plugins="sap.ui.table.plugins"
     xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
     height="100%"
 >
     <m:Page>
         <m:headerContent>
             <m:Button
                 text="{i18n>Label.SecondTerm}"
-                tooltip="Toggle 2nd Term"
+                tooltip="2nd Term"
                 visible="{viewData>/showBtn2ndTerm}"
-                press="onToggle2ndTerm"
+                press="onCreate2ndTerm"
+            />
+            <m:Button
+                text="{i18n>Label.DeleteSecondTerm}"
+                tooltip="2nd Term"
+                visible="{viewData>/showBtnDel2ndTerm}"
+                press="onDelete2ndTerm"
             />
         </m:headerContent>
         <ui:Table
             id="planTable"
-            rows="{viewData>/floorData}"
+            rows="{
+                path: 'tableData>/floorData',
+                templateShareable: false
+            }"
             ariaLabelledBy="title"
             enableColumnFreeze="true"
-            visibleRowCount="12"
+            visibleRowCount="15"
         >
             <ui:plugins>
                 <plugins:MultiSelectionPlugin
@@ -49,8 +59,8 @@
                     <m:Label text="{i18n>Label.Floor}" />
                     <ui:template>
                         <m:Label
-                            text="{viewData>Floor}"
-                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
+                            text="{tableData>Floor}"
+                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
                             width="100%"
                         />
                     </ui:template>
@@ -59,9 +69,9 @@
                     <m:Label text="{i18n>Label.UnitNo}" />
                     <ui:template>
                         <m:Label
-                            text="{viewData>Unitno}"
-                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
-                            textAlign="{= ${viewData>Term1/Main} ? 'Begin': 'End'}"
+                            text="{tableData>Unitno}"
+                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
+                            textAlign="{= ${tableData>Term1mode/Main} ? 'Begin': 'End'}"
                             width="100%"
                         />
                     </ui:template>
@@ -85,8 +95,8 @@
                     </ui:multiLabels>
                     <ui:template>
                         <m:Label
-                            text="{viewData>Term1/Company}"
-                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
+                            text="{tableData>Term1/Company}"
+                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
                         />
                     </ui:template>
                 </ui:Column>
@@ -104,8 +114,8 @@
                     </ui:multiLabels>
                     <ui:template>
                         <m:Label
-                            text="{viewData>Term1/Tenant}"
-                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
+                            text="{tableData>Term1/Tenant}"
+                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
                         />
                     </ui:template>
                 </ui:Column>
@@ -124,8 +134,8 @@
                     </ui:multiLabels>
                     <ui:template>
                         <m:Label
-                            text="{viewData>Term1/Trade}"
-                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
+                            text="{tableData>Term1/Trade}"
+                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
                         />
                     </ui:template>
                 </ui:Column>
@@ -145,11 +155,11 @@
                     <ui:template>
                         <m:Label
                             text="{
-                                path: 'viewData>Term1/Areasize',
+                                path: 'tableData>Term1/Areasize',
                                 formatter: '.formatNoDecimals'
-                            } {Term1/Uom}"
-                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
-                            visible="{= ${viewData>Term1/Main}}"
+                            } {tableData>Term1/Uom}"
+                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
+                            visible="{= ${tableData>Term1mode/Main}}"
                             textAlign="End"
                             width="100%"
                         />
@@ -170,9 +180,9 @@
                     </ui:multiLabels>
                     <ui:template>
                         <m:Label
-                            text="{viewData>Term1/Noofyears}"
-                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
-                            visible="{viewData>Term1/Main}"
+                            text="{tableData>Term1/Noofyears}"
+                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
+                            visible="{tableData>Term1mode/Main}"
                         />
                     </ui:template>
                 </ui:Column>
@@ -191,11 +201,11 @@
                     <ui:template>
                         <m:Label
                             text="{
-                                path: 'viewData>Term1/Startdate',
+                                path: 'tableData>Term1/Startdate',
                                 formatter: '.formatDateTime'
                             }"
-                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
-                            visible="{viewData>Term1/Main}"
+                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
+                            visible="{tableData>Term1mode/Main}"
                         />
                     </ui:template>
                 </ui:Column>
@@ -214,11 +224,11 @@
                     <ui:template>
                         <m:Label
                             text="{
-                                path: 'viewData>Term1/Enddate',
+                                path: 'tableData>Term1/Enddate',
                                 formatter: '.formatDateTime'
                             }"
-                            design="{= ${viewData>Term1/Main} ? 'Bold': 'Standard'}"
-                            visible="{viewData>Term1/Main}"
+                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
+                            visible="{tableData>Term1mode/Main}"
                         />
                     </ui:template>
                 </ui:Column>
@@ -237,11 +247,11 @@
                     <ui:template>
                         <m:Button
                             text="{
-                                path: 'viewData>Term1/Avgbaserent',
+                                path: 'tableData>Term1/Avgbaserent',
                                 formatter: '.formatNumber'
                             }"
                             press="onShowT1Baserent"
-                            visible="{viewData>Term1/Main}"
+                            visible="{tableData>Term1mode/Main}"
                         />
                     </ui:template>
                 </ui:Column>
@@ -264,16 +274,20 @@
                         />
                     </ui:multiLabels>
                     <ui:template>
-                        <m:Input
-                            value="{viewData>Term2/Company}"
-                            autocomplete="false"
-                            visible="{viewData>Term2/IsInput}"
-                        />
-                        <m:Label
-                            text="{viewData>Term2/Company}"
-                            design="{= ${viewData>Term2/Main} ? 'Bold': 'Standard'}"
-                            visible="{=!${viewData>Term2/IsInput}}"
-                        />
+                        <l:VerticalLayout width="100%">
+                            <l:content>
+                                <m:Input
+                                    value="{tableData>Term2/Company}"
+                                    autocomplete="false"
+                                    visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+                                />
+                                <m:Label
+                                    text="{tableData>Term2/Company}"
+                                    design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
+                                    visible="{= ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+                                />
+                            </l:content>
+                        </l:VerticalLayout>
                     </ui:template>
                 </ui:Column>
                 <ui:Column
@@ -289,24 +303,32 @@
                         />
                     </ui:multiLabels>
                     <ui:template>
-                        <m:Input
-                            value="{viewData>Term2/Tenant}"
-                            autocomplete="false"
-                            visible="{viewData>Term2/IsInput}"
-                        />
-                        <m:Label
-                            text="{viewData>Term2/Tenant}"
-                            design="{= ${viewData>Term2/Main} ? 'Bold': 'Standard'}"
-                            visible="{=!${viewData>Term2/IsInput}}"
-                        />
+                        <l:VerticalLayout width="100%">
+                            <l:content>
+                                <m:Input
+                                    value="{tableData>Term2/Tenant}"
+                                    autocomplete="false"
+                                    visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+                                />
+                                <m:Label
+                                    text="{tableData>Term2/Tenant}"
+                                    design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
+                                    visible="{= ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+                                />
+                            </l:content>
+                        </l:VerticalLayout>
                     </ui:template>
                 </ui:Column>
                 <ui:Column
-                    width="12rem"
+                    width="13rem"
                     filterProperty="Term2/Tenant"
                 >
                     <ui:multiLabels>
-                        <m:Label text="{i18n>Label.SecondTerm}" width="100%" textAlign="Center"/>
+                        <m:Label
+                            text="{i18n>Label.SecondTerm}"
+                            width="100%"
+                            textAlign="Center"
+                        />
                         <m:Label
                             text="{i18n>Contract.Trade}"
                             textAlign="Center"
@@ -314,14 +336,74 @@
                         />
                     </ui:multiLabels>
                     <ui:template>
-                        <m:Select  items="{viewData>/industryData}" >
-                            <core:Item key="{viewData>IndustrySector}" text="{viewData>IndustryKeyDescription}" />
-                        </m:Select>
-                        <!-- <m:Label
-                            text="{viewData>Term2/Trade}"
-                            design="{= ${viewData>Term2/Main} ? 'Bold': 'Standard'}"
-                            visible="{=!${viewData>Term2/IsInput}}"
-                        /> -->
+                        <l:VerticalLayout width="100%">
+                            <l:content>
+                                <m:Select
+                                    items="{
+                                        path: 'viewData>/industryData',
+                                        templateShareable: false
+                                    }"
+                                    selectedKey="{tableData>Term2/Tradekey}"
+                                    change=".onTradeChanged"
+                                    showSecondaryValues="true"
+                                    visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+                                >
+                                    <core:ListItem
+                                        key="{viewData>IndustrySector}"
+                                        text="{viewData>IndustryKeyDescription}"
+                                        additionalText="{viewData>IndustrySector}"
+                                    />
+                                </m:Select>
+                                <m:Label
+                                    text="{tableData>Term2/Trade}"
+                                    class="sapUiTinyMarginBegin"
+                                    design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
+                                    visible="{= !${tableData>Term2mode/Main} &amp;&amp;  !${tableData>Term2mode/IsInput} &amp;&amp; ${tableData>Term2mode/Hasdata}}"
+                                />
+                            </l:content>
+                        </l:VerticalLayout>
+                    </ui:template>
+                </ui:Column>
+                <ui:Column width="8rem" hAlign="End">
+                    <ui:multiLabels>
+                        <m:Label
+                            text="{i18n>Label.SecondTerm}"
+                            textAlign="Center"
+                            width="100%"
+                        />
+                        <m:Label
+                            text="{i18n>Contract.AreaSize}"
+                            textAlign="Center"
+                            width="100%"
+                        />
+                    </ui:multiLabels>
+                    <ui:template>
+                        <l:VerticalLayout width="100%">
+                            <l:content>
+                                <m:Input
+                                    fieldWidth="75%"
+                                    value="{
+                                        parts: [
+                                            {path: 'tableData>Term2/Areasize'},
+                                            {path: 'tableData>Term2/Uom'}
+                                        ],
+                                        type: 'sap.ui.model.type.Currency',
+                                        formatOptions: {showMeasure: false, decimals: 0}
+                                    }"
+                                    autocomplete="false"
+                                    visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+                                    description="{tableData>Term2/Uom}"
+                                />
+                                <m:Label
+                                    text="{
+                                        path: 'tableData>Term2/Areasize',
+                                        formatter: '.formatNoDecimals'
+                                    } {tableData>Term2/Uom}"
+                                    design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
+                                    visible="{= ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+                                />
+                            </l:content>
+                        </l:VerticalLayout>                       
                     </ui:template>
                 </ui:Column>
             </ui:columns>
