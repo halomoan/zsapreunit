@@ -172,15 +172,19 @@
                     <ui:multiLabels>
                         <m:Label text="First Term" />
                         <m:Label
-                            text="{i18n>Label.NoOfYears}"
+                            text="{i18n>Label.Duration}"
                             textAlign="Center"
                             width="100%"
                             wrapping="true"
                         />
                     </ui:multiLabels>
-                    <ui:template>
+                 <ui:template>
                         <m:Label
-                            text="{tableData>Term1/Noofyears}"
+                            text="{ 
+                                parts: [
+                                    {path: 'tableData>Term1/Startdate'},
+                                    {path: 'tableData>Term1/Enddate'}
+                                ], formatter:'.yearDiff' }"
                             design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
                             visible="{tableData>Term1mode/Main}"
                         />
@@ -372,9 +376,10 @@
                             width="100%"
                         />
                         <m:Label
-                            text="{i18n>Contract.AreaSize}"
+                            text="{i18n>Contract.AreaSize} "
                             textAlign="Center"
                             width="100%"
+                            tooltip="{i18n>Label.Optional}"
                         />
                     </ui:multiLabels>
                     <ui:template>
@@ -391,7 +396,7 @@
                                         formatOptions: {showMeasure: false, decimals: 0}
                                     }"
                                     autocomplete="false"
-                                    visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+                                    visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} &amp;&amp; ( ${tableData>Term2/Areasize} &gt; 0 )}"
                                     description="{tableData>Term2/Uom}"
                                 />
                                 <m:Label
@@ -400,13 +405,80 @@
                                         formatter: '.formatNoDecimals'
                                     } {tableData>Term2/Uom}"
                                     design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
-                                    visible="{= ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+                                    visible="{= ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} &amp;&amp; ( ${tableData>Term2/Areasize} &gt; 0 )}"
                                 />
                             </l:content>
                         </l:VerticalLayout>                       
                     </ui:template>
                 </ui:Column>
+                <ui:Column
+                    width="5rem"
+                    hAlign="Center"
+                >
+                    <ui:multiLabels>
+                        <m:Label text="{i18n>Label.SecondTerm}" />
+                        <m:Label
+                            text="{i18n>Label.Duration}"
+                            textAlign="Center"
+                            width="100%"
+                            wrapping="true"
+                        />
+                    </ui:multiLabels>
+                    <ui:template>
+                        <m:Label
+                            text="{ 
+                                parts: [
+                                    {path: 'tableData>Term2/Startdate'},
+                                    {path: 'tableData>Term2/Enddate'}
+                                ], formatter:'.yearDiff' }"
+                            design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
+                            visible="{tableData>Term2mode/Main}"
+                        />
+                    </ui:template>
+                </ui:Column>
+
+                  <ui:Column
+                    width="8rem"
+                    hAlign="Center"        
+                    filterProperty="Term2/Startdate"
+                >
+                    <ui:multiLabels>
+                        <m:Label
+                            text="{i18n>Label.SecondTerm}"
+                            textAlign="Center"
+                            width="100%"
+                        />
+                        <m:Label
+                            text="{i18n>Contract.StartDate}"
+                            textAlign="Center"
+                            width="100%"
+                        />
+                    </ui:multiLabels>
+                    <ui:template>
+                        <l:VerticalLayout width="100%">
+                            <l:content>
+                              
+
+                                	<m:Link
+                                    ariaHasPopup="Dialog"
+                                    text="{ path: 'tableData>Term2/Startdate',
+                                formatter: '.formatDateTime'}"
+                                    press=".openDatePicker" />
+                                <m:Label
+                                    text="{ path: 'tableData>Term2/Startdate',
+                                formatter: '.formatDateTime'}"
+                                    design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
+                                    visible="{= ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+                                />
+                            </l:content>
+                        </l:VerticalLayout>
+                    </ui:template>
+                </ui:Column>
             </ui:columns>
         </ui:Table>
     </m:Page>
+    <m:DatePicker
+		id="HiddenDP"
+		hideInput="true"
+		change=".onDateChanged" />
 </mvc:View>

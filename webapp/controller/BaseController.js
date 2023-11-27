@@ -6,22 +6,22 @@ sap.ui.define(
     "sap/ui/core/UIComponent",
   ],
   function (Controller, History, DateFormat, UIComponent) {
-
     var sDateFormat = "yyyy-MMM-dd";
 
+    function getDayDiff(startDate, endDate) {
+      const msInDay = 24 * 60 * 60 * 1000;
     
+      return Math.round(
+        Math.abs(endDate - startDate) / msInDay
+      );
+    }
 
     function getMonthDifference(startDate, endDate) {
-      // return (
-      //   endDate.getMonth() -
-      //   startDate.getMonth() +
-      //   12 * (endDate.getFullYear() - startDate.getFullYear())
-      // );
-      var months;
-      months = (endDate.getFullYear() - startDate.getFullYear()) * 12;
-      months -= startDate.getMonth();
-      months += endDate.getMonth();
-      return months <= 0 ? 0 : months;
+      return (
+        endDate.getMonth() -
+        startDate.getMonth() +
+        12 * (endDate.getFullYear() - startDate.getFullYear())
+      );     
     }
 
     function getYearDiff(date1, date2) {
@@ -29,40 +29,46 @@ sap.ui.define(
     }
 
     ("use strict");
-    return Controller.extend("zsapreunit.controller.BaseController", {
-
-      DATEFORMAT: sDateFormat,
+    return Controller.extend("zsapreunit.controller.BaseController", {     
 
       getRouter: function () {
         return UIComponent.getRouterFor(this);
       },
 
-     
       getKeyDate: function () {
         return new Date("2017-08-01");
       },
 
-      getServiceKeys: function() {
+      getServiceKeys: function () {
         var oKeys = {
-          "Bukrs" : "1001",
-          "Busentity": "1001",
-          "Contrtype": "L002",
-          "Keydate": this.getKeyDate()
-        }
+          Bukrs: "1001",
+          Busentity: "1001",
+          Contrtype: "L002",
+          Keydate: this.getKeyDate(),
+        };
         return oKeys;
-    },
+      },
 
       yearDiff: function (oSDate, oEDate) {
-        var oDate = new Date(oEDate);
-        oDate.setDate(oEDate.getDate() + 1);
-        var diff = getYearDiff(oSDate, oDate);
-        if (diff == 1) {
-          return diff + " yr";
-        } else if (diff > 1) {
-          return diff + " yrs";
-        } else {
-          return getMonthDifference(oSDate, oDate) + " mths";
-        }
+        if (oSDate instanceof Date && oEDate instanceof Date) {
+          var oDate = new Date(oEDate);
+
+          oDate.setDate(oEDate.getDate() + 1);
+          var diff = getYearDiff(oSDate, oDate);
+          if (diff === 1) {
+            return diff + " yr";
+          } else if (diff > 1) {
+            return diff + " yrs";
+          } else {
+            diff =  getMonthDifference(oSDate, oDate);
+            if (diff === 1){
+              return diff + "mth";
+            } else if (diff > 1) {
+              return diff + " mths";
+            } else return getDayDiff(oSDate, oDate) + " days";
+
+          }
+        } else return "0 yr";
       },
 
       formatDateTime: function (oDateTime, sFormat) {
@@ -105,7 +111,7 @@ sap.ui.define(
           //"groupingSeparator": '.', // grouping separator is '.'
           groupingSize: 3, // the amount of digits to be grouped (here: thousand)
           //"decimalSeparator": ","   // the decimal separator must be different from the grouping separator,
-          decimals: 0
+          decimals: 0,
         });
         return oFormat.format(Number);
       },
@@ -121,40 +127,59 @@ sap.ui.define(
         return oFormat.format(Number);
       },
 
-      getFragmentByName: function(_formFragments,sFragmentName) {
+      getFragmentByName: function (_formFragments, sFragmentName) {
         return _formFragments[sFragmentName];
       },
 
-      showPopOverFragment : function(oView,oSource, _formFragments,sFragmentName,oThis) {
-        return this.getFormFragment(oView, _formFragments,sFragmentName,oThis).openBy(oSource);
-
+      showPopOverFragment: function (
+        oView,
+        oSource,
+        _formFragments,
+        sFragmentName,
+        oThis
+      ) {
+        return this.getFormFragment(
+          oView,
+          _formFragments,
+          sFragmentName,
+          oThis
+        ).openBy(oSource);
       },
-      
-      showFormDialogFragment : function (oView, _formFragments,sFragmentName,oThis) {
-        this.getFormFragment(oView, _formFragments,sFragmentName,oThis).open();
+
+      showFormDialogFragment: function (
+        oView,
+        _formFragments,
+        sFragmentName,
+        oThis
+      ) {
+        this.getFormFragment(
+          oView,
+          _formFragments,
+          sFragmentName,
+          oThis
+        ).open();
       },
 
-      getFormFragment: function (oView, _formFragments, sFragmentName,oThis) {
+      getFormFragment: function (oView, _formFragments, sFragmentName, oThis) {
         var oFormFragment = _formFragments[sFragmentName];
-      
+
         if (oFormFragment) {
           return oFormFragment;
-          
         }
-      
-        oFormFragment = sap.ui.xmlfragment(oView.getId(), sFragmentName,oThis);
+
+        oFormFragment = sap.ui.xmlfragment(oView.getId(), sFragmentName, oThis);
         oView.addDependent(oFormFragment);
-        
+
         var myFragment = (_formFragments[sFragmentName] = oFormFragment);
         return myFragment;
       },
 
-      removeFragment: function(_formFragments){
-        for(var sPropertyName in _formFragments) {
-          if(!_formFragments.hasOwnProperty(sPropertyName)) {
+      removeFragment: function (_formFragments) {
+        for (var sPropertyName in _formFragments) {
+          if (!_formFragments.hasOwnProperty(sPropertyName)) {
             return;
           }
-    
+
           _formFragments[sPropertyName].destroy();
           _formFragments[sPropertyName] = null;
         }

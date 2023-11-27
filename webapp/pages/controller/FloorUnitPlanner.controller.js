@@ -27,6 +27,7 @@ sap.ui.define(
     var _oi18Bundle;
     var _oForms;
     var _oDelItem;
+    var _oLink;
 
     return BaseController.extend(
       "zsapreunit.pages.controller.FloorUnitPlanner",
@@ -71,7 +72,7 @@ sap.ui.define(
         onShowT1Baserent: function (oEvent) {
           var oSource = oEvent.getSource();
           //var sPath = oSource.getBindingContext("viewData").getPath();      ;
-          var oData = oSource.getBindingContext("viewData").getObject();
+          var oData = oSource.getBindingContext("tableData").getObject();
 
           //var oPopover = this.showPopOverFragment(this.getView(), oSource, this._formFragments, "zsapreunit.fragments.BaseRentYrsChg", this);
           //oPopover.bindElement(sPath);
@@ -215,6 +216,7 @@ sap.ui.define(
           _oForms = {
             mainTerm: [],
             subTerms: [],
+            termModes: [],
             floorUnits: [],
           };
 
@@ -236,6 +238,7 @@ sap.ui.define(
               oItem.Term2mode.Isinput = true;
               oItem.Term2mode.Hasdata = true;
               oItem.Term2mode.Todelete = false;
+              
               //oItem.Term2.Startdate = oDate.setDate(oItem.Term1.Enddate.getDate() + 1);
 
               oItem.Term2.Startdate = new Date(oItem.Term1.Enddate.getTime());
@@ -243,14 +246,17 @@ sap.ui.define(
                 oItem.Term2.Startdate.getDate() + 1
               );
 
+              oItem.Term2.Areasize = 0;  
               oItem.Term2.Enddate = new Date(oItem.Term2.Startdate.getTime());
               oItem.Term2.Enddate.setDate(
                 oItem.Term2.Enddate.getDate() + 365 * 3
               );
-              //oItem.Term3.xId = _oi18Bundle.getText("Label.ThirdTerm");
+
+             
+              
 
               _oForms.mainTerm.push(oItem.Term2);
-
+              
               sUnitNos = oItem.Unitno;
             } else {
               oItem.Term2 = oMainTerm;
@@ -265,11 +271,10 @@ sap.ui.define(
             if (!oItem.Term2.Uom) {
               oItem.Term2.Uom = "SF";
             }
+            _oForms.termModes.push(oItem.Term2mode);
           }
-
-          //if (!_oForms.mainTerm[0].Unitnos) {
-          _oForms.mainTerm[0].Unitnos = sUnitNos;
-          //}          
+          
+          _oForms.mainTerm[0].Unitnos = sUnitNos;          
 
           _oForms.floorUnits.push({
             Floor: oItem.Floor,
@@ -286,7 +291,7 @@ sap.ui.define(
           var oViewModel = this.getView().getModel("viewData");
           oViewModel.setProperty("/ChangeAreaSize", false);
 
-
+          
           this.showFormDialogFragment(
             this.getView(),
             this._formFragments,
@@ -326,31 +331,27 @@ sap.ui.define(
           }
         },
 
-        onNewTermCreate: function () {
-          
-          this._refreshTable();
+        onNewTermCreate: function () {          
+          _oForms.mainTerm[0].Noofyears = this.yearDiff(_oForms.mainTerm[0].Startdate, _oForms.mainTerm[0].Enddate)
 
+          this._refreshTable();
           
           var oDialog = this.getView().byId("PlanTermForm");
           oDialog.close();
         },
 
         onNewTermCancel: function () {
-          for (var i = 0; i < _oForms.mainTerm.length; i++) {
-            var oItem = _oForms.mainTerm[i];
-            // oItem.Isinput = false;
+          for (var i = 0; i < _oForms.termModes.length; i++) {
+            
+            var oItem = _oForms.termModes[i];            
+            oItem.Main = false;
+            oItem.Isinput = false;
             oItem.Startdate = null;
             oItem.Hasdata = false;
-          }
-          for (var i = 0; i < _oForms.subTerms.length; i++) {
-            var oItem = _oForms.subTerms[i];
-            //oItem.Isinput = false;
-            oItem.Startdate = null;
-            oItem.Hasdata = false;
-          }
-
-          //var oModel = this.getView().getModel("tableData");
-          //oModel.refresh();
+            
+          }   
+          
+          this._refreshTable();
 
           var oTable = this.byId("planTable");
           var oPlugin = oTable.getPlugins()[0];
@@ -358,6 +359,53 @@ sap.ui.define(
 
           var oDialog = this.getView().byId("PlanTermForm");
           oDialog.close();
+        },
+
+        onSDateChanged:function(oEvent) {
+          var oStartDP = oEvent.getSource();    
+          
+          console.log(oStartDP.getBindingContext("PlanFormData"));
+          var oItem = oStartDP.getBindingContext("PlanFormData").getObject();
+          
+          oItem.Noofyears = this.yearDiff(oItem.Startdate,oItem.Enddate);          
+         
+        },
+        onEDateChanged: function(oEvent){
+          var oEndDP = oEvent.getSource();                    
+          var oItem = oEndDP.getBindingContext("PlanFormData").getObject();
+          
+          oItem.Noofyears = this.yearDiff(oItem.Startdate,oItem.Enddate);
+          
+
+        },
+        onChangeAreaSize: function(oEvent){          
+          var oSource = oEvent.getSource();
+          var oBindingContext = oSource.getBindingContext("PlanFormData");
+          var oData = oBindingContext.getObject();
+          oData.Areasize = 0;          
+        },
+
+        openDatePicker: function(oEvent){
+          _oLink = oEvent.getSource();
+          this.getView().byId("HiddenDP").openBy(_oLink.getDomRef());
+        },
+
+        onDateChanged: function(oEvent){
+         
+          var sValue = oEvent.getParameter("value");
+          var oDate  = new  Date(sValue);
+          var sItemPath = _oLink.getBindingContext("tableData").getPath();
+          
+          var sPath = _oLink.getBinding("text").getPath();
+          
+          var oModel = this.getView().getModel("tableData");
+          oModel.setProperty(sItemPath + "/" + sPath, oDate);
+          
+          //oModel.refresh();
+          
+          //var oObject = _oLink.getBindingContext("tableData").getObject();
+          //console.log(sItemPath,sPath,oObject,oPlanDate);
+
         },
 
         onGotoFirstColumn: function () {},
@@ -442,12 +490,7 @@ sap.ui.define(
           });
         },
 
-        onChangeAreaSize: function(oEvent){          
-          var oSource = oEvent.getSource();
-          var oBindingContext = oSource.getBindingContext("PlanFormData");
-          var oData = oBindingContext.getObject();
-          oData.Areasize = 0;          
-        },
+   
 
         _delete2ndTerm: function(){
           

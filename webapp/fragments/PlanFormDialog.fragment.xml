@@ -69,6 +69,7 @@
 						<core:Title text="{i18n>Label.Contract}" />
 						<Label text="{i18n>Contract.StartDate}" />
 						<DatePicker
+						id="dialogSDate"
 							placeholder="Enter Date"
 							value="{
 								path: 'PlanFormData>Startdate',
@@ -77,10 +78,11 @@
 									pattern: 'yyyy-MM-dd'
 								}
 							}"
-							showFooter="false"
+							change=".onSDateChanged"
 						/>
 						<Label text="{i18n>Contract.EndDate}" />
 						<DatePicker
+							id="dialogEDate"
 							placeholder="Enter Date"
 							value="{
 								path: 'PlanFormData>Enddate',
@@ -88,11 +90,9 @@
 								formatOptions: {
 									pattern: 'yyyy-MM-dd'
 								}
-							}"
-							minDate="{
-								path: 'PlanFormData>Startdate',
-								type: 'sap.ui.model.type.Date'
-							}"
+							}"							
+							change=".onEDateChanged"
+
 						/>
 						<Label text="Personal website" />
 						<Input value="{website}" />
