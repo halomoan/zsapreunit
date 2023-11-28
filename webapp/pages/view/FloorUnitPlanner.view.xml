@@ -178,13 +178,16 @@
                             wrapping="true"
                         />
                     </ui:multiLabels>
-                 <ui:template>
+                    <ui:template>
                         <m:Label
-                            text="{ 
-                                parts: [
-                                    {path: 'tableData>Term1/Startdate'},
-                                    {path: 'tableData>Term1/Enddate'}
-                                ], formatter:'.yearDiff' }"
+                            text="{
+                                parts: [{
+                                    path: 'tableData>Term1/Startdate'
+                                }, {
+                                    path: 'tableData>Term1/Enddate'
+                                }],
+                                formatter: '.yearDiff'
+                            }"
                             design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
                             visible="{tableData>Term1mode/Main}"
                         />
@@ -368,7 +371,10 @@
                         </l:VerticalLayout>
                     </ui:template>
                 </ui:Column>
-                <ui:Column width="8rem" hAlign="End">
+                <ui:Column
+                    width="8rem"
+                    hAlign="End"
+                >
                     <ui:multiLabels>
                         <m:Label
                             text="{i18n>Label.SecondTerm}"
@@ -385,19 +391,33 @@
                     <ui:template>
                         <l:VerticalLayout width="100%">
                             <l:content>
-                                <m:Input
+                                <!-- <m:Input
                                     fieldWidth="75%"
                                     value="{
-                                        parts: [
-                                            {path: 'tableData>Term2/Areasize'},
-                                            {path: 'tableData>Term2/Uom'}
-                                        ],
+                                        parts: [{
+                                            path: 'tableData>Term2/Areasize'
+                                        }, {
+                                            path: 'tableData>Term2/Uom'
+                                        }],
                                         type: 'sap.ui.model.type.Currency',
-                                        formatOptions: {showMeasure: false, decimals: 0}
+                                        formatOptions: {
+                                            showMeasure: false,
+                                            decimals: 0
+                                        }
                                     }"
                                     autocomplete="false"
-                                    visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} &amp;&amp; ( ${tableData>Term2/Areasize} &gt; 0 )}"
+                                    visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} &amp;&amp; ( ${tableData>Term2/Areasize} &gt; 0 )
+                                           }"
                                     description="{tableData>Term2/Uom}"
+                                /> -->
+                                <m:Link
+                                    ariaHasPopup="Dialog"
+                                    text="{
+                                        path: 'tableData>Term2/Areasize',
+                                        formatter: '.formatNoDecimals'
+                                    } {tableData>Term2/Uom}"
+                                    press=".onOpenAreaSize"
+                                    visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} &amp;&amp; ( ${tableData>Term2/Areasize} &gt; 0 ) }"
                                 />
                                 <m:Label
                                     text="{
@@ -405,10 +425,11 @@
                                         formatter: '.formatNoDecimals'
                                     } {tableData>Term2/Uom}"
                                     design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
-                                    visible="{= ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} &amp;&amp; ( ${tableData>Term2/Areasize} &gt; 0 )}"
+                                    visible="{= ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} &amp;&amp; ( ${tableData>Term2/Areasize} &gt; 0 )
+                                       }"
                                 />
                             </l:content>
-                        </l:VerticalLayout>                       
+                        </l:VerticalLayout>
                     </ui:template>
                 </ui:Column>
                 <ui:Column
@@ -426,20 +447,22 @@
                     </ui:multiLabels>
                     <ui:template>
                         <m:Label
-                            text="{ 
-                                parts: [
-                                    {path: 'tableData>Term2/Startdate'},
-                                    {path: 'tableData>Term2/Enddate'}
-                                ], formatter:'.yearDiff' }"
+                            text="{
+                                parts: [{
+                                    path: 'tableData>Term2/Startdate'
+                                }, {
+                                    path: 'tableData>Term2/Enddate'
+                                }],
+                                formatter: '.yearDiff'
+                            }"
                             design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
                             visible="{tableData>Term2mode/Main}"
                         />
                     </ui:template>
                 </ui:Column>
-
-                  <ui:Column
+                <ui:Column
                     width="8rem"
-                    hAlign="Center"        
+                    hAlign="Center"
                     filterProperty="Term2/Startdate"
                 >
                     <ui:multiLabels>
@@ -457,18 +480,22 @@
                     <ui:template>
                         <l:VerticalLayout width="100%">
                             <l:content>
-                              
-
-                                	<m:Link
+                                <m:Link
                                     ariaHasPopup="Dialog"
-                                    text="{ path: 'tableData>Term2/Startdate',
-                                formatter: '.formatDateTime'}"
-                                    press=".openDatePicker" />
+                                    text="{
+                                        path: 'tableData>Term2/Startdate',
+                                        formatter: '.formatDateTime'
+                                    }"
+                                    press=".onOpenDatePicker"
+                                    visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+                                />
                                 <m:Label
-                                    text="{ path: 'tableData>Term2/Startdate',
-                                formatter: '.formatDateTime'}"
+                                    text="{
+                                        path: 'tableData>Term2/Startdate',
+                                        formatter: '.formatDateTime'
+                                    }"
                                     design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
-                                    visible="{= ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+                                    visible="{= ${tableData>Term2mode/Main} &amp;&amp; ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
                                 />
                             </l:content>
                         </l:VerticalLayout>
@@ -478,7 +505,9 @@
         </ui:Table>
     </m:Page>
     <m:DatePicker
-		id="HiddenDP"
-		hideInput="true"
-		change=".onDateChanged" />
+        id="HiddenDP"
+        hideInput="true"
+        change=".onDateChanged"
+    />
+   
 </mvc:View>

@@ -1,0 +1,17 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+>
+	<Popover
+		showHeader="false"		
+		placement="Left"
+	>
+		<Input
+			id="HiddenAreaSize"			
+			fieldWidth="75%"
+			value="{term>/Areasize}"
+			description="SF"
+			change=".onAreaSizeChanged"
+		/>
+	</Popover>
+</core:FragmentDefinition>

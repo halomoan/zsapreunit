@@ -246,7 +246,7 @@ sap.ui.define(
                 oItem.Term2.Startdate.getDate() + 1
               );
 
-              oItem.Term2.Areasize = 0;  
+              oItem.Term2.Areasize = 1500;  
               oItem.Term2.Enddate = new Date(oItem.Term2.Startdate.getTime());
               oItem.Term2.Enddate.setDate(
                 oItem.Term2.Enddate.getDate() + 365 * 3
@@ -379,13 +379,25 @@ sap.ui.define(
 
         },
         onChangeAreaSize: function(oEvent){          
-          var oSource = oEvent.getSource();
+          var oSource = oEvent.getSource();          
           var oBindingContext = oSource.getBindingContext("PlanFormData");
           var oData = oBindingContext.getObject();
           oData.Areasize = 0;          
         },
 
-        openDatePicker: function(oEvent){
+        onOpenAreaSize: function(oEvent){
+          var oSource = oEvent.getSource();
+          var sItemPath = oSource.getBindingContext("tableData").getPath();
+          var sPath = oSource.getBinding("text").getBindings()[0].getPath();           
+          sPath  = sPath.replace(/\/.+$/, "");
+          sItemPath = sItemPath + "/" + sPath;
+          console.log(sItemPath);
+          var oPopover = this.showPopOverFragment(this.getView(), oSource, this._formFragments, "zsapreunit.fragments.InputAreaSize", this);
+          oPopover.bindElement({ path: sItemPath, model: "term" });
+          
+        },
+
+        onOpenDatePicker: function(oEvent){
           _oLink = oEvent.getSource();
           this.getView().byId("HiddenDP").openBy(_oLink.getDomRef());
         },
