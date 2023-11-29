@@ -3,9 +3,10 @@ sap.ui.define(
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/routing/History",
     "sap/ui/core/format/DateFormat",
+    "sap/ui/core/format/NumberFormat",
     "sap/ui/core/UIComponent",
   ],
-  function (Controller, History, DateFormat, UIComponent) {
+  function (Controller, History, DateFormat, NumberFormat, UIComponent) {
     var sDateFormat = "yyyy-MMM-dd";
 
     function getDayDiff(startDate, endDate) {
@@ -92,7 +93,7 @@ sap.ui.define(
           shortDecimals: 2,
         };
         var oFloatFormat =
-          sap.ui.core.format.NumberFormat.getFloatInstance(oFormatOptions);
+          NumberFormat.getFloatInstance(oFormatOptions);
         return oFloatFormat.format(Number);
       },
       formatNumericScale: function (Number) {
@@ -106,7 +107,7 @@ sap.ui.define(
       },
 
       formatNoDecimals: function (Number) {
-        var oFormat = sap.ui.core.format.NumberFormat.getFloatInstance({
+        var oFormat = NumberFormat.getFloatInstance({
           groupingEnabled: true, // grouping is enabled
           //"groupingSeparator": '.', // grouping separator is '.'
           groupingSize: 3, // the amount of digits to be grouped (here: thousand)
@@ -117,7 +118,7 @@ sap.ui.define(
       },
 
       formatNumber: function (Number) {
-        var oFormat = sap.ui.core.format.NumberFormat.getFloatInstance({
+        var oFormat = NumberFormat.getFloatInstance({
           groupingEnabled: true, // grouping is enabled
           decimals: 2,
           //"groupingSeparator": '.', // grouping separator is '.'

@@ -1,351 +1,363 @@
 <mvc:View
-    controllerName="zsapreunit.pages.controller.FloorUnitPlanner"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.uxap"
-    xmlns:ui="sap.ui.table"
-    xmlns:m="sap.m"
-    xmlns:plugins="sap.ui.table.plugins"
-    xmlns:core="sap.ui.core"
-    xmlns:l="sap.ui.layout"
-    height="100%"
+	controllerName="zsapreunit.pages.controller.FloorUnitPlanner"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.uxap"
+	xmlns:ui="sap.ui.table"
+	xmlns:m="sap.m"
+	xmlns:plugins="sap.ui.table.plugins"
+	xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout"
+	height="100%"
 >
-    <m:Page>
-        <m:headerContent>
-            <m:Button
-                text="{i18n>Label.SecondTerm}"
-                tooltip="2nd Term"
-                visible="{viewData>/showBtn2ndTerm}"
-                press="onCreate2ndTerm"
-            />
-            <m:Button
-                text="{i18n>Label.DeleteSecondTerm}"
-                tooltip="2nd Term"
-                visible="{viewData>/showBtnDel2ndTerm}"
-                press="onDelete2ndTerm"
-            />
-        </m:headerContent>
-        <ui:Table
-            id="planTable"
-            rows="{
-                path: 'tableData>/floorData',
-                templateShareable: false
-            }"
-            ariaLabelledBy="title"
-            enableColumnFreeze="true"
-            visibleRowCount="15"
-        >
-            <ui:plugins>
-                <plugins:MultiSelectionPlugin
-                    limit="20"
-                    enableNotification="true"
-                    showHeaderSelector="true"
-                    selectionMode="MultiToggle"
-                    selectionChange=".onUnitSelChange"
-                />
-            </ui:plugins>
-            <ui:extension>
-                <m:OverflowToolbar style="Clear">
-                    <m:ToolbarSpacer />
-                    <m:Button
-                        icon="sap-icon://close-command-field"
-                        textDirection="Inherit"
-                        type="Default"
-                        press="onGotoFirstColumn"
-                    />
-                </m:OverflowToolbar>
-            </ui:extension>
-            <ui:columns>
-                <ui:Column width="4rem">
-                    <m:Label text="{i18n>Label.Floor}" />
-                    <ui:template>
-                        <m:Label
-                            text="{tableData>Floor}"
-                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
-                            width="100%"
-                        />
-                    </ui:template>
-                </ui:Column>
-                <ui:Column width="4rem">
-                    <m:Label text="{i18n>Label.UnitNo}" />
-                    <ui:template>
-                        <m:Label
-                            text="{tableData>Unitno}"
-                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
-                            textAlign="{= ${tableData>Term1mode/Main} ? 'Begin': 'End'}"
-                            width="100%"
-                        />
-                    </ui:template>
-                </ui:Column>
-                <ui:Column
-                    width="18rem"
-                    headerSpan="2"
-                    filterProperty="Term1/Company"
-                >
-                    <ui:multiLabels>
-                        <m:Label
-                            text="First Term"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                        <m:Label
-                            text="{i18n>Contract.Company}"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                    </ui:multiLabels>
-                    <ui:template>
-                        <m:Label
-                            text="{tableData>Term1/Company}"
-                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
-                        />
-                    </ui:template>
-                </ui:Column>
-                <ui:Column
-                    width="12rem"
-                    filterProperty="Term1/Tenant"
-                >
-                    <ui:multiLabels>
-                        <m:Label text="First Term" />
-                        <m:Label
-                            text="{i18n>Contract.Tenant}"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                    </ui:multiLabels>
-                    <ui:template>
-                        <m:Label
-                            text="{tableData>Term1/Tenant}"
-                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
-                        />
-                    </ui:template>
-                </ui:Column>
-                <ui:Column width="10rem">
-                    <ui:multiLabels>
-                        <m:Label
-                            text="First Term"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                        <m:Label
-                            text="Trade"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                    </ui:multiLabels>
-                    <ui:template>
-                        <m:Label
-                            text="{tableData>Term1/Trade}"
-                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
-                        />
-                    </ui:template>
-                </ui:Column>
-                <ui:Column width="6rem">
-                    <ui:multiLabels>
-                        <m:Label
-                            text="First Term"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                        <m:Label
-                            text="{i18n>Contract.AreaSize}"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                    </ui:multiLabels>
-                    <ui:template>
-                        <m:Label
-                            text="{
-                                path: 'tableData>Term1/Areasize',
-                                formatter: '.formatNoDecimals'
-                            } {tableData>Term1/Uom}"
-                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
-                            visible="{= ${tableData>Term1mode/Main}}"
-                            textAlign="End"
-                            width="100%"
-                        />
-                    </ui:template>
-                </ui:Column>
-                <ui:Column
-                    width="5rem"
-                    hAlign="Center"
-                >
-                    <ui:multiLabels>
-                        <m:Label text="First Term" />
-                        <m:Label
-                            text="{i18n>Label.Duration}"
-                            textAlign="Center"
-                            width="100%"
-                            wrapping="true"
-                        />
-                    </ui:multiLabels>
-                    <ui:template>
-                        <m:Label
-                            text="{
-                                parts: [{
-                                    path: 'tableData>Term1/Startdate'
-                                }, {
-                                    path: 'tableData>Term1/Enddate'
-                                }],
-                                formatter: '.yearDiff'
-                            }"
-                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
-                            visible="{tableData>Term1mode/Main}"
-                        />
-                    </ui:template>
-                </ui:Column>
-                <ui:Column
-                    hAlign="Center"
-                    width="8rem"
-                >
-                    <ui:multiLabels>
-                        <m:Label text="First Term" />
-                        <m:Label
-                            text="{i18n>Contract.StartDate}"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                    </ui:multiLabels>
-                    <ui:template>
-                        <m:Label
-                            text="{
-                                path: 'tableData>Term1/Startdate',
-                                formatter: '.formatDateTime'
-                            }"
-                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
-                            visible="{tableData>Term1mode/Main}"
-                        />
-                    </ui:template>
-                </ui:Column>
-                <ui:Column
-                    hAlign="Center"
-                    width="8rem"
-                >
-                    <ui:multiLabels>
-                        <m:Label text="First Term" />
-                        <m:Label
-                            text="{i18n>Contract.EndDate}"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                    </ui:multiLabels>
-                    <ui:template>
-                        <m:Label
-                            text="{
-                                path: 'tableData>Term1/Enddate',
-                                formatter: '.formatDateTime'
-                            }"
-                            design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
-                            visible="{tableData>Term1mode/Main}"
-                        />
-                    </ui:template>
-                </ui:Column>
-                <ui:Column
-                    hAlign="Center"
-                    width="8rem"
-                >
-                    <ui:multiLabels>
-                        <m:Label text="First Term" />
-                        <m:Label
-                            text="{i18n>Contract.BaseRent.Avg}"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                    </ui:multiLabels>
-                    <ui:template>
-                        <m:Button
-                            text="{
-                                path: 'tableData>Term1/Avgbaserent',
-                                formatter: '.formatNumber'
-                            }"
-                            press="onShowT1Baserent"
-                            visible="{tableData>Term1mode/Main}"
-                        />
-                    </ui:template>
-                </ui:Column>
-                <!-- 2nd Term-->
-                <ui:Column
-                    width="18rem"
-                    headerSpan="2"
-                    filterProperty="Term2/Company"
-                >
-                    <ui:multiLabels>
-                        <m:Label
-                            text="{i18n>Label.SecondTerm}"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                        <m:Label
-                            text="{i18n>Contract.Company}"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                    </ui:multiLabels>
-                    <ui:template>
-                        <l:VerticalLayout width="100%">
-                            <l:content>
-                                <m:Input
+	<m:Page>
+		<m:headerContent>
+			<m:Button
+				text="{i18n>Label.SecondTerm}"
+				tooltip="2nd Term"
+				visible="{viewData>/showBtn2ndTerm}"
+				press="onCreate2ndTerm"
+			/>
+			<m:Button
+				text="{i18n>Label.DeleteSecondTerm}"
+				tooltip="2nd Term"
+				visible="{viewData>/showBtnDel2ndTerm}"
+				press="onDelete2ndTerm"
+			/>
+		</m:headerContent>
+		<ui:Table
+			id="planTable"
+			rows="{
+				path: 'tableData>/floorData',
+				templateShareable: false
+			}"
+			ariaLabelledBy="title"
+			enableColumnFreeze="true"
+			visibleRowCount="15"
+		>
+			<ui:plugins>
+				<plugins:MultiSelectionPlugin
+					limit="20"
+					enableNotification="true"
+					showHeaderSelector="true"
+					selectionMode="MultiToggle"
+					selectionChange=".onUnitSelChange"
+				/>
+			</ui:plugins>
+			<ui:extension>
+				<m:OverflowToolbar style="Clear">
+					<m:ToolbarSpacer/>
+					<m:Button
+						icon="sap-icon://close-command-field"
+						textDirection="Inherit"
+						type="Default"
+						press="onGotoFirstColumn"
+					/>
+				</m:OverflowToolbar>
+			</ui:extension>
+			<ui:columns>
+				<ui:Column width="4rem">
+					<m:Label text="{i18n>Label.Floor}"/>
+					<ui:template>
+						<m:Label
+							text="{tableData>Floor}"
+							design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
+							width="100%"
+						/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column width="4rem">
+					<m:Label text="{i18n>Label.UnitNo}"/>
+					<ui:template>
+						<m:Label
+							text="{tableData>Unitno}"
+							design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
+							textAlign="{= ${tableData>Term1mode/Main} ? 'Begin': 'End'}"
+							width="100%"
+						/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					width="18rem"
+					headerSpan="2"
+					filterProperty="Term1/Company"
+				>
+					<ui:multiLabels>
+						<m:Label
+							text="First Term"
+							textAlign="Center"
+							width="100%"
+						/>
+						<m:Label
+							text="{i18n>Contract.Company}"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<m:Label
+							text="{tableData>Term1/Company}"
+							design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
+						/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					width="12rem"
+					filterProperty="Term1/Tenant"
+				>
+					<ui:multiLabels>
+						<m:Label text="First Term"/>
+						<m:Label
+							text="{i18n>Contract.Tenant}"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<m:Label
+							text="{tableData>Term1/Tenant}"
+							design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
+						/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column width="10rem">
+					<ui:multiLabels>
+						<m:Label
+							text="First Term"
+							textAlign="Center"
+							width="100%"
+						/>
+						<m:Label
+							text="Trade"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<m:Label
+							text="{tableData>Term1/Trade}"
+							design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
+						/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column width="6rem">
+					<ui:multiLabels>
+						<m:Label
+							text="First Term"
+							textAlign="Center"
+							width="100%"
+						/>
+						<m:Label
+							text="{i18n>Contract.AreaSize}"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<m:Label
+							text="{
+								path: 'tableData>Term1/Areasize',
+								formatter: '.formatNoDecimals'
+							} {tableData>Term1/Uom}"
+							design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
+							visible="{= ${tableData>Term1mode/Main}}"
+							textAlign="End"
+							width="100%"
+						/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					width="5rem"
+					hAlign="Center"
+				>
+					<ui:multiLabels>
+						<m:Label text="First Term"/>
+						<m:Label
+							text="{i18n>Label.Duration}"
+							textAlign="Center"
+							width="100%"
+							wrapping="true"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<m:Label
+							text="{
+								parts: [{
+									path: 'tableData>Term1/Startdate'
+								}, {
+									path: 'tableData>Term1/Enddate'
+								}],
+								formatter: '.yearDiff'
+							}"
+							design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
+							visible="{tableData>Term1mode/Main}"
+						/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					hAlign="Center"
+					width="8rem"
+				>
+					<ui:multiLabels>
+						<m:Label text="First Term"/>
+						<m:Label
+							text="{i18n>Contract.StartDate}"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<m:Label
+							text="{
+								path: 'tableData>Term1/Startdate',
+								formatter: '.formatDateTime'
+							}"
+							design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
+							visible="{tableData>Term1mode/Main}"
+						/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					hAlign="Center"
+					width="8rem"
+				>
+					<ui:multiLabels>
+						<m:Label text="First Term"/>
+						<m:Label
+							text="{i18n>Contract.EndDate}"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<m:Label
+							text="{
+								path: 'tableData>Term1/Enddate',
+								formatter: '.formatDateTime'
+							}"
+							design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
+							visible="{tableData>Term1mode/Main}"
+						/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					hAlign="Center"
+					width="8rem"
+				>
+					<ui:multiLabels>
+						<m:Label text="First Term"/>
+						<m:Label
+							text="{i18n>Contract.BaseRent.Avg}"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<m:Button
+							text="{
+								path: 'tableData>Term1/Avgbaserent',
+								formatter: '.formatNumber'
+							}"
+							press="onShowT1Baserent"
+							visible="{tableData>Term1mode/Main}"
+						/>
+					</ui:template>
+				</ui:Column>
+				<!-- 2nd Term-->
+				<ui:Column
+					width="18rem"
+					headerSpan="2"
+					filterProperty="Term2/Company"
+				>
+					<ui:multiLabels>
+						<m:Label
+							text="{i18n>Label.SecondTerm}"
+							textAlign="Center"
+							width="100%"
+						/>
+						<m:Label
+							text="{i18n>Contract.Company}"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<l:VerticalLayout width="100%">
+							<l:content>
+								<!-- <m:Input
                                     value="{tableData>Term2/Company}"
                                     autocomplete="false"
                                     visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
-                                />
-                                <m:Label
-                                    text="{tableData>Term2/Company}"
-                                    design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
-                                    visible="{= ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
-                                />
-                            </l:content>
-                        </l:VerticalLayout>
-                    </ui:template>
-                </ui:Column>
-                <ui:Column
-                    width="12rem"
-                    filterProperty="Term2/Tenant"
-                >
-                    <ui:multiLabels>
-                        <m:Label text="{i18n>Label.SecondTerm}" />
-                        <m:Label
-                            text="Tenant"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                    </ui:multiLabels>
-                    <ui:template>
-                        <l:VerticalLayout width="100%">
-                            <l:content>
-                                <m:Input
+                                /> -->
+								<m:Link
+									ariaHasPopup="Dialog"
+									text="{tableData>Term2/Company}"
+									press=".onEditTerm"
+									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+								/>
+								<m:Label
+									text="{tableData>Term2/Company}"
+									design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
+									visible="{= ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+								/>
+							</l:content>
+						</l:VerticalLayout>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					width="12rem"
+					filterProperty="Term2/Tenant"
+				>
+					<ui:multiLabels>
+						<m:Label text="{i18n>Label.SecondTerm}"/>
+						<m:Label
+							text="Tenant"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<l:VerticalLayout width="100%">
+							<l:content>
+								<!-- <m:Input
                                     value="{tableData>Term2/Tenant}"
                                     autocomplete="false"
                                     visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
-                                />
-                                <m:Label
-                                    text="{tableData>Term2/Tenant}"
-                                    design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
-                                    visible="{= ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
-                                />
-                            </l:content>
-                        </l:VerticalLayout>
-                    </ui:template>
-                </ui:Column>
-                <ui:Column
-                    width="13rem"
-                    filterProperty="Term2/Tenant"
-                >
-                    <ui:multiLabels>
-                        <m:Label
-                            text="{i18n>Label.SecondTerm}"
-                            width="100%"
-                            textAlign="Center"
-                        />
-                        <m:Label
-                            text="{i18n>Contract.Trade}"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                    </ui:multiLabels>
-                    <ui:template>
-                        <l:VerticalLayout width="100%">
-                            <l:content>
-                                <m:Select
+                                /> -->
+								<m:Link
+									ariaHasPopup="Dialog"
+									text="{tableData>Term2/Tenant}"
+									press=".onEditTerm"
+									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+								/>
+								<m:Label
+									text="{tableData>Term2/Tenant}"
+									design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
+									visible="{= ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+								/>
+							</l:content>
+						</l:VerticalLayout>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					width="13rem"
+					filterProperty="Term2/Tenant"
+				>
+					<ui:multiLabels>
+						<m:Label
+							text="{i18n>Label.SecondTerm}"
+							width="100%"
+							textAlign="Center"
+						/>
+						<m:Label
+							text="{i18n>Contract.Trade}"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<l:VerticalLayout width="100%">
+							<l:content>
+								<!-- <m:Select
                                     items="{
                                         path: 'viewData>/industryData',
                                         templateShareable: false
@@ -360,154 +372,182 @@
                                         text="{viewData>IndustryKeyDescription}"
                                         additionalText="{viewData>IndustrySector}"
                                     />
-                                </m:Select>
-                                <m:Label
-                                    text="{tableData>Term2/Trade}"
-                                    class="sapUiTinyMarginBegin"
-                                    design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
-                                    visible="{= !${tableData>Term2mode/Main} &amp;&amp;  !${tableData>Term2mode/IsInput} &amp;&amp; ${tableData>Term2mode/Hasdata}}"
-                                />
-                            </l:content>
-                        </l:VerticalLayout>
-                    </ui:template>
-                </ui:Column>
-                <ui:Column
-                    width="8rem"
-                    hAlign="End"
-                >
-                    <ui:multiLabels>
-                        <m:Label
-                            text="{i18n>Label.SecondTerm}"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                        <m:Label
-                            text="{i18n>Contract.AreaSize} "
-                            textAlign="Center"
-                            width="100%"
-                            tooltip="{i18n>Label.Optional}"
-                        />
-                    </ui:multiLabels>
-                    <ui:template>
-                        <l:VerticalLayout width="100%">
-                            <l:content>
-                                <!-- <m:Input
-                                    fieldWidth="75%"
-                                    value="{
-                                        parts: [{
-                                            path: 'tableData>Term2/Areasize'
-                                        }, {
-                                            path: 'tableData>Term2/Uom'
-                                        }],
-                                        type: 'sap.ui.model.type.Currency',
-                                        formatOptions: {
-                                            showMeasure: false,
-                                            decimals: 0
-                                        }
-                                    }"
-                                    autocomplete="false"
-                                    visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} &amp;&amp; ( ${tableData>Term2/Areasize} &gt; 0 )
-                                           }"
-                                    description="{tableData>Term2/Uom}"
-                                /> -->
-                                <m:Link
-                                    ariaHasPopup="Dialog"
-                                    text="{
-                                        path: 'tableData>Term2/Areasize',
-                                        formatter: '.formatNoDecimals'
-                                    } {tableData>Term2/Uom}"
-                                    press=".onOpenAreaSize"
-                                    visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} &amp;&amp; ( ${tableData>Term2/Areasize} &gt; 0 ) }"
-                                />
-                                <m:Label
-                                    text="{
-                                        path: 'tableData>Term2/Areasize',
-                                        formatter: '.formatNoDecimals'
-                                    } {tableData>Term2/Uom}"
-                                    design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
-                                    visible="{= ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} &amp;&amp; ( ${tableData>Term2/Areasize} &gt; 0 )
-                                       }"
-                                />
-                            </l:content>
-                        </l:VerticalLayout>
-                    </ui:template>
-                </ui:Column>
-                <ui:Column
-                    width="5rem"
-                    hAlign="Center"
-                >
-                    <ui:multiLabels>
-                        <m:Label text="{i18n>Label.SecondTerm}" />
-                        <m:Label
-                            text="{i18n>Label.Duration}"
-                            textAlign="Center"
-                            width="100%"
-                            wrapping="true"
-                        />
-                    </ui:multiLabels>
-                    <ui:template>
-                        <m:Label
-                            text="{
-                                parts: [{
-                                    path: 'tableData>Term2/Startdate'
-                                }, {
-                                    path: 'tableData>Term2/Enddate'
-                                }],
-                                formatter: '.yearDiff'
-                            }"
-                            design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
-                            visible="{tableData>Term2mode/Main}"
-                        />
-                    </ui:template>
-                </ui:Column>
-                <ui:Column
-                    width="8rem"
-                    hAlign="Center"
-                    filterProperty="Term2/Startdate"
-                >
-                    <ui:multiLabels>
-                        <m:Label
-                            text="{i18n>Label.SecondTerm}"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                        <m:Label
-                            text="{i18n>Contract.StartDate}"
-                            textAlign="Center"
-                            width="100%"
-                        />
-                    </ui:multiLabels>
-                    <ui:template>
-                        <l:VerticalLayout width="100%">
-                            <l:content>
-                                <m:Link
-                                    ariaHasPopup="Dialog"
-                                    text="{
-                                        path: 'tableData>Term2/Startdate',
-                                        formatter: '.formatDateTime'
-                                    }"
-                                    press=".onOpenDatePicker"
-                                    visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
-                                />
-                                <m:Label
-                                    text="{
-                                        path: 'tableData>Term2/Startdate',
-                                        formatter: '.formatDateTime'
-                                    }"
-                                    design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
-                                    visible="{= ${tableData>Term2mode/Main} &amp;&amp; ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
-                                />
-                            </l:content>
-                        </l:VerticalLayout>
-                    </ui:template>
-                </ui:Column>
-            </ui:columns>
-        </ui:Table>
-    </m:Page>
-    <m:DatePicker
-        id="HiddenDP"
-        hideInput="true"
-        change=".onDateChanged"
-    />
-   
+                                </m:Select> -->
+								<m:Link
+									ariaHasPopup="Dialog"
+									text="{tableData>Term2/Trade}"
+									press=".onEditTerm"
+									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata}  }"
+								/>
+								<m:Label
+									text="{tableData>Term2/Trade}"
+									class="sapUiTinyMarginBegin"
+									design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
+									visible="{= !${tableData>Term2mode/Main} &amp;&amp;  !${tableData>Term2mode/IsInput} &amp;&amp; ${tableData>Term2mode/Hasdata}}"
+								/>
+							</l:content>
+						</l:VerticalLayout>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					width="8rem"
+					hAlign="End"
+				>
+					<ui:multiLabels>
+						<m:Label
+							text="{i18n>Label.SecondTerm}"
+							textAlign="Center"
+							width="100%"
+						/>
+						<m:Label
+							text="{i18n>Contract.AreaSize} "
+							textAlign="Center"
+							width="100%"
+							tooltip="{i18n>Label.Optional}"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<l:VerticalLayout width="100%">
+							<l:content>
+								<m:Link
+									ariaHasPopup="Dialog"
+									text="{
+										path: 'tableData>Term2/Areasize',
+										formatter: '.formatNoDecimals'
+									} {tableData>Term2/Uom}"
+									press=".onEditTerm"
+									visible="{=  ${tableData>Term2mode/Main} &amp;&amp; ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+								/>
+								<m:Label
+									text="{
+										path: 'tableData>Term2/Areasize',
+										formatter: '.formatNoDecimals'
+									} {tableData>Term2/Uom}"
+									design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
+									visible="{= ${tableData>Term2mode/Main} &amp;&amp; ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} 
+									}"
+								/>
+							</l:content>
+						</l:VerticalLayout>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					width="5rem"
+					hAlign="Center"
+				>
+					<ui:multiLabels>
+						<m:Label text="{i18n>Label.SecondTerm}"/>
+						<m:Label
+							text="{i18n>Label.Duration}"
+							textAlign="Center"
+							width="100%"
+							wrapping="true"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<m:Label
+							text="{
+								parts: [{
+									path: 'tableData>Term2/Startdate'
+								}, {
+									path: 'tableData>Term2/Enddate'
+								}],
+								formatter: '.yearDiff'
+							}"
+							design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
+							visible="{tableData>Term2mode/Main}"
+						/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					width="8rem"
+					hAlign="Center"
+					filterProperty="Term2/Startdate"
+				>
+					<ui:multiLabels>
+						<m:Label
+							text="{i18n>Label.SecondTerm}"
+							textAlign="Center"
+							width="100%"
+						/>
+						<m:Label
+							text="{i18n>Contract.StartDate}"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<l:VerticalLayout width="100%">
+							<l:content>
+								<m:Link
+									ariaHasPopup="Dialog"
+									text="{
+										path: 'tableData>Term2/Startdate',
+										formatter: '.formatDateTime'
+									}"
+									press=".onOpenDatePicker"
+									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+								/>
+								<m:Label
+									text="{
+										path: 'tableData>Term2/Startdate',
+										formatter: '.formatDateTime'
+									}"
+									design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
+									visible="{= ${tableData>Term2mode/Main} &amp;&amp; ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+								/>
+							</l:content>
+						</l:VerticalLayout>
+					</ui:template>
+				</ui:Column>
+
+				<ui:Column
+					width="8rem"
+					hAlign="Center"
+					filterProperty="Term2/Startdate"
+				>
+					<ui:multiLabels>
+						<m:Label
+							text="{i18n>Label.SecondTerm}"
+							textAlign="Center"
+							width="100%"
+						/>
+						<m:Label
+							text="{i18n>Contract.EndDate}"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<l:VerticalLayout width="100%">
+							<l:content>
+								<m:Link
+									ariaHasPopup="Dialog"
+									text="{
+										path: 'tableData>Term2/Enddate',
+										formatter: '.formatDateTime'
+									}"
+									press=".onOpenDatePicker"
+									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+								/>
+								<m:Label
+									text="{
+										path: 'tableData>Term2/Enddate',
+										formatter: '.formatDateTime'
+									}"
+									design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
+									visible="{= ${tableData>Term2mode/Main} &amp;&amp; ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
+								/>
+							</l:content>
+						</l:VerticalLayout>
+					</ui:template>
+				</ui:Column>
+			</ui:columns>
+		</ui:Table>
+	</m:Page>
+	<m:DatePicker
+		id="HiddenDP"
+		hideInput="true"
+		change=".onDateChanged"
+	/>
 </mvc:View>
