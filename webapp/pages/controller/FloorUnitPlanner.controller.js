@@ -1,6 +1,7 @@
 sap.ui.define(
   [
     "zsapreunit/controller/BaseController",
+    "zsapreunit/controller/TableManager",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/Sorter",
@@ -14,6 +15,7 @@ sap.ui.define(
    */
   function (
     BaseController,
+    TableManager,
     Filter,
     FilterOperator,
     Sorter,
@@ -25,6 +27,7 @@ sap.ui.define(
     "use strict";
 
     var _oi18Bundle;
+    var _oTableManager;
     var _oForms;
     var _oDelItem;
     var _oLink;
@@ -57,6 +60,9 @@ sap.ui.define(
             floorData: null,
           });
           oView.setModel(oTableModel, "tableData");
+
+          var oTable = this.byId("planTable");
+          _oTableManager = new TableManager(oTable);
 
           this._oRouter = this.getRouter();
           this._oRouter
@@ -348,13 +354,14 @@ sap.ui.define(
           var sItemPath = oSource.getBindingContext("tableData").getPath();
 
           var sPath = oSource.getBinding("text").getPath();
-          var sTermno = sPath.match(/(\d+)/)[1];
-          
+                   
 
           if (!sPath) {
             var aBindings = oSource.getBinding("text").getBindings();
             sPath = aBindings[0].getPath();
           }
+
+          var sTermno = sPath.match(/(\d+)/)[1];
 
           sPath = sPath.replace(/\/.+$/, "");
           var sTerm = sItemPath + "/" + sPath;
@@ -546,6 +553,7 @@ sap.ui.define(
           );
 
           var oModel = this.getView().getModel();
+          
 
           sap.ui.core.BusyIndicator.show();
 
@@ -558,6 +566,8 @@ sap.ui.define(
                 var oTableModel = new JSONModel({
                   floorData: aData,
                 });
+                
+                _oTableManager.setTableModel(oTableModel);                                
 
                 this.getView().setModel(oTableModel, "tableData");
               }
@@ -609,41 +619,17 @@ sap.ui.define(
         },
 
         _delete2ndTerm: function () {
-          var sFloor = _oDelItem.Floor;
-          var sUnitNos = _oDelItem.Term2.Unitnos;
-          var aUnitNos = sUnitNos.split("/");
-          var bFound = false;
 
-          var oModel = this.getView().getModel("tableData");
-          var aTableData = oModel.getData().floorData;
-          //console.log(aTableData);
-
-          for (var i = 0; i < aUnitNos.length; i++) {
-            for (var idx = 0; idx < aTableData.length; idx++) {
-              if (
-                aTableData[idx].Floor === sFloor &&
-                aTableData[idx].Unitno === aUnitNos[i]
-              ) {
-                bFound = true;
-                var oItem = aTableData[idx];
-
-                //console.log(oItem);
-
-                oItem.Term2mode.Hasdata = false;
-                oItem.Term2mode.Todelete = true;
-                break;
-              }
-            }
-          }
-
-          if (bFound) {
-            this._clearTableSelection();
-            oModel.refresh();
+          var bDone = _oTableManager.deleteTerm(_oDelItem,"2");
+          
+          if (bDone) {
+            _oTableManager.clearTableSelection();
+            _oTableManager.refreshTable();
           }
         },
 
         _refreshTable: function () {
-          var oModel = this.getView().getModel("tableData");
+          var oModel = _oTableManager.getTableModel();
           oModel.refresh();
         },
         _clearTableSelection: function () {
