@@ -23,6 +23,37 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
       return this.aTableData;
     },
 
+    doSaveData: function(sFloor,aUnitnos,oMainTerm,iTermno){      
+      var sFloor = sFloor;
+
+      for (var i = 0; i < aUnitnos.length; i++) {
+        var sUnit = aUnitnos[i];
+        var oItem = null;
+
+        this.aTableData.forEach((value, key) => {
+          if (value.Floor === sFloor && value.Unitno === sUnit) {
+            oItem = value;                  
+            return;
+          }
+        });
+        if (oItem) {         
+          switch(iTermno) {
+            case 2:
+              oItem.Term2 = oMainTerm;
+              oItem.Term2mode.Hasdata = true;  
+              break;
+            case 3:
+              oItem.Term3 = oMainTerm;
+              oItem.Term3mode.Hasdata = true;  
+              break;            
+          }
+        }
+      }
+
+      this.oTableModel.setProperty("/floorData",this.aTableData);
+
+    },
+
     refreshTable: function () {
       this.oTableModel.refresh();
       return null;

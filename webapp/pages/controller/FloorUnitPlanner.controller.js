@@ -415,86 +415,7 @@ sap.ui.define(
           oDialog.close();
         },
 
-        _doTableSave: function(){
-          var oFloorUnits = _oForms.floorUnits;
-          var oModel = _oTableManager.getTableModel();
-          var aTableData = _oTableManager.getTableData();            
-          
-
-          if (oFloorUnits.Unitnos !== _oForms.mainTerm[0].Unitnos) {
-            var aCurrUnitnos = _oForms.mainTerm[0].Unitnos.split("/");
-            var aPrevUnitnos = oFloorUnits.Unitnos.split("/");
-            
-            const aDiffUnitnos = aCurrUnitnos.filter(
-              (element) => !aPrevUnitnos.includes(element)
-            );
-
-            MessageBox.confirm(
-              _oi18Bundle.getText("Confirm.AddNewUnit", [
-                aDiffUnitnos.toString(),
-              ]),
-              {
-                actions: ["Yes", "No"],
-                emphasizedAction: "Yes",
-                onClose: function (sAction) {
-                  if (sAction === "Yes") {
-                    
-                    var oMainTerm = _oForms.mainTerm[0];
-                    var sFloor = oFloorUnits.Floor;
-
-                    for (var i = 0; i < aDiffUnitnos.length; i++) {
-                      var sUnit = aDiffUnitnos[i];
-                      var oItem = null;
-
-                      aTableData.forEach((value, key) => {
-                        if (value.Floor === sFloor && value.Unitno === sUnit) {
-                          oItem = value;                         
-                          return;
-                        }
-                      });
-                      if (oItem) {
-                        if (_oForms.Termno === "2") {
-                          oItem.Term2 = oMainTerm;
-                          oItem.Term2mode.Hasdata = true;                                                
-                          oModel.setProperty("/floorData",aTableData);
-                        }
-                      }
-                    }
-                  }
-                }.bind(this),
-              }
-            );
-            return true;
-          } else {
-            // Floor Units don't change
-            var oMainTerm = _oForms.mainTerm[0];
-            var sFloor = oFloorUnits.Floor;
-
-            var aCurrUnitnos = _oForms.mainTerm[0].Unitnos.split("/");
-
-            for (var i = 0; i < aCurrUnitnos.length; i++) {
-              var sUnit = aCurrUnitnos[i];
-              var oItem = null;
-
-              aTableData.forEach((value, key) => {
-                if (value.Floor === sFloor && value.Unitno === sUnit) {
-                  oItem = value;                  
-                  return;
-                }
-              });
-              if (oItem) {
-                if (_oForms.Termno === "2") {
-                  oItem.Term2 = oMainTerm;
-                  oItem.Term2mode.Hasdata = true;                                    
-                  oModel.setProperty("/floorData",aTableData);
-                }
-              }
-            }
-
-          }
-          return false;
-        },
-
+     
         onNewTermCancel: function () {
           for (var i = 0; i < _oForms.termModes.length; i++) {
             var oItem = _oForms.termModes[i];
@@ -641,6 +562,69 @@ sap.ui.define(
             },
           });
         },
+        
+        _doTableSave: function(){
+          var oFloorUnits = _oForms.floorUnits;
+          var oModel = _oTableManager.getTableModel();
+          var aTableData = _oTableManager.getTableData();            
+          
+
+          if (oFloorUnits.Unitnos !== _oForms.mainTerm[0].Unitnos) {
+            var aCurrUnitnos = _oForms.mainTerm[0].Unitnos.split("/");
+            var aPrevUnitnos = oFloorUnits.Unitnos.split("/");
+            
+            const aDiffUnitnos = aCurrUnitnos.filter(
+              (element) => !aPrevUnitnos.includes(element)
+            );
+
+            MessageBox.confirm(
+              _oi18Bundle.getText("Confirm.AddNewUnit", [
+                aDiffUnitnos.toString(),
+              ]),
+              {
+                actions: ["Yes", "No"],
+                emphasizedAction: "Yes",
+                onClose: function (sAction) {
+                  if (sAction === "Yes") {
+                    
+                    var oMainTerm = _oForms.mainTerm[0];
+                    var sFloor = oFloorUnits.Floor;
+
+                    switch(_oForms.Termno) 
+                    {
+                        case "2":
+                          _oTableManager.doSaveData(sFloor,aDiffUnitnos,oMainTerm,2);
+                          break;
+                        case "3":
+                          _oTableManager.doSaveData(sFloor,aDiffUnitnos,oMainTerm,3);
+                          break;
+                    }                 
+                  }
+                }.bind(this),
+              }
+            );
+            return true;
+          } else {
+            // Floor Units don't change
+            var oMainTerm = _oForms.mainTerm[0];
+            var sFloor = oFloorUnits.Floor;
+
+            var aUnitnos = _oForms.mainTerm[0].Unitnos.split("/");
+
+            switch(_oForms.Termno) 
+            {
+                case "2":
+                  _oTableManager.doSaveData(sFloor,aUnitnos,oMainTerm,2);
+                  break;
+                case "3":
+                  _oTableManager.doSaveData(sFloor,aUnitnos,oMainTerm,3);
+                  break;
+            }
+
+          }
+          return false;
+        },
+
 
         _delete2ndTerm: function (oItem) {
 
