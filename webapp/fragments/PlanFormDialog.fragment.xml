@@ -101,6 +101,8 @@
 							}"
 							change=".onEDateChanged"
 						/>
+						<Label text="{i18n>Label.Duration}"/>
+						<Text text="{PlanFormData>Duration}"/>
 						<Label text="{i18n>Contract.Units}"/>
 						<Input value="{PlanFormData>Unitnos}"/>
 						<core:Title text="{i18n>Contract.BaseRent}"/>
@@ -485,13 +487,14 @@
 						visible="{= ! ${PlanFormData>/Editmode} }"
 					/>
 					<Button
-						text="{i18n>Label.Edit}"
+						text="{i18n>Label.Close}"
 						press="onNewTermEdit"
 						visible="{PlanFormData>/Editmode}"
 					/>
 					<Button
 						text="{i18n>Label.Cancel}"
 						press="onNewTermCancel"
+						visible="{= ! ${PlanFormData>/Editmode} }"
 					/>
 				</content>
 			</Toolbar>

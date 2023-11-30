@@ -214,7 +214,7 @@ sap.ui.define(
           }
         },
 
-        onCreate2ndTerm: function (oEvent) {
+        onCreate2ndTermDialog: function (oEvent) {
           var oTable = this.byId("planTable");
           var oPlugin = oTable.getPlugins()[0];
           var aIndices = oPlugin.getSelectedIndices();
@@ -223,23 +223,20 @@ sap.ui.define(
           var oMainTerm;
 
           _oForms = {
-            mainTerm: [],
-            subTerms: [],
+            mainTerm: [],            
             termModes: [],
-            floorUnits: [],
+            floorUnits: null,            
             Editmode: false,
             Termno: "2",
           };
 
           for (var i = 0; i < aIndices.length; i++) {
             var oItem = oTable.getContextByIndex(aIndices[i]).getObject();
+            sUnitNos =  (i === 0) ? oItem.Unitno : sUnitNos + "/" + oItem.Unitno;
+          }
 
-            if (oItem.Term2.Bupano && oItem.Term2.Startdate) {
-              MessageBox.error(
-                _oi18Bundle.getText("Error.2ndTermInUsed", oItem.Unitno)
-              );
-              break;
-            }
+          for (var i = 0; i < aIndices.length; i++) {
+            var oItem = oTable.getContextByIndex(aIndices[i]).getObject();
 
             if (i === 0) {
               oMainTerm = oItem.Term2;
@@ -263,18 +260,26 @@ sap.ui.define(
                 oItem.Term2.Enddate.getDate() + 365 * 3
               );
 
-              _oForms.mainTerm.push(oItem.Term2);
+              // Single Row selected and isMain
+              if (aIndices.length === 1 && oItem.Term1mode.Main) {
+                oItem.Term2.Areasize = oItem.Term1.Areasize;
+                oItem.Term2.Uom = oItem.Term1.Uom;
+                oItem.Term2.Unitnos = oItem.Term1.Unitnos;
+                sUnitNos = oItem.Term1.Unitnos;
+              } else {
+                oItem.Term2.Unitnos = sUnitNos;
+              }
 
-              sUnitNos = oItem.Unitno;
+              _oForms.mainTerm.push(oItem.Term2);
+             
             } else {
               oItem.Term2 = oMainTerm;
 
               oItem.Term2mode.Isinput = false;
               oItem.Term2mode.Hasdata = true;
               oItem.Term2mode.Todelete = false;
-              _oForms.subTerms.push(oItem.Term2);
-              sUnitNos = sUnitNos + "/" + oItem.Unitno;
-            }
+    
+            }            
 
             if (!oItem.Term2.Uom) {
               oItem.Term2.Uom = "SF";
@@ -282,13 +287,11 @@ sap.ui.define(
             _oForms.termModes.push(oItem.Term2mode);
           }
 
-          _oForms.mainTerm[0].Unitnos = sUnitNos;
-
-          _oForms.floorUnits.push({
+          _oForms.floorUnits = {
             Floor: oItem.Floor,
-            Unitnos: _oForms.mainTerm[0].Unitnos,
-          });
-
+            Unitnos: sUnitNos,
+          };
+          
           this._clearTableSelection();
           this._refreshTable();
 
@@ -306,13 +309,13 @@ sap.ui.define(
           );
         },
 
-        onDelete2ndTerm: function () {
+        onDelete2ndTermDialog: function () {
           MessageBox.confirm(_oi18Bundle.getText("Confirm.Delete2ndTerm"), {
             actions: ["Yes", "No"],
             emphasizedAction: "Yes",
             onClose: function (sAction) {
               if (sAction === "Yes") {
-                this._delete2ndTerm();
+                this._delete2ndTerm(_oDelItem);
               }
             }.bind(this),
           });
@@ -341,7 +344,7 @@ sap.ui.define(
             _oForms.mainTerm[0].Enddate
           );
               
-          if(!this._DetectNewUnit()) {
+          if(!this._doTableSave()) {
             this._refreshTable();
           };
 
@@ -349,7 +352,7 @@ sap.ui.define(
           var oDialog = this.getView().byId("PlanTermForm");
           oDialog.close();
         },
-        onEditTerm: function (oEvent) {
+        onEditTermDialog: function (oEvent) {
           var oSource = oEvent.getSource();
           var sItemPath = oSource.getBindingContext("tableData").getPath();
 
@@ -371,21 +374,20 @@ sap.ui.define(
           var oItem = oModel.getProperty(sItemPath);
 
           _oForms = {
-            mainTerm: [],
-            subTerms: [],
+            mainTerm: [],            
             termModes: [],
-            floorUnits: [],
+            floorUnits: null,            
             Editmode: true,
             Termno: sTermno
           };
 
           _oForms.mainTerm.push(oTerm);
 
-          _oForms.floorUnits.push({
+          _oForms.floorUnits = {
             Floor: oItem.Floor,
             Unitnos: oTerm.Unitnos,
-          });
-
+          };
+          
           oModel = new JSONModel(_oForms);
           this.getView().setModel(oModel, "PlanFormData");
 
@@ -402,9 +404,9 @@ sap.ui.define(
           _oForms.mainTerm[0].Noofyears = this.yearDiff(
             _oForms.mainTerm[0].Startdate,
             _oForms.mainTerm[0].Enddate
-          );
+          );          
 
-          if(!this._DetectNewUnit()) {
+          if(!this._doTableSave()) {
             this._refreshTable();
           };
           
@@ -413,10 +415,11 @@ sap.ui.define(
           oDialog.close();
         },
 
-        _DetectNewUnit: function(){
-          var oFloorUnits = _oForms.floorUnits[0];
-
-          console.log(oFloorUnits.Unitnos, _oForms.mainTerm[0].Unitnos);
+        _doTableSave: function(){
+          var oFloorUnits = _oForms.floorUnits;
+          var oModel = _oTableManager.getTableModel();
+          var aTableData = _oTableManager.getTableData();            
+          
 
           if (oFloorUnits.Unitnos !== _oForms.mainTerm[0].Unitnos) {
             var aCurrUnitnos = _oForms.mainTerm[0].Unitnos.split("/");
@@ -425,9 +428,6 @@ sap.ui.define(
             const aDiffUnitnos = aCurrUnitnos.filter(
               (element) => !aPrevUnitnos.includes(element)
             );
-
-            var oModel = this.getView().getModel("tableData");
-            var aTableData = oModel.getData();            
 
             MessageBox.confirm(
               _oi18Bundle.getText("Confirm.AddNewUnit", [
@@ -446,19 +446,17 @@ sap.ui.define(
                       var sUnit = aDiffUnitnos[i];
                       var oItem = null;
 
-                      aTableData.floorData.forEach((value, key) => {
+                      aTableData.forEach((value, key) => {
                         if (value.Floor === sFloor && value.Unitno === sUnit) {
-                          oItem = value;
-                          console.log("1",oItem);
+                          oItem = value;                         
                           return;
                         }
                       });
                       if (oItem) {
                         if (_oForms.Termno === "2") {
                           oItem.Term2 = oMainTerm;
-                          oItem.Term2mode.Hasdata = true;            
-                          console.log("2",oItem);             
-                          oModel.setProperty("/floorData",aTableData.floorData);
+                          oItem.Term2mode.Hasdata = true;                                                
+                          oModel.setProperty("/floorData",aTableData);
                         }
                       }
                     }
@@ -467,7 +465,33 @@ sap.ui.define(
               }
             );
             return true;
-          } 
+          } else {
+            // Floor Units don't change
+            var oMainTerm = _oForms.mainTerm[0];
+            var sFloor = oFloorUnits.Floor;
+
+            var aCurrUnitnos = _oForms.mainTerm[0].Unitnos.split("/");
+
+            for (var i = 0; i < aCurrUnitnos.length; i++) {
+              var sUnit = aCurrUnitnos[i];
+              var oItem = null;
+
+              aTableData.forEach((value, key) => {
+                if (value.Floor === sFloor && value.Unitno === sUnit) {
+                  oItem = value;                  
+                  return;
+                }
+              });
+              if (oItem) {
+                if (_oForms.Termno === "2") {
+                  oItem.Term2 = oMainTerm;
+                  oItem.Term2mode.Hasdata = true;                                    
+                  oModel.setProperty("/floorData",aTableData);
+                }
+              }
+            }
+
+          }
           return false;
         },
 
@@ -618,9 +642,9 @@ sap.ui.define(
           });
         },
 
-        _delete2ndTerm: function () {
+        _delete2ndTerm: function (oItem) {
 
-          var bDone = _oTableManager.deleteTerm(_oDelItem,"2");
+          var bDone = _oTableManager.deleteTerm(oItem,"2");
           
           if (bDone) {
             _oTableManager.clearTableSelection();

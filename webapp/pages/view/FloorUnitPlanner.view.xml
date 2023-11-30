@@ -15,13 +15,13 @@
 				text="{i18n>Label.SecondTerm}"
 				tooltip="2nd Term"
 				visible="{viewData>/showBtn2ndTerm}"
-				press="onCreate2ndTerm"
+				press="onCreate2ndTermDialog"
 			/>
 			<m:Button
 				text="{i18n>Label.DeleteSecondTerm}"
 				tooltip="2nd Term"
 				visible="{viewData>/showBtnDel2ndTerm}"
-				press="onDelete2ndTerm"
+				press="onDelete2ndTermDialog"
 			/>
 		</m:headerContent>
 		<ui:Table
@@ -291,7 +291,7 @@
 								<m:Link
 									ariaHasPopup="Dialog"
 									text="{tableData>Term2/Company}"
-									press=".onEditTerm"
+									press=".onEditTermDialog"
 									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
 								/>
 								<m:Label
@@ -326,7 +326,7 @@
 								<m:Link
 									ariaHasPopup="Dialog"
 									text="{tableData>Term2/Tenant}"
-									press=".onEditTerm"
+									press=".onEditTermDialog"
 									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
 								/>
 								<m:Label
@@ -376,7 +376,7 @@
 								<m:Link
 									ariaHasPopup="Dialog"
 									text="{tableData>Term2/Trade}"
-									press=".onEditTerm"
+									press=".onEditTermDialog"
 									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata}  }"
 								/>
 								<m:Label
@@ -415,7 +415,7 @@
 										path: 'tableData>Term2/Areasize',
 										formatter: '.formatNoDecimals'
 									} {tableData>Term2/Uom}"
-									press=".onEditTerm"
+									press=".onEditTermDialog"
 									visible="{=  ${tableData>Term2mode/Main} &amp;&amp; ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
 								/>
 								<m:Label

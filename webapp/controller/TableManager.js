@@ -19,6 +19,9 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
     getTableModel: function () {
       return this.oTableModel;
     },
+    getTableData: function(){
+      return this.aTableData;
+    },
 
     refreshTable: function () {
       this.oTableModel.refresh();
