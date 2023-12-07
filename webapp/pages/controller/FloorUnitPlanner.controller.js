@@ -51,6 +51,7 @@ sap.ui.define(
             showBtnDel2ndTerm: false,
             ChangeAreaSize: false,
             industryData: [],
+            isBusy: false
           });
 
           var oView = this.getView();
@@ -377,11 +378,15 @@ sap.ui.define(
             mainTerm: [],            
             termModes: [],
             floorUnits: null,            
+            editTerm: [],
             Editmode: true,
-            Termno: sTermno
+            Termno: sTermno,
+            
           };
 
-          _oForms.mainTerm.push(oTerm);
+          //_oForms.mainTerm.push(oTerm);
+          _oForms.mainTerm = oTerm;
+          _oForms.editTerm.push(JSON.parse(JSON.stringify(oTerm)));
 
           _oForms.floorUnits = {
             Floor: oItem.Floor,
@@ -401,9 +406,9 @@ sap.ui.define(
 
 
         onNewTermEdit: function () {
-          _oForms.mainTerm[0].Noofyears = this.yearDiff(
-            _oForms.mainTerm[0].Startdate,
-            _oForms.mainTerm[0].Enddate
+          _oForms.mainTerm.Noofyears = this.yearDiff(
+            _oForms.mainTerm.Startdate,
+            _oForms.mainTerm.Enddate
           );          
 
           if(!this._doTableSave()) {
@@ -482,6 +487,8 @@ sap.ui.define(
 
         _getTableData: function () {
           var oServiceKeys = this.getServiceKeys();
+          var oModel = this.getView().getModel();
+          var oViewModel = this.getView().getModel("viewData");
 
           var aFilters = [];
           aFilters.push(
@@ -497,10 +504,10 @@ sap.ui.define(
             new Filter("Keydate", FilterOperator.EQ, oServiceKeys.Keydate)
           );
 
-          var oModel = this.getView().getModel();
           
+          oViewModel.setProperty("/isBusy",true);
 
-          sap.ui.core.BusyIndicator.show();
+          //sap.ui.core.BusyIndicator.show();
 
           oModel.read("/ZSFloorTermSet", {
             filters: aFilters,
@@ -512,19 +519,21 @@ sap.ui.define(
                   floorData: aData,
                 });
                 
-                _oTableManager.setTableModel(oTableModel);                                
+                _oTableManager.setTableModel(oTableModel);    
+                oViewModel.setProperty("/isBusy",false)                            
 
                 this.getView().setModel(oTableModel, "tableData");
               }
               sap.ui.core.BusyIndicator.hide();
             }.bind(this),
             error: function (oError) {
-              sap.ui.core.BusyIndicator.hide();
+              //sap.ui.core.BusyIndicator.hide();
+              oViewModel.setProperty("/isBusy",false);     
               MessageBox.error("{i18n>Error.FailLoad}");
             },
           });
 
-          sap.ui.core.BusyIndicator.show();
+          //sap.ui.core.BusyIndicator.show();
 
           aFilters = [];
           aFilters.push(
@@ -540,6 +549,9 @@ sap.ui.define(
           aFilters.push(
             new Filter("IndustrySector", FilterOperator.BT, "100", "999")
           );
+
+          
+
           oModel.read("/ZIT_INDUSTRY", {
             filters: aFilters,
             sorters: [
@@ -550,8 +562,7 @@ sap.ui.define(
             ],
             success: function (oResponse) {
               if (oResponse.results) {
-                var aData = oResponse.results;
-                var oViewModel = this.getView().getModel("viewData");
+                var aData = oResponse.results;                
                 oViewModel.setProperty("/industryData", aData);
               }
               sap.ui.core.BusyIndicator.hide();
@@ -565,10 +576,10 @@ sap.ui.define(
         
         _doTableSave: function(){
           var oFloorUnits = _oForms.floorUnits;
-          var oModel = _oTableManager.getTableModel();
-          var aTableData = _oTableManager.getTableData();            
+          //var oModel = _oTableManager.getTableModel();
+          //var aTableData = _oTableManager.getTableData();            
           
-
+          // Floor Units changed
           if (oFloorUnits.Unitnos !== _oForms.mainTerm[0].Unitnos) {
             var aCurrUnitnos = _oForms.mainTerm[0].Unitnos.split("/");
             var aPrevUnitnos = oFloorUnits.Unitnos.split("/");

@@ -12,7 +12,7 @@
 				class="sapUiSmallMargin"
 				id="formContainer"
 				items="{
-					path: 'PlanFormData>/mainTerm'
+					path: 'PlanFormData>/editTerm'
 				}"
 			>
 				<f:SimpleForm

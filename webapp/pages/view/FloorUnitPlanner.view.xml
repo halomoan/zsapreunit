@@ -33,6 +33,7 @@
 			ariaLabelledBy="title"
 			enableColumnFreeze="true"
 			visibleRowCount="15"
+			enableBusyIndicator="{viewData>/isBusy}"
 		>
 			<ui:plugins>
 				<plugins:MultiSelectionPlugin
