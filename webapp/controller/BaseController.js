@@ -153,7 +153,7 @@ sap.ui.define(
         sFragmentName,
         oThis
       ) {
-        this.getFormFragment(
+         return this.getFormFragment(
           oView,
           _formFragments,
           sFragmentName,

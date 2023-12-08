@@ -33,7 +33,7 @@
 			ariaLabelledBy="title"
 			enableColumnFreeze="true"
 			visibleRowCount="15"
-			enableBusyIndicator="{viewData>/isBusy}"
+			enableBusyIndicator="true"
 		>
 			<ui:plugins>
 				<plugins:MultiSelectionPlugin
@@ -56,7 +56,7 @@
 				</m:OverflowToolbar>
 			</ui:extension>
 			<ui:columns>
-				<ui:Column width="4rem">
+				<ui:Column width="4rem" filterProperty="Floor">
 					<m:Label text="{i18n>Label.Floor}"/>
 					<ui:template>
 						<m:Label
@@ -66,7 +66,7 @@
 						/>
 					</ui:template>
 				</ui:Column>
-				<ui:Column width="4rem">
+				<ui:Column width="4rem" filterProperty="Unitno">
 					<m:Label text="{i18n>Label.UnitNo}"/>
 					<ui:template>
 						<m:Label
@@ -293,6 +293,7 @@
 									ariaHasPopup="Dialog"
 									text="{tableData>Term2/Company}"
 									press=".onEditTermDialog"
+									class="tickLink"
 									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
 								/>
 								<m:Label
@@ -328,6 +329,7 @@
 									ariaHasPopup="Dialog"
 									text="{tableData>Term2/Tenant}"
 									press=".onEditTermDialog"
+									class="tickLink"
 									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
 								/>
 								<m:Label
@@ -378,11 +380,11 @@
 									ariaHasPopup="Dialog"
 									text="{tableData>Term2/Trade}"
 									press=".onEditTermDialog"
+									class="tickLink"
 									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata}  }"
 								/>
 								<m:Label
-									text="{tableData>Term2/Trade}"
-									class="sapUiTinyMarginBegin"
+									text="{tableData>Term2/Trade}"									
 									design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
 									visible="{= !${tableData>Term2mode/Main} &amp;&amp;  !${tableData>Term2mode/IsInput} &amp;&amp; ${tableData>Term2mode/Hasdata}}"
 								/>
@@ -416,6 +418,7 @@
 										path: 'tableData>Term2/Areasize',
 										formatter: '.formatNoDecimals'
 									} {tableData>Term2/Uom}"
+									class="tickLink"
 									press=".onEditTermDialog"
 									visible="{=  ${tableData>Term2mode/Main} &amp;&amp; ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
 								/>
@@ -486,6 +489,7 @@
 										path: 'tableData>Term2/Startdate',
 										formatter: '.formatDateTime'
 									}"
+									class="tickLink"
 									press=".onOpenDatePicker"
 									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
 								/>
@@ -528,6 +532,7 @@
 										path: 'tableData>Term2/Enddate',
 										formatter: '.formatDateTime'
 									}"
+									class="tickLink"
 									press=".onOpenDatePicker"
 									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
 								/>

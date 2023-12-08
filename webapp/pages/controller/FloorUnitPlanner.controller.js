@@ -2,6 +2,7 @@ sap.ui.define(
   [
     "zsapreunit/controller/BaseController",
     "zsapreunit/controller/TableManager",
+    "zsapreunit/controller/FloorUnitForm",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/Sorter",
@@ -16,6 +17,7 @@ sap.ui.define(
   function (
     BaseController,
     TableManager,
+    FloorUnitForm,
     Filter,
     FilterOperator,
     Sorter,
@@ -26,9 +28,10 @@ sap.ui.define(
   ) {
     "use strict";
 
-    var _oi18Bundle;
-    var _oTableManager;
-    var _oForms;
+    var _oi18Bundle;    
+    var _oTableManager; 
+    var _oForm;
+    var _oFormDialog;   
     var _oDelItem;
     var _oLink;
 
@@ -64,6 +67,7 @@ sap.ui.define(
 
           var oTable = this.byId("planTable");
           _oTableManager = new TableManager(oTable);
+          
 
           this._oRouter = this.getRouter();
           this._oRouter
@@ -71,7 +75,7 @@ sap.ui.define(
             .attachPatternMatched(this.__onRouteMatched, this);
         },
 
-        __onRouteMatched: function (oEvent) {
+        __onRouteMatched: function (oEvent) {          
           _oi18Bundle = this.getResourceBundle();
           this._getTableData();
         },
@@ -216,20 +220,12 @@ sap.ui.define(
         },
 
         onCreate2ndTermDialog: function (oEvent) {
-          var oTable = this.byId("planTable");
+          var oTable = _oTableManager.getTableControl();
           var oPlugin = oTable.getPlugins()[0];
           var aIndices = oPlugin.getSelectedIndices();
 
           var sUnitNos = "";
-          var oMainTerm;
-
-          _oForms = {
-            mainTerm: [],            
-            termModes: [],
-            floorUnits: null,            
-            Editmode: false,
-            Termno: "2",
-          };
+          var oFUForm = new FloorUnitForm("2","CREATE");
 
           for (var i = 0; i < aIndices.length; i++) {
             var oItem = oTable.getContextByIndex(aIndices[i]).getObject();
@@ -240,7 +236,9 @@ sap.ui.define(
             var oItem = oTable.getContextByIndex(aIndices[i]).getObject();
 
             if (i === 0) {
-              oMainTerm = oItem.Term2;
+
+             
+                          
               oItem.Term2.xId = _oi18Bundle.getText("Label.SecondTerm");
 
               oItem.Term2mode.Main = true;
@@ -248,14 +246,13 @@ sap.ui.define(
               oItem.Term2mode.Hasdata = true;
               oItem.Term2mode.Todelete = false;
 
-              //oItem.Term2.Startdate = oDate.setDate(oItem.Term1.Enddate.getDate() + 1);
-
+            
               oItem.Term2.Startdate = new Date(oItem.Term1.Enddate.getTime());
               oItem.Term2.Startdate.setDate(
                 oItem.Term2.Startdate.getDate() + 1
               );
 
-              //oItem.Term2.Areasize = 1500;
+      
               oItem.Term2.Enddate = new Date(oItem.Term2.Startdate.getTime());
               oItem.Term2.Enddate.setDate(
                 oItem.Term2.Enddate.getDate() + 365 * 3
@@ -268,13 +265,20 @@ sap.ui.define(
                 oItem.Term2.Unitnos = oItem.Term1.Unitnos;
                 sUnitNos = oItem.Term1.Unitnos;
               } else {
+                oItem.Term2.Areasize = 0;
+                oItem.Term2.Uom = oItem.Term1.Uom;
                 oItem.Term2.Unitnos = sUnitNos;
               }
 
-              _oForms.mainTerm.push(oItem.Term2);
+              
+             
+               oFUForm.setMainTerm(oItem.Term2);
+             
+               oFUForm.setEditTerm(oItem.Term2);
              
             } else {
-              oItem.Term2 = oMainTerm;
+            
+              oItem.Term2 = oFUForm.getMainTerm();
 
               oItem.Term2mode.Isinput = false;
               oItem.Term2mode.Hasdata = true;
@@ -282,32 +286,46 @@ sap.ui.define(
     
             }            
 
-            if (!oItem.Term2.Uom) {
-              oItem.Term2.Uom = "SF";
-            }
-            _oForms.termModes.push(oItem.Term2mode);
-          }
+         
+            oFUForm.setTermModes(oItem.Term2mode);
+          }       
 
-          _oForms.floorUnits = {
-            Floor: oItem.Floor,
-            Unitnos: sUnitNos,
-          };
-          
+          oFUForm.setFloorUnits(
+            {
+              Floor: oItem.Floor,
+              Unitnos: sUnitNos,
+            }
+          );
+
+                  
           this._clearTableSelection();
           this._refreshTable();
 
-          var oModel = new JSONModel(_oForms);
+          _oForm = oFUForm.getForm();          
+
+          var oModel = new JSONModel(_oForm);
           this.getView().setModel(oModel, "PlanFormData");
 
-          var oViewModel = this.getView().getModel("viewData");
-          oViewModel.setProperty("/ChangeAreaSize", false);
+          //var oViewModel = this.getView().getModel("viewData");
+          //oViewModel.setProperty("/ChangeAreaSize", false);
+         
 
-          this.showFormDialogFragment(
-            this.getView(),
-            this._formFragments,
-            "zsapreunit.fragments.PlanFormDialog",
-            this
-          );
+          if (_oFormDialog) {            
+            _oFormDialog.open();
+          } else {            
+            _oFormDialog = this.showFormDialogFragment(
+              this.getView(),
+              this._formFragments,
+              "zsapreunit.fragments.PlanFormDialog",
+              this
+            );                    
+          }
+          _oFormDialog.bindElement({ path: "/", model: "PlanFormData" })
+
+          var oFloorUnitsCtrl = this.byId("mFloorUnits");
+          
+          var oBinding = oFloorUnitsCtrl.getBinding("suggestionItems");          
+          oBinding.filter([new Filter("Floor", FilterOperator.EQ, oItem.Floor) ]);          
         },
 
         onDelete2ndTermDialog: function () {
@@ -328,30 +346,35 @@ sap.ui.define(
           var sTrade = oSelectedItem.getText();
 
           var oBindingContext = oSelectedItem.getBindingContext("tableData");
-
+          
+          
           if (oBindingContext) {
             oItem = oBindingContext.getObject();
             oItem.Term2.Trade = sTrade;
           } else {
-            oBindingContext = oSelectedItem.getBindingContext("PlanFormData");
+            oBindingContext = oSelectedItem.getBindingContext("PlanFormData");                        
             oItem = oBindingContext.getObject();
-            oItem.Trade = sTrade;
+            
+            oItem.editTerm.Trade = sTrade;
+            
           }
+          
         },
 
-        onNewTermCreate: function () {
-          _oForms.mainTerm[0].Noofyears = this.yearDiff(
-            _oForms.mainTerm[0].Startdate,
-            _oForms.mainTerm[0].Enddate
+        onNewTermCreate: function () {          
+          _oForm.mainTerm.Noofyears = this.yearDiff(
+            _oForm.mainTerm.Startdate,
+            _oForm.mainTerm.Enddate
           );
+
+          if (!_oForm.mainTerm.Uom) _oForm.mainTerm.Uom = "SF";
               
           if(!this._doTableSave()) {
             this._refreshTable();
           };
-
-
-          var oDialog = this.getView().byId("PlanTermForm");
-          oDialog.close();
+       
+          _oFormDialog.findAggregatedObjects(true,function(o) { if( typeof o.setValueState === 'function' ) o.setValueState("None") });
+          _oFormDialog.close();
         },
         onEditTermDialog: function (oEvent) {
           var oSource = oEvent.getSource();
@@ -374,85 +397,125 @@ sap.ui.define(
           var oTerm = oModel.getProperty(sTerm);
           var oItem = oModel.getProperty(sItemPath);
 
-          _oForms = {
-            mainTerm: [],            
-            termModes: [],
-            floorUnits: null,            
-            editTerm: [],
-            Editmode: true,
-            Termno: sTermno,
-            
-          };
-
-          //_oForms.mainTerm.push(oTerm);
-          _oForms.mainTerm = oTerm;
-          _oForms.editTerm.push(JSON.parse(JSON.stringify(oTerm)));
-
-          _oForms.floorUnits = {
-            Floor: oItem.Floor,
-            Unitnos: oTerm.Unitnos,
-          };
+          var oFUForm = new FloorUnitForm("2","EDIT");
           
-          oModel = new JSONModel(_oForms);
-          this.getView().setModel(oModel, "PlanFormData");
+          
+          //_oForm.mainTerm = oTerm;
+          oFUForm.setMainTerm(oTerm)
+          //Copy to temporary storage for editing.
 
-          this.showFormDialogFragment(
-            this.getView(),
-            this._formFragments,
-            "zsapreunit.fragments.PlanFormDialog",
-            this
+          var oTermCopy = JSON.parse(JSON.stringify(oTerm));
+          oTermCopy.Startdate = _oForm.mainTerm.Startdate;
+          oTermCopy.Enddate = _oForm.mainTerm.Enddate;          
+          oFUForm.setEditTerm(oTermCopy)
+
+
+          //_oForm.floorUnits = {
+          //  Floor: oItem.Floor,
+          //  Unitnos: oTerm.Unitnos,
+          //};
+
+          oFUForm.setFloorUnits(
+            {
+              Floor: oItem.Floor,
+              Unitnos: oTerm.Unitnos,
+            }
           );
+
+          _oForm = oFUForm.getForm();
+          
+          oModel = new JSONModel(_oForm);
+          this.getView().setModel(oModel, "PlanFormData");
+        
+          if (_oFormDialog) {            
+            _oFormDialog.open();
+          } else {  
+          
+            _oFormDialog = this.showFormDialogFragment(
+              this.getView(),
+              this._formFragments,
+              "zsapreunit.fragments.PlanFormDialog",
+              this
+            );
+          }
         },
 
 
         onNewTermEdit: function () {
-          _oForms.mainTerm.Noofyears = this.yearDiff(
-            _oForms.mainTerm.Startdate,
-            _oForms.mainTerm.Enddate
+          _oForm.mainTerm.Noofyears = this.yearDiff(
+            _oForm.mainTerm.Startdate,
+            _oForm.mainTerm.Enddate
           );          
-
+        for(var prop in _oForm.editTerm ) {
+           _oForm.mainTerm[prop] = _oForm.editTerm[prop];
+        }
+          
           if(!this._doTableSave()) {
             this._refreshTable();
           };
-          
-
-          var oDialog = this.getView().byId("PlanTermForm");
-          oDialog.close();
+                  
+          _oFormDialog.findAggregatedObjects(true,function(o) { if( typeof o.setValueState === 'function' ) o.setValueState("None") });
+          _oFormDialog.close();
         },
 
      
-        onNewTermCancel: function () {
-          for (var i = 0; i < _oForms.termModes.length; i++) {
-            var oItem = _oForms.termModes[i];
-            oItem.Main = false;
-            oItem.Isinput = false;
-            oItem.Startdate = null;
-            oItem.Hasdata = false;
+        onFormCancel: function () {
+
+          if (!_oForm.Editmode) {
+            for (var i = 0; i < _oForm.termModes.length; i++) {
+              var oItem = _oForm.termModes[i];
+              oItem.Main = false;
+              oItem.Isinput = false;
+              oItem.Startdate = null;
+              oItem.Hasdata = false;
+            }
+            this._refreshTable();
           }
 
-          this._refreshTable();
+          
 
-          var oTable = this.byId("planTable");
+          var oTable = _oTableManager.getTableControl();
           var oPlugin = oTable.getPlugins()[0];
           oPlugin.clearSelection();
 
-          var oDialog = this.getView().byId("PlanTermForm");
-          oDialog.close();
+          _oFormDialog.findAggregatedObjects(true,function(o) { if( typeof o.setValueState === 'function' ) o.setValueState("None") });
+         
+          _oFormDialog.close();
         },
 
         onSDateChanged: function (oEvent) {
           var oStartDP = oEvent.getSource();
+          
+          var oItem = oStartDP.getBindingContext("PlanFormData").getObject(); 
 
-          console.log(oStartDP.getBindingContext("PlanFormData"));
-          var oItem = oStartDP.getBindingContext("PlanFormData").getObject();
+          
+          if (oItem.editTerm.Startdate.getTime() > oItem.editTerm.Enddate.getTime()){
+            MessageBox.error(_oi18Bundle.getText("Error.StartdategtEnddate"))
+            oItem.HasError = true;
+            oStartDP.setValueState("Error")
+          } else {
+            oStartDP.setValueState("None")
+            oItem.HasError = false;
+          }
 
-          oItem.Noofyears = this.yearDiff(oItem.Startdate, oItem.Enddate);
+          oItem.editTerm.Noofyears = this.yearDiff(oItem.editTerm.Startdate, oItem.editTerm.Enddate);
         },
         onEDateChanged: function (oEvent) {
           var oEndDP = oEvent.getSource();
+
           var oItem = oEndDP.getBindingContext("PlanFormData").getObject();
 
-          oItem.Noofyears = this.yearDiff(oItem.Startdate, oItem.Enddate);
+          if (oItem.editTerm.Startdate.getTime() > oItem.editTerm.Enddate.getTime()){
+            MessageBox.error(_oi18Bundle.getText("Error.StartdategtEnddate"))
+            oItem.HasError = true;
+            oEndDP.setValueState("Error")
+
+          } else {
+            oItem.HasError = false;
+            oEndDP.setValueState("None")
+          }
+
+          oItem.editTerm.Noofyears = this.yearDiff(oItem.editTerm.Startdate, oItem.editTerm.Enddate);
         },
         onChangeAreaSize: function (oEvent) {
           var oSource = oEvent.getSource();
@@ -476,11 +539,6 @@ sap.ui.define(
 
           var oModel = this.getView().getModel("tableData");
           oModel.setProperty(sItemPath + "/" + sPath, oDate);
-
-          //oModel.refresh();
-
-          //var oObject = _oLink.getBindingContext("tableData").getObject();
-          //console.log(sItemPath,sPath,oObject,oPlanDate);
         },
 
         onGotoFirstColumn: function () {},
@@ -503,37 +561,41 @@ sap.ui.define(
           aFilters.push(
             new Filter("Keydate", FilterOperator.EQ, oServiceKeys.Keydate)
           );
-
-          
-          oViewModel.setProperty("/isBusy",true);
-
-          //sap.ui.core.BusyIndicator.show();
-
+                   
+          var oTable = _oTableManager.getTableControl();
+          oTable.setFixedColumnCount(2); 
+          oTable.setBusy(true);                 
+               
           oModel.read("/ZSFloorTermSet", {
             filters: aFilters,
             success: function (oResponse) {
               if (oResponse.results) {
-                var aData = oResponse.results;
-                //console.log(aData);
+                var aData = oResponse.results;                
+                
                 var oTableModel = new JSONModel({
                   floorData: aData,
                 });
+
+                _oTableManager.setTableModel(oTableModel);                                                 
                 
-                _oTableManager.setTableModel(oTableModel);    
-                oViewModel.setProperty("/isBusy",false)                            
+                oTable.setBusy(false);   
 
                 this.getView().setModel(oTableModel, "tableData");
+
+                // var oFloorUnitsModel = new JSONModel({
+                //   floorUnitsData: _oTableManager.getFloorUnits(),
+                // });
+                // this.getView().setModel(oFloorUnitsModel, "floorUnitsData");
+                
               }
-              sap.ui.core.BusyIndicator.hide();
+              
             }.bind(this),
             error: function (oError) {
-              //sap.ui.core.BusyIndicator.hide();
-              oViewModel.setProperty("/isBusy",false);     
+              
+              oTable.setBusy(false);    
               MessageBox.error("{i18n>Error.FailLoad}");
             },
-          });
-
-          //sap.ui.core.BusyIndicator.show();
+          });          
 
           aFilters = [];
           aFilters.push(
@@ -575,13 +637,11 @@ sap.ui.define(
         },
         
         _doTableSave: function(){
-          var oFloorUnits = _oForms.floorUnits;
-          //var oModel = _oTableManager.getTableModel();
-          //var aTableData = _oTableManager.getTableData();            
-          
+          var oFloorUnits = _oForm.floorUnits;
+                 
           // Floor Units changed
-          if (oFloorUnits.Unitnos !== _oForms.mainTerm[0].Unitnos) {
-            var aCurrUnitnos = _oForms.mainTerm[0].Unitnos.split("/");
+          if (oFloorUnits.Unitnos !== _oForm.mainTerm.Unitnos) {
+            var aCurrUnitnos = _oForm.mainTerm.Unitnos.split("/");
             var aPrevUnitnos = oFloorUnits.Unitnos.split("/");
             
             const aDiffUnitnos = aCurrUnitnos.filter(
@@ -598,10 +658,10 @@ sap.ui.define(
                 onClose: function (sAction) {
                   if (sAction === "Yes") {
                     
-                    var oMainTerm = _oForms.mainTerm[0];
+                    var oMainTerm = _oForm.mainTerm;
                     var sFloor = oFloorUnits.Floor;
 
-                    switch(_oForms.Termno) 
+                    switch(_oForm.Termno) 
                     {
                         case "2":
                           _oTableManager.doSaveData(sFloor,aDiffUnitnos,oMainTerm,2);
@@ -617,12 +677,12 @@ sap.ui.define(
             return true;
           } else {
             // Floor Units don't change
-            var oMainTerm = _oForms.mainTerm[0];
+            var oMainTerm = _oForm.mainTerm;
             var sFloor = oFloorUnits.Floor;
 
-            var aUnitnos = _oForms.mainTerm[0].Unitnos.split("/");
+            var aUnitnos = _oForm.mainTerm.Unitnos.split("/");
 
-            switch(_oForms.Termno) 
+            switch(_oForm.Termno) 
             {
                 case "2":
                   _oTableManager.doSaveData(sFloor,aUnitnos,oMainTerm,2);
@@ -652,7 +712,7 @@ sap.ui.define(
           oModel.refresh();
         },
         _clearTableSelection: function () {
-          var oTable = this.byId("planTable");
+          var oTable = _oTableManager.getTableControl();
           var oPlugin = oTable.getPlugins()[0];
           oPlugin.clearSelection();
         },

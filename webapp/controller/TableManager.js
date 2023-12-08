@@ -12,9 +12,27 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
       return this;
     },
 
+    getTableControl: function(){
+      return this.oTable;
+    },
     setTableModel: function(oModel){
         this.oTableModel = oModel;
         this.aTableData = oModel.getData().floorData;
+    },
+
+    getFloorUnits: function(){
+      var aFloorUnits = [];              
+
+      this.aTableData.forEach((o) => { aFloorUnits.push(
+        {
+          "Floor": o.Floor,
+          "Unitno": o.Unitno
+        }
+        );
+      })
+      
+      return aFloorUnits;
+
     },
     getTableModel: function () {
       return this.oTableModel;
@@ -48,15 +66,14 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
               break;            
           }
         }
-      }
-
+      }      
+      
       this.oTableModel.setProperty("/floorData",this.aTableData);
 
     },
 
     refreshTable: function () {
-      this.oTableModel.refresh();
-      return null;
+      this.oTableModel.refresh();     
     },
 
     clearTableSelection: function () {      
