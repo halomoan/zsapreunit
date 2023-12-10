@@ -110,13 +110,21 @@
 						id="mFloorUnits"						
 						suggestionItems="{
 							path: 'tableData>/floorData',
-							sorter: { path: 'Floor' }
+							sorter: { path: 'Unitno' }
 						}"
+						tokens="{
+							path: 'PlanFormData>editTerm/xUnitnos',
+							sorter: { path: 'Unitno' }
+						}"
+						tokenUpdate="onUnitsChanged"
 						showValueHelp="false">
 						
-						<core:Item key="{tableData>Floor}" text="{tableData>Unitno}" />
-						
+						<core:Item key="{tableData>Unitno}" text="{tableData>Unitno}" />
+						<tokens>
+							<Token key="{PlanFormData>Unitno}" text="{PlanFormData>Unitno}" />
+						</tokens>
 					</MultiInput>
+					
 					<core:Title text="{i18n>Contract.BaseRent}" />
 					<Label
 						design="Bold"

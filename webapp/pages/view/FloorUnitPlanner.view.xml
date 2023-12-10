@@ -459,7 +459,7 @@
 								formatter: '.yearDiff'
 							}"
 							design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
-							visible="{tableData>Term2mode/Main}"
+							visible="{= ${tableData>Term2mode/Main} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
 						/>
 					</ui:template>
 				</ui:Column>
