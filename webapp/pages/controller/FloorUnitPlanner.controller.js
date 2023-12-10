@@ -678,7 +678,8 @@ sap.ui.define(
         },
 
         _doTableSave: function () {
-          var oFloorUnits = _oForm.floorUnits;
+          var sFloor = _oForm.floorUnits.Floor;
+          var aUnitnos = 
           
           // Floor Units changed
           if (oFloorUnits.Unitnos !== _oForm.mainTerm.Unitnos) {
