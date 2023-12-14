@@ -43,14 +43,14 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
 
     doSaveData: function(oForm){      
       
-      var sTermno = oForm.Termno;
-      var sFloor = oForm.floorUnits.Floor;
+      var sTermno = oForm.Termno;      
       var aUnitnos = oForm.mainTerm.xUnitnos;
       var oMainTerm = oForm.mainTerm;
       
       
       
       for (var i = 0; i < aUnitnos.length; i++) {
+        var sFloor = aUnitnos[i].Floor;
         var sUnitno = aUnitnos[i].Unitno;
         var oItem = this.getFloorUnitTerm(sFloor,sUnitno);
         
@@ -87,8 +87,10 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
       var aRemoveUnits = oForm.RemoveUnits;     
 
       for (var i = 0; i < aRemoveUnits.length; i++) {
+        var sFloor = aRemoveUnits[i].Floor;
         var sUnitno = aRemoveUnits[i].Unitno;
         var oItem = this.getFloorUnitTerm(sFloor,sUnitno);
+
         if (oItem) {         
           switch(sTermno) {
             case "2":

@@ -7,7 +7,7 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
       mainTerm: null,            
       editTerm: null,      
       termModes: [],
-      floorUnits: null,
+      //floorUnits: null,
       RemoveUnits: [],                  
       Editmode: true,
       HasError: false,
@@ -57,9 +57,9 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
       this.oForm.termModes.push(oTermMode);
     },
 
-    setFloorUnits: function(oFloorUnits){
-      this.oForm.floorUnits = oFloorUnits;
-    },
+    // setFloorUnits: function(oFloorUnits){
+    //   this.oForm.floorUnits = oFloorUnits;
+    // },
 
     getUnitnos: function(){
       var sUnitnos = "";

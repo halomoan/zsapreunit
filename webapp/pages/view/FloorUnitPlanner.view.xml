@@ -23,6 +23,18 @@
 				visible="{viewData>/showBtnDel2ndTerm}"
 				press="onDelete2ndTermDialog"
 			/>
+			<m:Button
+				text="{i18n>Label.ThirdTerm}"
+				tooltip="2nd Term"
+				visible="{viewData>/showBtn3rdTerm}"
+				press="onCreate3rdTermDialog"
+			/>
+			<m:Button
+				text="{i18n>Label.DeleteThirdTerm}"
+				tooltip="2nd Term"
+				visible="{viewData>/showBtnDel3rdTerm}"
+				press="onDelete3rdTermDialog"
+			/>
 		</m:headerContent>
 		<ui:Table
 			id="planTable"
@@ -546,6 +558,337 @@
 								/>
 							</l:content>
 						</l:VerticalLayout>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					hAlign="Center"
+					width="8rem"
+				>
+					<ui:multiLabels>
+						<m:Label text="{i18n>Label.SecondTerm}"/>
+						<m:Label
+							text="{i18n>Contract.BaseRent.Avg}"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<m:Button
+							text="{
+								path: 'tableData>Term2/Avgbaserent',
+								formatter: '.formatNumber'
+							}"
+							press="onShowT2Baserent"
+							visible="{tableData>Term2mode/Main}"
+						/>
+					</ui:template>
+				</ui:Column>
+				<!-- 3rd Term-->
+				<ui:Column
+					width="18rem"
+					headerSpan="2"
+					filterProperty="Term3/Company"
+				>
+					<ui:multiLabels>
+						<m:Label
+							text="{i18n>Label.ThirdTerm}"
+							textAlign="Center"
+							width="100%"
+						/>
+						<m:Label
+							text="{i18n>Contract.Company}"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<l:VerticalLayout width="100%">
+							<l:content>
+								<!-- <m:Input
+                                    value="{tableData>Term3/Company}"
+                                    autocomplete="false"
+                                    visible="{= ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
+                                /> -->
+								<m:Link
+									ariaHasPopup="Dialog"
+									text="{tableData>Term3/Company}"
+									press=".onEditTermDialog"
+									class="tickLink"
+									visible="{= ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
+								/>
+								<m:Label
+									text="{tableData>Term3/Company}"
+									design="{= ${tableData>Term3mode/Main} ? 'Bold': 'Standard'}"
+									visible="{= ! ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
+								/>
+							</l:content>
+						</l:VerticalLayout>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					width="12rem"
+					filterProperty="Term3/Tenant"
+				>
+					<ui:multiLabels>
+						<m:Label text="{i18n>Label.ThirdTerm}"/>
+						<m:Label
+							text="Tenant"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<l:VerticalLayout width="100%">
+							<l:content>
+								<!-- <m:Input
+                                    value="{tableData>Term3/Tenant}"
+                                    autocomplete="false"
+                                    visible="{= ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
+                                /> -->
+								<m:Link
+									ariaHasPopup="Dialog"
+									text="{tableData>Term3/Tenant}"
+									press=".onEditTermDialog"
+									class="tickLink"
+									visible="{= ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
+								/>
+								<m:Label
+									text="{tableData>Term3/Tenant}"
+									design="{= ${tableData>Term3mode/Main} ? 'Bold': 'Standard'}"
+									visible="{= ! ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
+								/>
+							</l:content>
+						</l:VerticalLayout>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					width="13rem"
+					filterProperty="Term3/Tenant"
+				>
+					<ui:multiLabels>
+						<m:Label
+							text="{i18n>Label.ThirdTerm}"
+							width="100%"
+							textAlign="Center"
+						/>
+						<m:Label
+							text="{i18n>Contract.Trade}"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<l:VerticalLayout width="100%">
+							<l:content>
+								<!-- <m:Select
+                                    items="{
+                                        path: 'viewData>/industryData',
+                                        templateShareable: false
+                                    }"
+                                    selectedKey="{tableData>Term3/Tradekey}"
+                                    change=".onTradeChanged"
+                                    showSecondaryValues="true"
+                                    visible="{= ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
+                                >
+                                    <core:ListItem
+                                        key="{viewData>IndustrySector}"
+                                        text="{viewData>IndustryKeyDescription}"
+                                        additionalText="{viewData>IndustrySector}"
+                                    />
+                                </m:Select> -->
+								<m:Link
+									ariaHasPopup="Dialog"
+									text="{tableData>Term3/Trade}"
+									press=".onEditTermDialog"
+									class="tickLink"
+									visible="{= ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata}  }"
+								/>
+								<m:Label
+									text="{tableData>Term3/Trade}"									
+									design="{= ${tableData>Term3mode/Main} ? 'Bold': 'Standard'}"
+									visible="{= !${tableData>Term3mode/Main} &amp;&amp;  !${tableData>Term3mode/IsInput} &amp;&amp; ${tableData>Term3mode/Hasdata}}"
+								/>
+							</l:content>
+						</l:VerticalLayout>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					width="8rem"
+					hAlign="End"
+				>
+					<ui:multiLabels>
+						<m:Label
+							text="{i18n>Label.ThirdTerm}"
+							textAlign="Center"
+							width="100%"
+						/>
+						<m:Label
+							text="{i18n>Contract.AreaSize} "
+							textAlign="Center"
+							width="100%"
+							tooltip="{i18n>Label.Optional}"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<l:VerticalLayout width="100%">
+							<l:content>
+								<m:Link
+									ariaHasPopup="Dialog"
+									text="{
+										path: 'tableData>Term3/Areasize',
+										formatter: '.formatNoDecimals'
+									} {tableData>Term3/Uom}"
+									class="tickLink"
+									press=".onEditTermDialog"
+									visible="{=  ${tableData>Term3mode/Main} &amp;&amp; ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
+								/>
+								<m:Label
+									text="{
+										path: 'tableData>Term3/Areasize',
+										formatter: '.formatNoDecimals'
+									} {tableData>Term3/Uom}"
+									design="{= ${tableData>Term3mode/Main} ? 'Bold': 'Standard'}"
+									visible="{= ${tableData>Term3mode/Main} &amp;&amp; ! ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} 
+									}"
+								/>
+							</l:content>
+						</l:VerticalLayout>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					width="5rem"
+					hAlign="Center"
+				>
+					<ui:multiLabels>
+						<m:Label text="{i18n>Label.ThirdTerm}"/>
+						<m:Label
+							text="{i18n>Label.Duration}"
+							textAlign="Center"
+							width="100%"
+							wrapping="true"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<m:Label
+							text="{
+								parts: [{
+									path: 'tableData>Term3/Startdate'
+								}, {
+									path: 'tableData>Term3/Enddate'
+								}],
+								formatter: '.yearDiff'
+							}"
+							design="{= ${tableData>Term3mode/Main} ? 'Bold': 'Standard'}"
+							visible="{= ${tableData>Term3mode/Main} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
+						/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					width="8rem"
+					hAlign="Center"
+					filterProperty="Term3/Startdate"
+				>
+					<ui:multiLabels>
+						<m:Label
+							text="{i18n>Label.ThirdTerm}"
+							textAlign="Center"
+							width="100%"
+						/>
+						<m:Label
+							text="{i18n>Contract.StartDate}"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<l:VerticalLayout width="100%">
+							<l:content>
+								<m:Link
+									ariaHasPopup="Dialog"
+									text="{
+										path: 'tableData>Term3/Startdate',
+										formatter: '.formatDateTime'
+									}"
+									class="tickLink"
+									press=".onOpenDatePicker"
+									visible="{= ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
+								/>
+								<m:Label
+									text="{
+										path: 'tableData>Term3/Startdate',
+										formatter: '.formatDateTime'
+									}"
+									design="{= ${tableData>Term3mode/Main} ? 'Bold': 'Standard'}"
+									visible="{= ${tableData>Term3mode/Main} &amp;&amp; ! ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
+								/>
+							</l:content>
+						</l:VerticalLayout>
+					</ui:template>
+				</ui:Column>
+
+				<ui:Column
+					width="8rem"
+					hAlign="Center"
+					filterProperty="Term3/Startdate"
+				>
+					<ui:multiLabels>
+						<m:Label
+							text="{i18n>Label.ThirdTerm}"
+							textAlign="Center"
+							width="100%"
+						/>
+						<m:Label
+							text="{i18n>Contract.EndDate}"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<l:VerticalLayout width="100%">
+							<l:content>
+								<m:Link
+									ariaHasPopup="Dialog"
+									text="{
+										path: 'tableData>Term3/Enddate',
+										formatter: '.formatDateTime'
+									}"
+									class="tickLink"
+									press=".onOpenDatePicker"
+									visible="{= ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
+								/>
+								<m:Label
+									text="{
+										path: 'tableData>Term3/Enddate',
+										formatter: '.formatDateTime'
+									}"
+									design="{= ${tableData>Term3mode/Main} ? 'Bold': 'Standard'}"
+									visible="{= ${tableData>Term3mode/Main} &amp;&amp; ! ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
+								/>
+							</l:content>
+						</l:VerticalLayout>
+					</ui:template>
+				</ui:Column>
+				<ui:Column
+					hAlign="Center"
+					width="8rem"
+				>
+					<ui:multiLabels>
+						<m:Label text="{i18n>Label.ThirdTerm}"/>
+						<m:Label
+							text="{i18n>Contract.BaseRent.Avg}"
+							textAlign="Center"
+							width="100%"
+						/>
+					</ui:multiLabels>
+					<ui:template>
+						<m:Button
+							text="{
+								path: 'tableData>Term3/Avgbaserent',
+								formatter: '.formatNumber'
+							}"
+							press="onShowT2Baserent"
+							visible="{tableData>Term3mode/Main}"
+						/>
 					</ui:template>
 				</ui:Column>
 			</ui:columns>

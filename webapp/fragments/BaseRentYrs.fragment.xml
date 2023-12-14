@@ -5,14 +5,14 @@
 >
     <Dialog
         id="BaseRentDialog"
-        title="{i18n>Label.FirstTerm} : {Term1>/Company}"
+        title="{i18n>Label.FirstTerm} : {Term>/Company}"
         contentWidth="650px"
     >
         <content>
             <VBox
                 class="sapUiSmallMargin"
                 items="{
-                    path: 'rateT1>/'
+                    path: 'termRate>/'
                 }"
             >
                 <f:SimpleForm
@@ -34,17 +34,17 @@
                     singleContainerFullSize="false"
                 >
                     <f:content>
-                        <core:Title text="{i18n>Label.Year} {rateT1>Year}" />
+                        <core:Title text="{i18n>Label.Year} {termRate>Year}" />
                         <Label text="{i18n>Contract.BaseRent}" />
                         <Input
-                            description="{rateT1>Currency}"
-                            editable="{rateT1>Editable}"
+                            description="{termRate>Currency}"
+                            editable="{termRate>Editable}"
                             required="true"
                             value="{
                                 parts: [{
-                                    path: 'rateT1>Baserent'
+                                    path: 'termRate>Baserent'
                                 }, {
-                                    path: 'rateT1>Currency'
+                                    path: 'termRate>Currency'
                                 }],
                                 type: 'sap.ui.model.type.Currency',
                                 formatOptions: {
@@ -54,13 +54,13 @@
                         />
                         <Label text="{i18n>Contract.SvcRent}" />
                         <Input
-                            description="{rateT1>Currency}"
-                            editable="{rateT1>Editable}"
+                            description="{termRate>Currency}"
+                            editable="{termRate>Editable}"
                             value="{
                                 parts: [{
-                                    path: 'rateT1>Svcrent'
+                                    path: 'termRate>Svcrent'
                                 }, {
-                                    path: 'rateT1>Currency'
+                                    path: 'termRate>Currency'
                                 }],
                                 type: 'sap.ui.model.type.Currency',
                                 formatOptions: {
@@ -70,13 +70,13 @@
                         />
                         <Label text="{i18n>Contract.AnpRent}" />
                         <Input
-                            description="{rateT1>Currency}"
-                            editable="{rateT1>Editable}"
+                            description="{termRate>Currency}"
+                            editable="{termRate>Editable}"
                             value="{
                                 parts: [{
-                                    path: 'rateT1>Anprent'
+                                    path: 'termRate>Anprent'
                                 }, {
-                                    path: 'rateT1>Currency'
+                                    path: 'termRate>Currency'
                                 }],
                                 type: 'sap.ui.model.type.Currency',
                                 formatOptions: {
@@ -92,13 +92,16 @@
             <Button
                 text="{i18n>Label.Save}"
                 press="onBaseRentDialogSave"
+                visible="{termRate>/0/Editable}"
             />
         </beginButton>
+
         <endButton>
             <Button
                 text="{i18n>Label.Close}"
                 press="onBaseRentDialogClose"
             />
         </endButton>
+       
     </Dialog>
 </core:FragmentDefinition>

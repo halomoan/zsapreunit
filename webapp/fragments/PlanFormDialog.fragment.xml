@@ -119,9 +119,9 @@
 						tokenUpdate="onUnitsChanged"
 						showValueHelp="false">
 						
-						<core:Item key="{tableData>Unitno}" text="{tableData>Unitno}" />
+						<core:Item key="{tableData>Floor}-{tableData>Unitno}" text="#{tableData>Floor}-{tableData>Unitno}" />
 						<tokens>
-							<Token key="{PlanFormData>Unitno}" text="{PlanFormData>Unitno}" />
+							<Token key="{PlanFormData>Floor}-{PlanFormData>Unitno}" text="#{PlanFormData>Floor}-{PlanFormData>Unitno}" />
 						</tokens>
 					</MultiInput>
 					
@@ -133,7 +133,9 @@
 					<Input
 						autocomplete="false"
 						description="{PlanFormData>editTerm/Currency}"
-						fieldWidth="4rem"
+						fieldWidth="8rem"
+						type="Number"
+						textAlign="End"
 						value="{
 							parts: [{
 								path: 'PlanFormData>editTerm/Baserentyr1'
@@ -153,7 +155,9 @@
 					<Input
 						autocomplete="false"
 						description="{PlanFormData>editTerm/Currency}"
-						fieldWidth="4rem"
+						fieldWidth="8rem"
+						type="Number"
+						textAlign="End"
 						value="{
 							parts: [{
 								path: 'PlanFormData>editTerm/Baserentyr2'
@@ -172,8 +176,10 @@
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>Currency}"
-						fieldWidth="4rem"
+						description="{PlanFormData>editTerm/Currency}"
+						fieldWidth="8rem"
+						type="Number"
+						textAlign="End"
 						value="{
 							parts: [{
 								path: 'PlanFormData>editTerm/Baserentyr3'
@@ -194,7 +200,9 @@
 					<Input
 						autocomplete="false"
 						description="{PlanFormData>editTerm/Currency}"
-						fieldWidth="4rem"
+						fieldWidth="8rem"
+						type="Number"
+						textAlign="End"
 						value="{
 							parts: [{
 								path: 'PlanFormData>editTerm/Baserentyr4'
@@ -214,7 +222,9 @@
 					<Input
 						autocomplete="false"
 						description="{PlanFormData>editTerm/Currency}"
-						fieldWidth="4rem"
+						fieldWidth="8rem"
+						type="Number"
+						textAlign="End"
 						value="{
 							parts: [{
 								path: 'PlanFormData>editTerm/Baserentyr5'
@@ -234,7 +244,8 @@
 					<Input
 						autocomplete="false"
 						description="{PlanFormData>editTerm/Currency}"
-						fieldWidth="4rem"
+						fieldWidth="8rem"
+						textAlign="End"
 						value="{
 							parts: [{
 								path: 'PlanFormData>editTerm/Baserentyr6'
@@ -255,7 +266,9 @@
 					<Input
 						autocomplete="false"
 						description="{PlanFormData>editTerm/Currency}"
-						fieldWidth="4rem"
+						fieldWidth="8rem"
+						type="Number"
+						textAlign="End"
 						value="{
 							parts: [{
 								path: 'PlanFormData>editTerm/Svcrentyr1'
@@ -274,8 +287,9 @@
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>Currency}"
-						fieldWidth="4rem"
+						description="{PlanFormData>editTerm/Currency}"
+						fieldWidth="8rem"
+						textAlign="End"
 						value="{
 							parts: [{
 								path: 'PlanFormData>editTerm/Svcrentyr2'
@@ -295,7 +309,8 @@
 					<Input
 						autocomplete="false"
 						description="{PlanFormData>editTerm/Currency}"
-						fieldWidth="4rem"
+						fieldWidth="8rem"
+						textAlign="End"
 						value="{
 							parts: [{
 								path: 'PlanFormData>editTerm/Svcrentyr3'
@@ -316,7 +331,9 @@
 					<Input
 						autocomplete="false"
 						description="{PlanFormData>editTerm/Currency}"
-						fieldWidth="4rem"
+						fieldWidth="8rem"
+						type="Number"
+						textAlign="End"
 						value="{
 							parts: [{
 								path: 'PlanFormData>editTerm/Svcrentyr4'
@@ -335,8 +352,10 @@
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>Currency}"
-						fieldWidth="4rem"
+						description="{PlanFormData>editTerm/Currency}"
+						fieldWidth="8rem"
+						type="Number"
+						textAlign="End"
 						value="{
 							parts: [{
 								path: 'PlanFormData>editTerm/Svcrentyr5'
@@ -355,8 +374,10 @@
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>Currency}"
-						fieldWidth="4rem"
+						description="{PlanFormData>editTerm/Currency}"
+						fieldWidth="8rem"
+						type="Number"
+						textAlign="End"
 						value="{
 							parts: [{
 								path: 'PlanFormData>editTerm/Svcrentyr6'
@@ -377,7 +398,9 @@
 					<Input
 						autocomplete="false"
 						description="{PlanFormData>editTerm/Currency}"
-						fieldWidth="4rem"
+						fieldWidth="8rem"
+						type="Number"
+						textAlign="End"
 						value="{
 							parts: [{
 								path: 'PlanFormData>editTerm/Anprentyr1'
@@ -397,7 +420,9 @@
 					<Input
 						autocomplete="false"
 						description="{PlanFormData>editTerm/Currency}"
-						fieldWidth="4rem"
+						fieldWidth="8rem"
+						type="Number"
+						textAlign="End"
 						value="{
 							parts: [{
 								path: 'PlanFormData>editTerm/Anprentyr2'
@@ -417,12 +442,14 @@
 					<Input
 						autocomplete="false"
 						description="{PlanFormData>editTerm/Currency}"
-						fieldWidth="4rem"
+						fieldWidth="8rem"
+						type="Number"
+						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>Anprentyr3'
+								path: 'PlanFormData>editTerm/Anprentyr3'
 							}, {
-								path: 'PlanFormData>Currency'
+								path: 'PlanFormData>editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
@@ -438,7 +465,9 @@
 					<Input
 						autocomplete="false"
 						description="{PlanFormData>editTerm/Currency}"
-						fieldWidth="4rem"
+						fieldWidth="8rem"
+						type="Number"
+						textAlign="End"
 						value="{
 							parts: [{
 								path: 'PlanFormData>editTerm/Anprentyr4'
@@ -458,7 +487,9 @@
 					<Input
 						autocomplete="false"
 						description="{PlanFormData>editTerm/Currency}"
-						fieldWidth="4rem"
+						fieldWidth="8rem"
+						type="Number"
+						textAlign="End"
 						value="{
 							parts: [{
 								path: 'PlanFormData>editTerm/Anprentyr5'
@@ -478,7 +509,9 @@
 					<Input
 						autocomplete="false"
 						description="{PlanFormData>editTerm/Currency}"
-						fieldWidth="4rem"
+						fieldWidth="8rem"
+						type="Number"
+						textAlign="End"
 						value="{
 							parts: [{
 								path: 'PlanFormData>editTerm/Anprentyr6'
