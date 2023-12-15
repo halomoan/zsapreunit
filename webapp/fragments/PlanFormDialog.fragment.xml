@@ -119,9 +119,9 @@
 						tokenUpdate="onUnitsChanged"
 						showValueHelp="false">
 						
-						<core:Item key="{tableData>Floor}-{tableData>Unitno}" text="#{tableData>Floor}-{tableData>Unitno}" />
+						<core:Item key="#{tableData>Floor}-{tableData>Unitno}" text="#{tableData>Floor}-{tableData>Unitno}" />
 						<tokens>
-							<Token key="{PlanFormData>Floor}-{PlanFormData>Unitno}" text="#{PlanFormData>Floor}-{PlanFormData>Unitno}" />
+							<Token key="#{PlanFormData>Floor}-{PlanFormData>Unitno}" text="#{PlanFormData>Floor}-{PlanFormData>Unitno}" />
 						</tokens>
 					</MultiInput>
 					

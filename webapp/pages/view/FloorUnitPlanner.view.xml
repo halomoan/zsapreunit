@@ -58,7 +58,7 @@
 			</ui:plugins>
 			<ui:extension>
 				<m:OverflowToolbar style="Clear">
-					<m:ToolbarSpacer/>
+					<m:ToolbarSpacer />
 					<m:Button
 						icon="sap-icon://close-command-field"
 						textDirection="Inherit"
@@ -68,8 +68,11 @@
 				</m:OverflowToolbar>
 			</ui:extension>
 			<ui:columns>
-				<ui:Column width="4rem" filterProperty="Floor">
-					<m:Label text="{i18n>Label.Floor}"/>
+				<ui:Column
+					width="4rem"
+					filterProperty="Floor"
+				>
+					<m:Label text="{i18n>Label.Floor}" />
 					<ui:template>
 						<m:Label
 							text="{tableData>Floor}"
@@ -78,8 +81,11 @@
 						/>
 					</ui:template>
 				</ui:Column>
-				<ui:Column width="4rem" filterProperty="Unitno">
-					<m:Label text="{i18n>Label.UnitNo}"/>
+				<ui:Column
+					width="4rem"
+					filterProperty="Unitno"
+				>
+					<m:Label text="{i18n>Label.UnitNo}" />
 					<ui:template>
 						<m:Label
 							text="{tableData>Unitno}"
@@ -118,7 +124,7 @@
 					filterProperty="Term1/Tenant"
 				>
 					<ui:multiLabels>
-						<m:Label text="First Term"/>
+						<m:Label text="First Term" />
 						<m:Label
 							text="{i18n>Contract.Tenant}"
 							textAlign="Center"
@@ -166,7 +172,7 @@
 						/>
 					</ui:multiLabels>
 					<ui:template>
-						<m:Label
+						<!-- <m:Label
 							text="{
 								path: 'tableData>Term1/Areasize',
 								formatter: '.formatNoDecimals'
@@ -175,6 +181,14 @@
 							visible="{= ${tableData>Term1mode/Main}}"
 							textAlign="End"
 							width="100%"
+						/> -->
+						<m:ObjectNumber
+							textAlign="End"
+							number="{
+								path: 'tableData>Term1/Areasize',
+								formatter: '.formatNoDecimals'
+							}"
+							unit="{tableData>Term1/Uom}"
 						/>
 					</ui:template>
 				</ui:Column>
@@ -183,7 +197,7 @@
 					hAlign="Center"
 				>
 					<ui:multiLabels>
-						<m:Label text="First Term"/>
+						<m:Label text="First Term" />
 						<m:Label
 							text="{i18n>Label.Duration}"
 							textAlign="Center"
@@ -211,7 +225,7 @@
 					width="8rem"
 				>
 					<ui:multiLabels>
-						<m:Label text="First Term"/>
+						<m:Label text="First Term" />
 						<m:Label
 							text="{i18n>Contract.StartDate}"
 							textAlign="Center"
@@ -234,7 +248,7 @@
 					width="8rem"
 				>
 					<ui:multiLabels>
-						<m:Label text="First Term"/>
+						<m:Label text="First Term" />
 						<m:Label
 							text="{i18n>Contract.EndDate}"
 							textAlign="Center"
@@ -257,7 +271,7 @@
 					width="8rem"
 				>
 					<ui:multiLabels>
-						<m:Label text="First Term"/>
+						<m:Label text="First Term" />
 						<m:Label
 							text="{i18n>Contract.BaseRent.Avg}"
 							textAlign="Center"
@@ -305,7 +319,7 @@
 									ariaHasPopup="Dialog"
 									text="{tableData>Term2/Company}"
 									press=".onEditTermDialog"
-									class="tickLink"
+									emphasized="true"
 									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
 								/>
 								<m:Label
@@ -322,7 +336,7 @@
 					filterProperty="Term2/Tenant"
 				>
 					<ui:multiLabels>
-						<m:Label text="{i18n>Label.SecondTerm}"/>
+						<m:Label text="{i18n>Label.SecondTerm}" />
 						<m:Label
 							text="Tenant"
 							textAlign="Center"
@@ -341,7 +355,7 @@
 									ariaHasPopup="Dialog"
 									text="{tableData>Term2/Tenant}"
 									press=".onEditTermDialog"
-									class="tickLink"
+									emphasized="true"
 									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
 								/>
 								<m:Label
@@ -392,11 +406,11 @@
 									ariaHasPopup="Dialog"
 									text="{tableData>Term2/Trade}"
 									press=".onEditTermDialog"
-									class="tickLink"
+									emphasized="true"
 									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata}  }"
 								/>
 								<m:Label
-									text="{tableData>Term2/Trade}"									
+									text="{tableData>Term2/Trade}"
 									design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
 									visible="{= !${tableData>Term2mode/Main} &amp;&amp;  !${tableData>Term2mode/IsInput} &amp;&amp; ${tableData>Term2mode/Hasdata}}"
 								/>
@@ -424,17 +438,19 @@
 					<ui:template>
 						<l:VerticalLayout width="100%">
 							<l:content>
-								<m:Link
+								<!-- <m:Link
 									ariaHasPopup="Dialog"
 									text="{
 										path: 'tableData>Term2/Areasize',
 										formatter: '.formatNoDecimals'
 									} {tableData>Term2/Uom}"
-									class="tickLink"
+									emphasized="true"
 									press=".onEditTermDialog"
 									visible="{=  ${tableData>Term2mode/Main} &amp;&amp; ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
 								/>
-								<m:Label
+
+								 -->
+								<!-- <m:Label
 									text="{
 										path: 'tableData>Term2/Areasize',
 										formatter: '.formatNoDecimals'
@@ -442,6 +458,30 @@
 									design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
 									visible="{= ${tableData>Term2mode/Main} &amp;&amp; ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} 
 									}"
+								/> -->
+
+								<m:ObjectNumber
+									textAlign="End"
+									number="{
+										path: 'tableData>Term2/Areasize',
+										formatter: '.formatNoDecimals'
+									}"
+									visible="{=  ${tableData>Term2mode/Main} &amp;&amp; ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"									
+									unit="{tableData>Term2/Uom}"
+									active="true"
+									press=".onEditTermDialog"
+									state="Information"
+								/>
+
+								<m:ObjectNumber
+									textAlign="End"
+									number="{
+										path: 'tableData>Term2/Areasize',
+										formatter: '.formatNoDecimals'
+									}"
+									visible="{= ${tableData>Term2mode/Main} &amp;&amp; ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} 
+									}"
+									unit="{tableData>Term2/Uom}"
 								/>
 							</l:content>
 						</l:VerticalLayout>
@@ -452,7 +492,7 @@
 					hAlign="Center"
 				>
 					<ui:multiLabels>
-						<m:Label text="{i18n>Label.SecondTerm}"/>
+						<m:Label text="{i18n>Label.SecondTerm}" />
 						<m:Label
 							text="{i18n>Label.Duration}"
 							textAlign="Center"
@@ -501,7 +541,7 @@
 										path: 'tableData>Term2/Startdate',
 										formatter: '.formatDateTime'
 									}"
-									class="tickLink"
+									emphasized="true"
 									press=".onOpenDatePicker"
 									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
 								/>
@@ -517,7 +557,6 @@
 						</l:VerticalLayout>
 					</ui:template>
 				</ui:Column>
-
 				<ui:Column
 					width="8rem"
 					hAlign="Center"
@@ -544,7 +583,7 @@
 										path: 'tableData>Term2/Enddate',
 										formatter: '.formatDateTime'
 									}"
-									class="tickLink"
+									emphasized="true"
 									press=".onOpenDatePicker"
 									visible="{= ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
 								/>
@@ -565,7 +604,7 @@
 					width="8rem"
 				>
 					<ui:multiLabels>
-						<m:Label text="{i18n>Label.SecondTerm}"/>
+						<m:Label text="{i18n>Label.SecondTerm}" />
 						<m:Label
 							text="{i18n>Contract.BaseRent.Avg}"
 							textAlign="Center"
@@ -613,7 +652,8 @@
 									ariaHasPopup="Dialog"
 									text="{tableData>Term3/Company}"
 									press=".onEditTermDialog"
-									class="tickLink"
+									class="greenFont"
+									emphasized="true"
 									visible="{= ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
 								/>
 								<m:Label
@@ -630,7 +670,7 @@
 					filterProperty="Term3/Tenant"
 				>
 					<ui:multiLabels>
-						<m:Label text="{i18n>Label.ThirdTerm}"/>
+						<m:Label text="{i18n>Label.ThirdTerm}" />
 						<m:Label
 							text="Tenant"
 							textAlign="Center"
@@ -649,7 +689,8 @@
 									ariaHasPopup="Dialog"
 									text="{tableData>Term3/Tenant}"
 									press=".onEditTermDialog"
-									class="tickLink"
+									class="greenFont"
+									emphasized="true"
 									visible="{= ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
 								/>
 								<m:Label
@@ -700,11 +741,12 @@
 									ariaHasPopup="Dialog"
 									text="{tableData>Term3/Trade}"
 									press=".onEditTermDialog"
-									class="tickLink"
+									class="greenFont"
+									emphasized="true"
 									visible="{= ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata}  }"
 								/>
 								<m:Label
-									text="{tableData>Term3/Trade}"									
+									text="{tableData>Term3/Trade}"
 									design="{= ${tableData>Term3mode/Main} ? 'Bold': 'Standard'}"
 									visible="{= !${tableData>Term3mode/Main} &amp;&amp;  !${tableData>Term3mode/IsInput} &amp;&amp; ${tableData>Term3mode/Hasdata}}"
 								/>
@@ -732,13 +774,14 @@
 					<ui:template>
 						<l:VerticalLayout width="100%">
 							<l:content>
-								<m:Link
+								<!-- <m:Link
 									ariaHasPopup="Dialog"
 									text="{
 										path: 'tableData>Term3/Areasize',
 										formatter: '.formatNoDecimals'
 									} {tableData>Term3/Uom}"
-									class="tickLink"
+									class="greenFont"
+									emphasized="true"
 									press=".onEditTermDialog"
 									visible="{=  ${tableData>Term3mode/Main} &amp;&amp; ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
 								/>
@@ -750,6 +793,29 @@
 									design="{= ${tableData>Term3mode/Main} ? 'Bold': 'Standard'}"
 									visible="{= ${tableData>Term3mode/Main} &amp;&amp; ! ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} 
 									}"
+								/> -->
+								
+								<m:ObjectNumber
+									textAlign="End"
+									number="{
+										path: 'tableData>Term3/Areasize',
+										formatter: '.formatNoDecimals'
+									}"
+									visible="{=  ${tableData>Term3mode/Main} &amp;&amp; ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"									
+									unit="{tableData>Term2/Uom}"
+									active="true"
+									press=".onEditTermDialog"
+									state="Success"
+								/>
+								
+								<m:ObjectNumber
+									textAlign="End"
+									number="{
+										path: 'tableData>Term3/Areasize',
+										formatter: '.formatNoDecimals'
+									}"
+									visible="{= ${tableData>Term3mode/Main} &amp;&amp; ! ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"								
+									unit="{tableData>Term3/Uom}"									
 								/>
 							</l:content>
 						</l:VerticalLayout>
@@ -760,7 +826,7 @@
 					hAlign="Center"
 				>
 					<ui:multiLabels>
-						<m:Label text="{i18n>Label.ThirdTerm}"/>
+						<m:Label text="{i18n>Label.ThirdTerm}" />
 						<m:Label
 							text="{i18n>Label.Duration}"
 							textAlign="Center"
@@ -809,7 +875,8 @@
 										path: 'tableData>Term3/Startdate',
 										formatter: '.formatDateTime'
 									}"
-									class="tickLink"
+									class="greenFont"
+									emphasized="true"
 									press=".onOpenDatePicker"
 									visible="{= ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
 								/>
@@ -825,7 +892,6 @@
 						</l:VerticalLayout>
 					</ui:template>
 				</ui:Column>
-
 				<ui:Column
 					width="8rem"
 					hAlign="Center"
@@ -852,7 +918,8 @@
 										path: 'tableData>Term3/Enddate',
 										formatter: '.formatDateTime'
 									}"
-									class="tickLink"
+									class="greenFont"
+									emphasized="true"
 									press=".onOpenDatePicker"
 									visible="{= ${tableData>Term3mode/Isinput} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
 								/>
@@ -873,7 +940,7 @@
 					width="8rem"
 				>
 					<ui:multiLabels>
-						<m:Label text="{i18n>Label.ThirdTerm}"/>
+						<m:Label text="{i18n>Label.ThirdTerm}" />
 						<m:Label
 							text="{i18n>Contract.BaseRent.Avg}"
 							textAlign="Center"

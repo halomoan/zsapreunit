@@ -41,13 +41,32 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
       return this.aTableData;
     },
 
+    getAvgBaseRent: function(oTerm){
+      var iTBaserent = 0;
+      var iBaseRent = 0;
+      var iTCount = 0;
+      for(var i = 1; i < 7; i++){
+        iBaseRent = parseFloat(oTerm['Baserentyr' + i]);
+        iTBaserent = iTBaserent + iBaseRent;
+
+        if (iBaseRent > 0) {
+          iTCount = iTCount + 1;
+        }        
+      }
+
+      if (iTCount > 0)
+         return (iTBaserent / iTCount);
+      else
+        return 0;
+    },
+
     doSaveData: function(oForm){      
       
       var sTermno = oForm.Termno;      
       var aUnitnos = oForm.mainTerm.xUnitnos;
       var oMainTerm = oForm.mainTerm;
-      
-      
+
+      oMainTerm.Avgbaserent = this.getAvgBaseRent(oMainTerm);
       
       for (var i = 0; i < aUnitnos.length; i++) {
         var sFloor = aUnitnos[i].Floor;

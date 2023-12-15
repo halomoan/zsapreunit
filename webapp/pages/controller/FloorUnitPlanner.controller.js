@@ -234,64 +234,65 @@ sap.ui.define(
           var oData = this.getView().getModel("termRate").getData();
           var oTerm = this.getView().getModel("Term").getData();
           
-          var TBaserent = 0;
-          var TCounter = 0;
+          // var TBaserent = 0;
+          // var TCounter = 0;
 
-          oTerm.Baserentyr1 = oData[0].Baserent;
-          oTerm.Svcrentyr1 = oData[0].Svcrent;
-          oTerm.Anprentyr1 = oData[0].Anprent;
+          // oTerm.Baserentyr1 = oData[0].Baserent;
+          // oTerm.Svcrentyr1 = oData[0].Svcrent;
+          // oTerm.Anprentyr1 = oData[0].Anprent;
           
-          if (oTerm.Baserentyr1 > 0) {
-            TBaserent = TBaserent + oTerm.Baserentyr1;
-            TCounter = TCounter + 1;
-          }
+          // if (oTerm.Baserentyr1 > 0) {
+          //   TBaserent = TBaserent + oTerm.Baserentyr1;
+          //   TCounter = TCounter + 1;
+          // }
 
-          oTerm.Baserentyr2 = oData[1].Baserent;
-          oTerm.Svcrentyr2 = oData[1].Svcrent;
-          oTerm.Anprentyr2 = oData[1].Anprent;
+          // oTerm.Baserentyr2 = oData[1].Baserent;
+          // oTerm.Svcrentyr2 = oData[1].Svcrent;
+          // oTerm.Anprentyr2 = oData[1].Anprent;
 
-          if (oTerm.Baserentyr2 > 0) {
-            TBaserent = TBaserent + oTerm.Baserentyr2;
-            TCounter = TCounter + 1;
-          }
+          // if (oTerm.Baserentyr2 > 0) {
+          //   TBaserent = TBaserent + oTerm.Baserentyr2;
+          //   TCounter = TCounter + 1;
+          // }
 
-          oTerm.Baserentyr3 = oData[2].Baserent;
-          oTerm.Svcrentyr3 = oData[2].Svcrent;
-          oTerm.Anprentyr3 = oData[2].Anprent;
+          // oTerm.Baserentyr3 = oData[2].Baserent;
+          // oTerm.Svcrentyr3 = oData[2].Svcrent;
+          // oTerm.Anprentyr3 = oData[2].Anprent;
 
-          if (oTerm.Baserentyr3 > 0) {
-            TBaserent = TBaserent + oTerm.Baserentyr3;
-            TCounter = TCounter + 1;
-          }
+          // if (oTerm.Baserentyr3 > 0) {
+          //   TBaserent = TBaserent + oTerm.Baserentyr3;
+          //   TCounter = TCounter + 1;
+          // }
 
-          oTerm.Baserentyr4 = oData[3].Baserent;
-          oTerm.Svcrentyr4 = oData[3].Svcrent;
-          oTerm.Anprentyr4 = oData[3].Anprent;
+          // oTerm.Baserentyr4 = oData[3].Baserent;
+          // oTerm.Svcrentyr4 = oData[3].Svcrent;
+          // oTerm.Anprentyr4 = oData[3].Anprent;
 
-          if (oTerm.Baserentyr4 > 0) {
-            TBaserent = TBaserent + oTerm.Baserentyr4;
-            TCounter = TCounter + 1;
-          }
+          // if (oTerm.Baserentyr4 > 0) {
+          //   TBaserent = TBaserent + oTerm.Baserentyr4;
+          //   TCounter = TCounter + 1;
+          // }
 
-          oTerm.Baserentyr5 = oData[4].Baserent;
-          oTerm.Svcrentyr5 = oData[4].Svcrent;
-          oTerm.Anprentyr5 = oData[4].Anprent;
+          // oTerm.Baserentyr5 = oData[4].Baserent;
+          // oTerm.Svcrentyr5 = oData[4].Svcrent;
+          // oTerm.Anprentyr5 = oData[4].Anprent;
 
-          if (oTerm.Baserentyr5 > 0) {
-            TBaserent = TBaserent + oTerm.Baserentyr5;
-            TCounter = TCounter + 1;
-          }
+          // if (oTerm.Baserentyr5 > 0) {
+          //   TBaserent = TBaserent + oTerm.Baserentyr5;
+          //   TCounter = TCounter + 1;
+          // }
 
-          oTerm.Baserentyr6 = oData[5].Baserent;
-          oTerm.Svcrentyr6 = oData[5].Svcrent;
-          oTerm.Anprentyr6 = oData[5].Anprent;
+          // oTerm.Baserentyr6 = oData[5].Baserent;
+          // oTerm.Svcrentyr6 = oData[5].Svcrent;
+          // oTerm.Anprentyr6 = oData[5].Anprent;
 
-          if (oTerm.Baserentyr6 > 0) {
-            TBaserent = TBaserent + oTerm.Baserentyr6;
-            TCounter = TCounter + 1;
-          }
+          // if (oTerm.Baserentyr6 > 0) {
+          //   TBaserent = TBaserent + oTerm.Baserentyr6;
+          //   TCounter = TCounter + 1;
+          // }
 
-          oTerm.Avgbaserent = (TBaserent / TCounter);
+          //oTerm.Avgbaserent = (TBaserent / TCounter);
+          oTerm.Avgbaserent = _oTableManager.getAvgBaseRent(oTerm);
 
           _oTableManager.refreshTable();
 
@@ -323,6 +324,11 @@ sap.ui.define(
 
               if (i === 0) {
                 sFloor = oItem.Floor;
+                
+                if (!oItem.Term2mode.Hasdata){
+                  allow3rdTerm = false; 
+                }
+
                 if (
                   oItem.Term2mode.Main &&
                   oItem.Term2mode.Isinput &&
@@ -334,12 +340,10 @@ sap.ui.define(
                   allow2ndTerm = false;
                   _oDelItem = oItem;
                 }
-
-                console.log(oItem);
+                
                 if (
                   oItem.Term3mode.Main &&
-                  oItem.Term3mode.Isinput &&
-                  !oItem.Term2mode.Hasdata &&
+                  oItem.Term3mode.Isinput &&                  
                   oItem.Term3mode.Hasdata &&
                   !oItem.Term3mode.Todelete
                 ) {
@@ -348,6 +352,7 @@ sap.ui.define(
                   allow3rdTerm = false;
                   _oDelItem = oItem;
                 }
+
 
               } else if (sFloor !== oItem.Floor) {
                 allow2ndTerm = false;
@@ -390,10 +395,13 @@ sap.ui.define(
             if (oItem.Term1mode.Main && oItem.Term1mode.Hasdata) {
               sUnitNos =  oItem.Term1.Unitnos;
 
+
               var aTerm1Unitnos = sUnitNos.split('/');
 
+              
               for(var i=0; i < aTerm1Unitnos.length; i++){
-                aUnitNos.push({ Floor: oItem.Floor, Unitno: aTerm1Unitnos[i] });
+                var sUnitno = aTerm1Unitnos[i].substring(4,7);
+                aUnitNos.push({ Floor: oItem.Floor, Unitno: sUnitno });
               }
               
             } else {
@@ -403,7 +411,7 @@ sap.ui.define(
           } else {
             for (var i = 0; i < aIndices.length; i++) {
               var oItem = oTable.getContextByIndex(aIndices[i]).getObject();            
-              sUnitNos = i === 0 ? oItem.Unitno : sUnitNos + "/" + oItem.Unitno;
+              sUnitNos = i === 0 ? "#" + oItem.Floor + "-" + oItem.Unitno : sUnitNos + "/" + "#" + oItem.Floor + "-" + oItem.Unitno;
               aUnitNos.push({ Floor: oItem.Floor, Unitno: oItem.Unitno });
             }
           }
@@ -456,7 +464,7 @@ sap.ui.define(
           this._clearTableSelection();
           this._refreshTable();
 
-          _oForm = oFUForm.getForm();
+          _oForm = oFUForm.getForm();          
 
           var oModel = new JSONModel(_oForm);
           this.getView().setModel(oModel, "PlanFormData");
@@ -493,14 +501,19 @@ sap.ui.define(
           var oFUForm = new FloorUnitForm("3", "CREATE");
 
           if (aIndices.length === 1){
-            var oItem = oTable.getContextByIndex(aIndices[0]).getObject();            
+            var oItem = oTable.getContextByIndex(aIndices[0]).getObject();    
+            
+            
             if (oItem.Term2mode.Main && oItem.Term2mode.Hasdata) {
               sUnitNos =  oItem.Term2.Unitnos;
 
+            
               var aTerm2Unitnos = sUnitNos.split('/');
+                          
 
-              for(var i=0; i < aTerm2Unitnos.length; i++){
-                aUnitNos.push({ Floor: oItem.Floor, Unitno: aTerm2Unitnos[i] });
+              for(var i=0; i < aTerm2Unitnos.length; i++){            
+                var sUnitno = aTerm2Unitnos[i].substring(4,7);
+                aUnitNos.push({ Floor: oItem.Floor, Unitno: sUnitno });
               }
               
             } else {
@@ -510,7 +523,8 @@ sap.ui.define(
           } else {
             for (var i = 0; i < aIndices.length; i++) {
               var oItem = oTable.getContextByIndex(aIndices[i]).getObject();            
-              sUnitNos = i === 0 ? oItem.Unitno : sUnitNos + "/" + oItem.Unitno;
+              //sUnitNos = i === 0 ? oItem.Unitno : sUnitNos + "/" + oItem.Unitno;
+              sUnitNos = i === 0 ? "#" + oItem.Floor + "-" + oItem.Unitno : sUnitNos + "/" + "#" + oItem.Floor + "-" + oItem.Unitno;
               aUnitNos.push({ Floor: oItem.Floor, Unitno: oItem.Unitno });
             }
           }
@@ -600,7 +614,7 @@ sap.ui.define(
           if (sType === "removed") {
             var sFloor = oEvent
               .getParameter("removedTokens")[0]
-              .getProperty("key").substring(0,2);
+              .getProperty("key").substring(1,3);
             var sUnitno = oEvent
               .getParameter("removedTokens")[0]
               .getProperty("text").substring(4,7);
@@ -613,9 +627,9 @@ sap.ui.define(
 
             for (var i = 0; i < aUnitnos.length; i++) {
               if (i === 0) {
-                sUnitnos = aUnitnos[i].Unitno;
+                sUnitnos = "#" +aUnitnos[i].Floor + "-" + aUnitnos[i].Unitno;
               } else {
-                sUnitnos = sUnitnos + "/" + aUnitnos[i].Unitno;
+                sUnitnos = sUnitnos + "/" + "#" +aUnitnos[i].Floor + "-" + aUnitnos[i].Unitno;
               }
             }
             oForm.editTerm.xUnitnos = aUnitnos;
@@ -639,7 +653,7 @@ sap.ui.define(
 
             var aUnitnos = aTokens.map(function (oToken) {
               
-              var sFloor = oToken.getKey().substring(0,2);
+              var sFloor = oToken.getKey().substring(1,3);
               var sUnitno = oToken.getText().substring(4,7);
               return { Floor: sFloor, Unitno: sUnitno };
             });
@@ -700,16 +714,23 @@ sap.ui.define(
         },
         onEditTermDialog: function (oEvent) {
           var oSource = oEvent.getSource();
+
+          
           var sItemPath = oSource.getBindingContext("tableData").getPath();
 
-          var sPath = oSource.getBinding("text").getPath();
-
+          var sPath = "";
+          if (oSource.getBindingInfo("text")) 
+             sPath = oSource.getBinding("text").getPath();
+          else
+            sPath = oSource.getBinding("number").getPath();
+         
           if (!sPath) {
             var aBindings = oSource.getBinding("text").getBindings();
             sPath = aBindings[0].getPath();
           }
 
           var sTermno = sPath.match(/(\d+)/)[1];
+          
 
           sPath = sPath.replace(/\/.+$/, "");
           var sTerm = sItemPath + "/" + sPath;
@@ -718,7 +739,7 @@ sap.ui.define(
           var oTerm = oModel.getProperty(sTerm);
           //var oItem = oModel.getProperty(sItemPath);
 
-          var oFUForm = new FloorUnitForm("2", "EDIT");
+          var oFUForm = new FloorUnitForm(sTermno, "EDIT");
 
           //_oForm.mainTerm = oTerm;
           oFUForm.setMainTerm(oTerm);
@@ -729,8 +750,8 @@ sap.ui.define(
           oTermCopy.Enddate = _oForm.mainTerm.Enddate;
           oFUForm.setEditTerm(oTermCopy);
         
-          _oForm = oFUForm.getForm();
-
+          _oForm = oFUForm.getForm();          
+          
           oModel = new JSONModel(_oForm);
           this.getView().setModel(oModel, "PlanFormData");
 
@@ -841,8 +862,13 @@ sap.ui.define(
         },
 
         onOpenDatePicker: function (oEvent) {
+
           _oLink = oEvent.getSource();
-          this.getView().byId("HiddenDP").openBy(_oLink.getDomRef());
+          var oDate = _oLink.getBinding("text").getValue();
+          var oDP = this.getView().byId("HiddenDP");
+          oDP.setDateValue(oDate);
+
+          oDP.openBy(_oLink.getDomRef());
         },
 
         onDateChanged: function (oEvent) {
@@ -885,7 +911,7 @@ sap.ui.define(
             filters: aFilters,
             success: function (oResponse) {
               if (oResponse.results) {
-                var aData = oResponse.results;
+                var aData = oResponse.results;                
 
                 var oTableModel = new JSONModel({
                   floorData: aData,

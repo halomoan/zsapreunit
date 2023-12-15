@@ -1,5 +1,9 @@
 /* Enter your custom styles here */
 
-.tickLink {
+.boldLink {
     font-weight: bold;
+}
+
+.greenFont {
+    color: green !important;
 }
