@@ -5,6 +5,8 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
     aTableData: null,
     oTableModel: null,
     oTable: null,
+
+    aUploadData: [],
     constructor: function (oTable) {
       ManagedObject.prototype.constructor.apply(this, []);
       this.oTable = oTable;      
@@ -60,11 +62,13 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
         return 0;
     },
 
-    doSaveData: function(oForm){      
+    saveFormData: function(oForm){      
       
       var sTermno = oForm.Termno;      
       var aUnitnos = oForm.mainTerm.xUnitnos;
       var oMainTerm = oForm.mainTerm;
+
+      
 
       oMainTerm.Avgbaserent = this.getAvgBaseRent(oMainTerm);
       
@@ -81,11 +85,20 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
                 oItem.Term2mode.Isinput = true;
                 oItem.Term2mode.Hasdata = true;
                 oItem.Term2mode.Todelete = false;
+
+
+                // this.aUploadData.push({
+                //   "Floor": sFloor,
+                //   "Unitno": sUnitno,
+                //   "Term": oMainTerm
+                // });
+                // console.log(this.aUploadData);
+
               } else {
                 oItem.Term2mode.Isinput = false;
                 oItem.Term2mode.Hasdata = true;
                 oItem.Term2mode.Todelete = false;
-              }
+              }             
               break;
             case "3":
               oItem.Term3 = oMainTerm;
@@ -103,38 +116,40 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
           }
         }
       } 
-      var aRemoveUnits = oForm.RemoveUnits;     
 
-      for (var i = 0; i < aRemoveUnits.length; i++) {
-        var sFloor = aRemoveUnits[i].Floor;
-        var sUnitno = aRemoveUnits[i].Unitno;
-        var oItem = this.getFloorUnitTerm(sFloor,sUnitno);
+      
+        var aRemoveUnits = oForm.RemoveUnits;           
 
-        if (oItem) {         
-          switch(sTermno) {
-            case "2":
-              oItem.Term2 = oForm.editTerm;
-              oItem.Term2.Company = "";
-              oItem.Term2.Tenant = "";
-              oItem.Term2.Trade = "";
-              oItem.Term2.Tradekey = "";
-              oItem.Term2.Areasize = 0;
-              oItem.Term2mode.Isinput = false;
-              oItem.Term2mode.Hasdata = false;
-              oItem.Term2mode.Todelete = true;
-            case "3":
-              oItem.Term3 = oForm.editTerm;
-              oItem.Term3.Company = "";
-              oItem.Term3.Tenant = "";
-              oItem.Term3.Trade = "";
-              oItem.Term3.Tradekey = "";
-              oItem.Term3.Areasize = 0;
-              oItem.Term3mode.Isinput = false;
-              oItem.Term3mode.Hasdata = false;
-              oItem.Term3mode.Todelete = true;
+        for (var i = 0; i < aRemoveUnits.length; i++) {
+          var sFloor = aRemoveUnits[i].Floor;
+          var sUnitno = aRemoveUnits[i].Unitno;
+          var oItem = this.getFloorUnitTerm(sFloor,sUnitno);
+
+          if (oItem) {         
+            switch(sTermno) {
+              case "2":
+                oItem.Term2 = oForm.editTerm;
+                oItem.Term2.Company = "";
+                oItem.Term2.Tenant = "";
+                oItem.Term2.Trade = "";
+                oItem.Term2.Tradekey = "";
+                oItem.Term2.Areasize = 0;
+                oItem.Term2mode.Isinput = false;
+                oItem.Term2mode.Hasdata = false;
+                oItem.Term2mode.Todelete = true;
+              case "3":
+                oItem.Term3 = oForm.editTerm;
+                oItem.Term3.Company = "";
+                oItem.Term3.Tenant = "";
+                oItem.Term3.Trade = "";
+                oItem.Term3.Tradekey = "";
+                oItem.Term3.Areasize = 0;
+                oItem.Term3mode.Isinput = false;
+                oItem.Term3mode.Hasdata = false;
+                oItem.Term3mode.Todelete = true;
+            }
           }
-        }
-      }
+    }
       
       this.oTableModel.setProperty("/floorData",this.aTableData);
 
@@ -164,17 +179,21 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
       }
       var aUnitNos = sUnitNos.split("/");
       var bDone = false;
+    
 
       for (var i = 0; i < aUnitNos.length; i++) {
+
+        var sUnitno = aUnitNos[i].substring(4,7);
         for (var idx = 0; idx < this.aTableData.length; idx++) {
+
+          //console.log(sFloor,aUnitNos[i],this.aTableData[idx])
           if (
             this.aTableData[idx].Floor === sFloor &&
-            this.aTableData[idx].Unitno === aUnitNos[i]
+            this.aTableData[idx].Unitno === sUnitno
           ) {
             bDone = true;
             var oItem = this.aTableData[idx];
-
-            //console.log(oItem);
+            
             oItem.Term2mode.Isinput = false;
             oItem.Term2mode.Hasdata = false;
             oItem.Term2mode.Todelete = true;

@@ -121,7 +121,7 @@
 						
 						<core:Item key="#{tableData>Floor}-{tableData>Unitno}" text="#{tableData>Floor}-{tableData>Unitno}" />
 						<tokens>
-							<Token key="#{PlanFormData>Floor}-{PlanFormData>Unitno}" text="#{PlanFormData>Floor}-{PlanFormData>Unitno}" />
+							<Token key="#{PlanFormData>Floor}-{PlanFormData>Unitno}" text="#{PlanFormData>Floor}-{PlanFormData>Unitno}" editable="{PlanFormData>Editable}" />
 						</tokens>
 					</MultiInput>
 					

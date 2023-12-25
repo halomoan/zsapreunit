@@ -44,7 +44,7 @@
 			}"
 			ariaLabelledBy="title"
 			enableColumnFreeze="true"
-			visibleRowCount="15"
+			visibleRowCount="{viewData>/noRows}"
 			enableBusyIndicator="true"
 		>
 			<ui:plugins>
@@ -953,7 +953,7 @@
 								path: 'tableData>Term3/Avgbaserent',
 								formatter: '.formatNumber'
 							}"
-							press="onShowT2Baserent"
+							press="onShowT3Baserent"
 							visible="{tableData>Term3mode/Main}"
 						/>
 					</ui:template>
