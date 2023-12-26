@@ -62,6 +62,10 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
         return 0;
     },
 
+    getUploadData: function(){
+      return this.aUploadData;
+    },
+
     saveFormData: function(oForm){      
       
       var sTermno = oForm.Termno;      
@@ -87,12 +91,7 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
                 oItem.Term2mode.Todelete = false;
 
 
-                // this.aUploadData.push({
-                //   "Floor": sFloor,
-                //   "Unitno": sUnitno,
-                //   "Term": oMainTerm
-                // });
-                // console.log(this.aUploadData);
+                this._recordDirty(sFloor,sUnitno,sTermno,oMainTerm);
 
               } else {
                 oItem.Term2mode.Isinput = false;
@@ -107,6 +106,8 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
                 oItem.Term3mode.Isinput = true;
                 oItem.Term3mode.Hasdata = true;
                 oItem.Term3mode.Todelete = false;
+
+                this._recordDirty(sFloor,sUnitno,sTermno,oMainTerm);
               } else {
                 oItem.Term3mode.Isinput = false;
                 oItem.Term3mode.Hasdata = true;
@@ -154,6 +155,17 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
       this.oTableModel.setProperty("/floorData",this.aTableData);
 
     },
+
+    _recordDirty: function(sFloor,sUnitNo,sTermno,oTerm){
+      var oRecord = this.aUploadData.find((el,idx) => el.Floor === sFloor && el.Unitno === sUnitNo && el.Termno === sTermno);      
+
+      if (!oRecord){
+        this.aUploadData.push({ "Floor" : sFloor, "Unitno" : sUnitNo, "Termno" : sTermno, "Term" : oTerm});        
+      } else {
+        oRecord.Term = oTerm;
+      }      
+    },
+
 
     getFloorUnitTerm: function(sFloor,sUnitno){      
       return this.aTableData.find((el) => el.Floor === sFloor && el.Unitno === sUnitno);     

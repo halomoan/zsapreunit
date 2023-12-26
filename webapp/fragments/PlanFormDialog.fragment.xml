@@ -5,38 +5,41 @@
 >
 	<Dialog
 		id="PlanTermForm"
-		title="{i18n>Label.Asset} #{PlanFormData>floorUnits/Floor} - {PlanFormData>floorUnits/Unitnos}"
+		title="{i18n>Label.Asset} {PlanFormData>/editTerm/Unitnos}"
+		
 	>
 		<content>
 			<f:SimpleForm
 				editable="true"
 				layout="ColumnLayout"
-				title="{PlanFormData>editTerm/Term}"
+				title="{PlanFormData>/editTerm/Term}"
 				columnsM="2"
 				columnsL="2"
 				columnsXL="2"
 			>
 				<f:content>
-					<core:Title text="{PlanFormData>editTerm/xId}" />
+					<core:Title text="{PlanFormData>/editTerm/xId}" />
 					<Label text="{i18n>Contract.Company}" />
 					<Input
 						required="true"
 						value="{
-							path: 'PlanFormData>editTerm/Company',
+							path: 'PlanFormData>/editTerm/Company',
 							type: 'sap.ui.model.type.String'
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<Label text="{i18n>Contract.Tenant}" />
-					<Input value="{PlanFormData>editTerm/Tenant}" />
+					<Input value="{PlanFormData>/editTerm/Tenant}" editable="{= ${PlanFormData>/Mode} !== 'READ' }" />
 					<Label text="{i18n>Contract.Trade}" />
 					<Select
 						items="{
 							path: 'viewData>/industryData',
 							templateShareable: false
 						}"
-						selectedKey="{PlanFormData>editTerm/Tradekey}"
+						selectedKey="{PlanFormData>/editTerm/Tradekey}"
 						showSecondaryValues="true"
 						change=".onTradeChanged"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					>
 						<core:ListItem
 							key="{viewData>IndustrySector}"
@@ -54,9 +57,9 @@
 					<Input
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Areasize'
+								path: 'PlanFormData>/editTerm/Areasize'
 							}, {
-								path: 'PlanFormData>editTerm/Uom'
+								path: 'PlanFormData>/editTerm/Uom'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
@@ -64,7 +67,8 @@
 								decimals: 0
 							}
 						}"
-						description="{PlanFormData>editTerm/Uom}"						
+						description="{PlanFormData>/editTerm/Uom}"	
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"					
 					/>
 					<core:Title text="{i18n>Label.Contract}" />
 					<Label text="{i18n>Contract.StartDate}" />
@@ -72,33 +76,35 @@
 						id="dialogSDate"
 						placeholder="Enter Date"
 						value="{
-							path: 'PlanFormData>editTerm/Startdate',
+							path: 'PlanFormData>/editTerm/Startdate',
 							type: 'sap.ui.model.type.Date',
 							formatOptions: {
 								pattern: 'yyyy-MM-dd'
 							}							
 						}"
 						change=".onSDateChanged"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<Label text="{i18n>Contract.EndDate}" />
 					<DatePicker
 						id="dialogEDate"
 						placeholder="Enter Date"
 						value="{
-							path: 'PlanFormData>editTerm/Enddate',
+							path: 'PlanFormData>/editTerm/Enddate',
 							type: 'sap.ui.model.type.Date',
 							formatOptions: {
 								pattern: 'yyyy-MM-dd'
 							}
 						}"
 						change=".onEDateChanged"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<Label text="{i18n>Label.Duration}" />
 					<Text text="{
 						parts: [{
-							path: 'PlanFormData>editTerm/Startdate'
+							path: 'PlanFormData>/editTerm/Startdate'
 						}, {
-							path: 'PlanFormData>editTerm/Enddate'
+							path: 'PlanFormData>/editTerm/Enddate'
 						}],
 						formatter: '.yearDiff'
 					}" />
@@ -113,11 +119,13 @@
 							sorter: { path: 'Unitno' }
 						}"
 						tokens="{
-							path: 'PlanFormData>editTerm/xUnitnos',
+							path: 'PlanFormData>/editTerm/xUnitnos',
 							sorter: { path: 'Unitno' }
 						}"
 						tokenUpdate="onUnitsChanged"
-						showValueHelp="false">
+						showValueHelp="false"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
+						>
 						
 						<core:Item key="#{tableData>Floor}-{tableData>Unitno}" text="#{tableData>Floor}-{tableData>Unitno}" />
 						<tokens>
@@ -128,401 +136,419 @@
 					<core:Title text="{i18n>Contract.BaseRent}" />
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr1} :"
+						text="{i18n>Label.Yr1}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						type="Number"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Baserentyr1'
+								path: 'PlanFormData>/editTerm/Baserentyr1'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr2} :"
+						text="{i18n>Label.Yr2}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						type="Number"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Baserentyr2'
+								path: 'PlanFormData>/editTerm/Baserentyr2'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr3} :"
+						text="{i18n>Label.Yr3}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						type="Number"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Baserentyr3'
+								path: 'PlanFormData>/editTerm/Baserentyr3'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<core:Title text="{i18n>Contract.BaseRent}" />
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr4} :"
+						text="{i18n>Label.Yr4}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						type="Number"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Baserentyr4'
+								path: 'PlanFormData>/editTerm/Baserentyr4'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr5} :"
+						text="{i18n>Label.Yr5}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						type="Number"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Baserentyr5'
+								path: 'PlanFormData>/editTerm/Baserentyr5'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr6} :"
+						text="{i18n>Label.Yr6}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Baserentyr6'
+								path: 'PlanFormData>/editTerm/Baserentyr6'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<core:Title text="{i18n>Contract.SvcRent}" />
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr1} :"
+						text="{i18n>Label.Yr1}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						type="Number"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Svcrentyr1'
+								path: 'PlanFormData>/editTerm/Svcrentyr1'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr2} :"
+						text="{i18n>Label.Yr2}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Svcrentyr2'
+								path: 'PlanFormData>/editTerm/Svcrentyr2'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr3} :"
+						text="{i18n>Label.Yr3}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Svcrentyr3'
+								path: 'PlanFormData>/editTerm/Svcrentyr3'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<core:Title text="{i18n>Contract.SvcRent}" />
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr4} :"
+						text="{i18n>Label.Yr4}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						type="Number"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Svcrentyr4'
+								path: 'PlanFormData>/editTerm/Svcrentyr4'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr5} :"
+						text="{i18n>Label.Yr5}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						type="Number"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Svcrentyr5'
+								path: 'PlanFormData>/editTerm/Svcrentyr5'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr6} :"
+						text="{i18n>Label.Yr6}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						type="Number"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Svcrentyr6'
+								path: 'PlanFormData>/editTerm/Svcrentyr6'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<core:Title text="{i18n>Contract.AnpRent}" />
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr1} :"
+						text="{i18n>Label.Yr1}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						type="Number"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Anprentyr1'
+								path: 'PlanFormData>/editTerm/Anprentyr1'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr2} :"
+						text="{i18n>Label.Yr2}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						type="Number"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Anprentyr2'
+								path: 'PlanFormData>/editTerm/Anprentyr2'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr3} :"
+						text="{i18n>Label.Yr3}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						type="Number"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Anprentyr3'
+								path: 'PlanFormData>/editTerm/Anprentyr3'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<core:Title text="{i18n>Contract.AnpRent}" />
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr4} :"
+						text="{i18n>Label.Yr4}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						type="Number"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Anprentyr4'
+								path: 'PlanFormData>/editTerm/Anprentyr4'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr5} :"
+						text="{i18n>Label.Yr5}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						type="Number"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Anprentyr5'
+								path: 'PlanFormData>/editTerm/Anprentyr5'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 					<Label
 						design="Bold"
-						text="{i18n>Label.Yr6} :"
+						text="{i18n>Label.Yr6}"
 					/>
 					<Input
 						autocomplete="false"
-						description="{PlanFormData>editTerm/Currency}"
+						description="{PlanFormData>/editTerm/Currency}"
 						fieldWidth="8rem"
 						type="Number"
 						textAlign="End"
 						value="{
 							parts: [{
-								path: 'PlanFormData>editTerm/Anprentyr6'
+								path: 'PlanFormData>/editTerm/Anprentyr6'
 							}, {
-								path: 'PlanFormData>editTerm/Currency'
+								path: 'PlanFormData>/editTerm/Currency'
 							}],
 							type: 'sap.ui.model.type.Currency',
 							formatOptions: {
 								showMeasure: false
 							}
 						}"
+						editable="{= ${PlanFormData>/Mode} !== 'READ' }"
 					/>
 				</f:content>
 			</f:SimpleForm>
@@ -534,12 +560,12 @@
 					<Button
 						text="{i18n>Label.Create}"
 						press="onNewTermCreate"
-						visible="{= ! ${PlanFormData>/Editmode} }"
+						visible="{= ${PlanFormData>/Mode} === 'CREATE' }"
 					/>
 					<Button
 						text="{i18n>Label.Edit}"
 						press="onNewTermEdit"
-						visible="{PlanFormData>/Editmode}"
+						visible="{= ${PlanFormData>/Mode} === 'EDIT' }"
 					/>
 					<Button
 						text="{i18n>Label.Cancel}"

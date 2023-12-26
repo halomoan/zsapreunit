@@ -11,6 +11,15 @@
 >
 	<m:Page>
 		<m:headerContent>
+			<m:Text text="{i18n>Label.SelToPlan}"/>
+			<m:ToolbarSpacer/>						
+			<m:Button
+				text="{i18n>Label.UploadData}"
+				tooltip="Upload data to server"
+				visible="{viewData>/isDirty}"
+				press="onUploadToServer"
+			/>
+
 			<m:Button
 				text="{i18n>Label.SecondTerm}"
 				tooltip="2nd Term"
@@ -99,12 +108,14 @@
 					width="18rem"
 					headerSpan="2"
 					filterProperty="Term1/Company"
+					
 				>
 					<ui:multiLabels>
 						<m:Label
 							text="First Term"
 							textAlign="Center"
 							width="100%"
+							
 						/>
 						<m:Label
 							text="{i18n>Contract.Company}"
@@ -284,8 +295,8 @@
 								path: 'tableData>Term1/Avgbaserent',
 								formatter: '.formatNumber'
 							}"
-							press="onShowT1Baserent"
-							visible="{tableData>Term1mode/Main}"
+							press="onEditTermDialog"
+							visible="{tableData>Term1mode/Main}"							
 						/>
 					</ui:template>
 				</ui:Column>
@@ -437,28 +448,7 @@
 					</ui:multiLabels>
 					<ui:template>
 						<l:VerticalLayout width="100%">
-							<l:content>
-								<!-- <m:Link
-									ariaHasPopup="Dialog"
-									text="{
-										path: 'tableData>Term2/Areasize',
-										formatter: '.formatNoDecimals'
-									} {tableData>Term2/Uom}"
-									emphasized="true"
-									press=".onEditTermDialog"
-									visible="{=  ${tableData>Term2mode/Main} &amp;&amp; ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
-								/>
-
-								 -->
-								<!-- <m:Label
-									text="{
-										path: 'tableData>Term2/Areasize',
-										formatter: '.formatNoDecimals'
-									} {tableData>Term2/Uom}"
-									design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
-									visible="{= ${tableData>Term2mode/Main} &amp;&amp; ! ${tableData>Term2mode/Isinput} &amp;&amp; ${tableData>Term2mode/Hasdata} 
-									}"
-								/> -->
+							<l:content>							
 
 								<m:ObjectNumber
 									textAlign="End"
@@ -617,8 +607,8 @@
 								path: 'tableData>Term2/Avgbaserent',
 								formatter: '.formatNumber'
 							}"
-							press="onShowT2Baserent"
-							visible="{tableData>Term2mode/Main}"
+							press="onEditTermDialog"
+							visible="{= ${tableData>Term2mode/Main} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
 						/>
 					</ui:template>
 				</ui:Column>
@@ -953,7 +943,7 @@
 								path: 'tableData>Term3/Avgbaserent',
 								formatter: '.formatNumber'
 							}"
-							press="onShowT3Baserent"
+							press="onEditTermDialog"
 							visible="{tableData>Term3mode/Main}"
 						/>
 					</ui:template>

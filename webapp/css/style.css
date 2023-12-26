@@ -7,3 +7,11 @@
 .greenFont {
     color: green !important;
 }
+
+.green {
+    background-color: #66FF33;
+}
+
+.yellow {
+    background-color: #FFFF66;
+}

@@ -6,10 +6,10 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
     oForm : {
       mainTerm: null,            
       editTerm: null,      
-      termModes: [],
+      termModes: null,
       //floorUnits: null,
       RemoveUnits: [],                  
-      Editmode: true,
+      Mode: '',
       HasError: false,
       Termno: "2",      
     },
@@ -19,8 +19,9 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
 
       
       this.oForm.Termno = sTermno ? sTermno : "2";
-      this.oForm.Editmode = sMode === 'EDIT';
+      this.oForm.Mode = sMode;
       this.oForm.RemoveUnits = [];
+      this.oForm.termModes = null;
       // if (sMode === 'EDIT'){
       //   this.oForm.Editmode = true;
       // } else {
@@ -54,7 +55,7 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
     },
 
     setTermModes: function(oTermMode){
-      this.oForm.termModes.push(oTermMode);
+      this.oForm.termModes = oTermMode;
     },
 
     // setFloorUnits: function(oFloorUnits){
