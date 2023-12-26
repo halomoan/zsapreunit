@@ -6,7 +6,7 @@
 	xmlns:m="sap.m"
 	xmlns:plugins="sap.ui.table.plugins"
 	xmlns:core="sap.ui.core"
-	xmlns:l="sap.ui.layout"
+	xmlns:l="sap.ui.layout"	
 	height="100%"
 >
 	<m:Page>
@@ -80,7 +80,7 @@
 				<ui:Column
 					width="4rem"
 					filterProperty="Floor"
-				>
+				>				
 					<m:Label text="{i18n>Label.Floor}" />
 					<ui:template>
 						<m:Label
@@ -938,14 +938,16 @@
 						/>
 					</ui:multiLabels>
 					<ui:template>
+						
 						<m:Button
 							text="{
 								path: 'tableData>Term3/Avgbaserent',
 								formatter: '.formatNumber'
 							}"
 							press="onEditTermDialog"
-							visible="{tableData>Term3mode/Main}"
+							visible="{= ${tableData>Term3mode/Main} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
 						/>
+					
 					</ui:template>
 				</ui:Column>
 			</ui:columns>

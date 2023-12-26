@@ -192,10 +192,18 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
       var aUnitNos = sUnitNos.split("/");
       var bDone = false;
     
+      console.log(sUnitNos,aUnitNos);
 
       for (var i = 0; i < aUnitNos.length; i++) {
 
         var sUnitno = aUnitNos[i].substring(4,7);
+
+        if (i === 0) {
+          var idx = this.aUploadData.findIndex((el,idx) => el.Floor === sFloor && el.Unitno === sUnitno && el.Termno === sTermno); 
+          if (idx >= 0)
+            this.aUploadData.splice(idx,1);
+        }
+
         for (var idx = 0; idx < this.aTableData.length; idx++) {
 
           //console.log(sFloor,aUnitNos[i],this.aTableData[idx])
@@ -206,9 +214,15 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
             bDone = true;
             var oItem = this.aTableData[idx];
             
-            oItem.Term2mode.Isinput = false;
-            oItem.Term2mode.Hasdata = false;
-            oItem.Term2mode.Todelete = true;
+            if (sTermno === "2"){
+              oItem.Term2mode.Isinput = false;
+              oItem.Term2mode.Hasdata = false;
+              oItem.Term2mode.Todelete = true;
+            } else if (sTermno === "3") {
+              oItem.Term3mode.Isinput = false;
+              oItem.Term3mode.Hasdata = false;
+              oItem.Term3mode.Todelete = true;
+            }
             break;
           }
         }

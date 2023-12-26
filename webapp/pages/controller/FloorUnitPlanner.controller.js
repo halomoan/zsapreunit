@@ -78,6 +78,20 @@ sap.ui.define(
 
         __onRouteMatched: function (oEvent) {
           _oi18Bundle = this.getResourceBundle();
+
+          var oThis = this;
+
+          $("#container-zsapreunit---FloorUnitPlanner--planTable-vsb").scroll(function() { 
+            oThis._tableCellsColor();
+          });
+
+          // var oTableControl = _oTableManager.getTableControl();
+          // var oVsb = oTableControl._getScrollExtension().getVerticalScrollbar();
+          // oVsb.scroll(function() { 
+          //      console.log("screolll");
+          // });
+  
+
           this._getTableData();          
         },
 
@@ -452,11 +466,24 @@ sap.ui.define(
             emphasizedAction: "Yes",
             onClose: function (sAction) {
               if (sAction === "Yes") {
-                this._delete2ndTerm(_oDelItem);
+                this._deleteTerm(_oDelItem,"2");
               }
             }.bind(this),
           });
         },
+
+        onDelete3rdTermDialog: function () {
+          MessageBox.confirm(_oi18Bundle.getText("Confirm.Delete3rdTerm"), {
+            actions: ["Yes", "No"],
+            emphasizedAction: "Yes",
+            onClose: function (sAction) {
+              if (sAction === "Yes") {
+                this._deleteTerm(_oDelItem,"3");
+              }
+            }.bind(this),
+          });
+        },
+
 
         onTradeChanged: function (oEvent) {
           var oItem;
@@ -855,12 +882,26 @@ sap.ui.define(
           var aColumns = oTableControl.getColumns();
 
           for(var i = 10; i < 18; i++ ) {
-            oTableControl.getColumns()[i].$().addClass("green");
+            aColumns[i].$().addClass("green");
           }
 
           for(var i = 18; i < aColumns.length ; i++ ) {
-            oTableControl.getColumns()[i].$().addClass("yellow");
+            aColumns[i].$().addClass("yellow");
           }
+        },
+
+        _tableCellsColor:function(){
+          var oTableControl = _oTableManager.getTableControl();
+
+          var rowCount = oTableControl.getVisibleRowCount();
+          console.log(rowCount);
+          //var rowStart = rowCount * ( oTableControl._oPaginator.getCurrentPage() - 1);
+
+          for (var i = 0; i < rowCount; i++) {
+            oTableControl.getRows()[i].$().removeClass("green");        
+            oTableControl.getRows()[i].$().addClass("green");                 
+          }
+
         },
 
         _doTableSave: function () {
@@ -872,12 +913,18 @@ sap.ui.define(
           _oTableManager.saveFormData(_oForm);
         },
 
-        _delete2ndTerm: function (oItem) {
-          var bDone = _oTableManager.deleteTerm(oItem, "2");
+        _deleteTerm: function (oItem,sTermno) {
+          var bDone = _oTableManager.deleteTerm(oItem,sTermno);
 
           if (bDone) {
             _oTableManager.clearTableSelection();
             _oTableManager.refreshTable();
+          }
+
+          var aUploadData = _oTableManager.getUploadData();
+          if (aUploadData.length < 1){
+            var oModel = this.getView().getModel("viewData");
+            oModel.setProperty("/isDirty",false);
           }
         },
 
