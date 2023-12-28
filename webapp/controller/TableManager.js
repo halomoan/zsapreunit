@@ -158,12 +158,106 @@ sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
 
     _recordDirty: function(sFloor,sUnitNo,sTermno,oTerm){
       var oRecord = this.aUploadData.find((el,idx) => el.Floor === sFloor && el.Unitno === sUnitNo && el.Termno === sTermno);      
+      
 
       if (!oRecord){
         this.aUploadData.push({ "Floor" : sFloor, "Unitno" : sUnitNo, "Termno" : sTermno, "Term" : oTerm});        
       } else {
         oRecord.Term = oTerm;
       }      
+    },
+
+    getUploadData : function(Bukrs,Busentity,Contrtype,Keydate){
+      var oData = {
+        "Bukrs": Bukrs,
+        "Busentity" : Busentity,
+        "Contrtype": Contrtype,
+        "Keydate": Keydate,
+        "Floor": '',
+        "Unitno" : '',
+        "Term1" : null,
+        "Term2" : null,
+        "Term3" : null,
+        "Term1mode" : null,
+        "Term2mode" : null,
+        "Term3mode" : null
+      };
+
+      var result = [];
+
+      for(var i = 0; i < this.aUploadData.length; i++){
+        var rec = this.aUploadData[i];
+        oData.Floor = rec.Floor;
+        oData.Unitno = rec.Unitno;
+        switch(rec.Termno) {
+          case "2":
+              oData.Term2.Company = rec.Company;
+              oData.Term2.Tenant = rec.Tenant;
+              oData.Term2.Areasize = rec.Areasize;
+              oData.Term2.Uom = rec.Uom;
+              oData.Term2.Tradekey = rec.Tradekey;
+              oData.Term2.Trade = rec.Trade;
+              oData.Term2.Startdate = rec.Startdate;
+              oData.Term2.Enddate = rec.Enddate;
+              oData.Term2.Noofyears = rec.Noofyears;
+              oData.Term2.Currency = rec.Currency;
+              oData.Term2.Avgbaserent = rec.Avgbaserent;
+              oData.Term2.Baserentyr1 = rec.Baserentyr1;
+              oData.Term2.Baserentyr2 = rec.Baserentyr2;
+              oData.Term2.Baserentyr3 = rec.Baserentyr3;
+              oData.Term2.Baserentyr4 = rec.Baserentyr4;
+              oData.Term2.Baserentyr5 = rec.Baserentyr5;
+              oData.Term2.Baserentyr6 = rec.Baserentyr6;
+              oData.Term2.Svcrentyr1 = rec.Svcrentyr1;
+              oData.Term2.Svcrentyr2 = rec.Svcrentyr2;
+              oData.Term2.Svcrentyr3 = rec.Svcrentyr3;
+              oData.Term2.Svcrentyr4 = rec.Svcrentyr4;
+              oData.Term2.Svcrentyr5 = rec.Svcrentyr5;
+              oData.Term2.Svcrentyr6 = rec.Svcrentyr6;
+              oData.Term2.Anprentyr1 = rec.Anprentyr1;
+              oData.Term2.Anprentyr2 = rec.Anprentyr2;
+              oData.Term2.Anprentyr3 = rec.Anprentyr3;
+              oData.Term2.Anprentyr4 = rec.Anprentyr4;
+              oData.Term2.Anprentyr5 = rec.Anprentyr5;
+              oData.Term2.Anprentyr6 = rec.Anprentyr6;
+              oData.Term2.Unitnos = rec.Unitnos;
+            break;
+          case "3":
+              oData.Term3.Company = rec.Company;
+              oData.Term3.Tenant = rec.Tenant;
+              oData.Term3.Areasize = rec.Areasize;
+              oData.Term3.Uom = rec.Uom;
+              oData.Term3.Tradekey = rec.Tradekey;
+              oData.Term3.Trade = rec.Trade;
+              oData.Term3.Startdate = rec.Startdate;
+              oData.Term3.Enddate = rec.Enddate;
+              oData.Term3.Noofyears = rec.Noofyears;
+              oData.Term3.Currency = rec.Currency;
+              oData.Term3.Avgbaserent = rec.Avgbaserent;
+              oData.Term3.Baserentyr1 = rec.Baserentyr1;
+              oData.Term3.Baserentyr2 = rec.Baserentyr2;
+              oData.Term3.Baserentyr3 = rec.Baserentyr3;
+              oData.Term3.Baserentyr4 = rec.Baserentyr4;
+              oData.Term3.Baserentyr5 = rec.Baserentyr5;
+              oData.Term3.Baserentyr6 = rec.Baserentyr6;
+              oData.Term3.Svcrentyr1 = rec.Svcrentyr1;
+              oData.Term3.Svcrentyr2 = rec.Svcrentyr2;
+              oData.Term3.Svcrentyr3 = rec.Svcrentyr3;
+              oData.Term3.Svcrentyr4 = rec.Svcrentyr4;
+              oData.Term3.Svcrentyr5 = rec.Svcrentyr5;
+              oData.Term3.Svcrentyr6 = rec.Svcrentyr6;
+              oData.Term3.Anprentyr1 = rec.Anprentyr1;
+              oData.Term3.Anprentyr2 = rec.Anprentyr2;
+              oData.Term3.Anprentyr3 = rec.Anprentyr3;
+              oData.Term3.Anprentyr4 = rec.Anprentyr4;
+              oData.Term3.Anprentyr5 = rec.Anprentyr5;
+              oData.Term3.Anprentyr6 = rec.Anprentyr6;
+              oData.Term3.Unitnos = rec.Unitnos;
+            break;
+        }
+        result.push(oData);
+      }
+      return result;
     },
 
 
