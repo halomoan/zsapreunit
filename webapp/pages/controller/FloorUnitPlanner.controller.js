@@ -81,9 +81,9 @@ sap.ui.define(
 
           var oThis = this;
 
-          $("#container-zsapreunit---FloorUnitPlanner--planTable-vsb").scroll(function() { 
-            oThis._tableCellsColor();
-          });
+          // $("#container-zsapreunit---FloorUnitPlanner--planTable-vsb").scroll(function() { 
+          //   oThis._tableCellsColor();
+          // });
 
           // var oTableControl = _oTableManager.getTableControl();
           // var oVsb = oTableControl._getScrollExtension().getVerticalScrollbar();
