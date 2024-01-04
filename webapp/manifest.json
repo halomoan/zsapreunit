@@ -101,6 +101,13 @@
                     "target": [
                         "FloorUnitPlannerView"
                     ]
+                },
+                {
+                    "name": "ManageVacantUnit",
+                    "pattern": "ManageVacantUnit",
+                    "target": [
+                        "ManageVacantUnitView"
+                    ]
                 }
             ],
             "targets": {
@@ -138,6 +145,13 @@
                     "transition": "slide",
                     "viewId": "UnitsPlannerMaster",
                     "viewName": "UnitsPlannerMaster"
+                },
+                "ManageVacantUnitView": {
+                    "parent": "BaseView",                    
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "viewId": "ManageVacantUnit",
+                    "viewName": "ManageVacantUnit"
                 }
             }
         },

@@ -56,7 +56,7 @@ sap.ui.define(
             industryData: [],
             isDirty: false,
             isBusy: false,
-            noRows: sap.ui.Device.resize.height > 800 ? 19: 15
+            noRows: sap.ui.Device.resize.height > 800 ? 22: 15
           });
 
           var oView = this.getView();

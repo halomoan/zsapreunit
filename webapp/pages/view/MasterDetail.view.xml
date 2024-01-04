@@ -13,7 +13,7 @@
 		</tnt:header>
 		<tnt:sideContent>
 			<tnt:SideNavigation id="sideNavigation" itemSelect="onSideMenuSelect" >
-				<tnt:NavigationList id="_IDGenNavigationList1" items="{SideGroupMenuSet}">
+				<tnt:NavigationList id="_IDGenNavigationList1" items="{/SideGroupMenuSet}">
 					<tnt:NavigationListItem id="_IDGenNavigationListItem1" items="{SubMenus}" text="{Name}" icon="{Icon}" expanded="false" >
 						<tnt:NavigationListItem id="_IDGenNavigationListItem2" text="{Name}" target="{GroupID}:{Target}"  icon="{Icon}"/>
 					</tnt:NavigationListItem>

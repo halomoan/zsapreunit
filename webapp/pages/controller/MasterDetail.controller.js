@@ -24,6 +24,46 @@ sap.ui.define([
                 oToolPage.setSideExpanded(!oToolPage.getSideExpanded());
 
             }, 
+
+            onSideMenuSelect: function(oEvent){
+                var oItem = oEvent.getParameter("item"),
+                    //oCtx = oItem.getBindingContext(),
+                    //sMenu = oItem.getText(),
+                    sTarget = oItem.getTarget();
+
+               
+                    
+                switch(sTarget){
+                    case "G001:RECNPLAN":			
+                        this._oRouter.navTo("RouteMainView"); break;
+                    case "G001:VACANTUNITS":	
+                    console.log(sTarget)		
+                        this._oRouter.navTo("ManageVacantUnit"); break;	
+                    case "G002:RPTRANGE":	
+                        this._oRouter.navTo("rptrange"); break;	
+                    case "SAPG1:PLANT":			
+                        this._oRouter.navTo("planttopurchorg"); break;
+                    default:
+                        this._oRouter.navTo("notFound");break;
+                }
+            },
+
+            onFixMenuSelect: function(oEvent){
+                var oItem = oEvent.getParameter("item"),
+                    sTarget = oItem.getTarget();
+            
+                        
+                switch(sTarget){
+                    case "GROUP":			
+                        this._oRouter.navTo("recipegroup"); break;
+                    case "LOCATION":
+                        this._oRouter.navTo("recipeloc"); break;
+                        
+                    default:
+                        this._oRouter.navTo("notFound");break;
+                }		
+                        
+            },
             __onRouteMatched: function(oEvent){
                // this._refreshSloorUnit(); 
                    
