@@ -92,26 +92,36 @@
                 "viewPath": "zsapreunit.pages.view",
                 "controlAggregation": "pages",
                 "controlId": "app",
-                "clearControlAggregation": false
+                "clearControlAggregation": false,
+                "bypassed": {
+					"target": "notFound"
+				}
             },
             "routes": [
                 {
                     "name": "RouteMainView",
                     "pattern": ":?query:",
                     "target": [
+                        "HomepageView"
+                    ]
+                },
+                {
+                    "name": "FloorUnitPlanner",
+                    "pattern": "FloorUnitPlanner/{Bukrs}/{Busentity}/{Contrtype}/:Keydate:",
+                    "target": [
                         "FloorUnitPlannerView"
                     ]
                 },
                 {
                     "name": "ManageVacantUnit",
-                    "pattern": "ManageVacantUnit",
+                    "pattern": "ManageVacantUnit/{Bukrs}/{Busentity}/{Contrtype}/:Keydate:",
                     "target": [
                         "ManageVacantUnitView"
                     ]
                 }
             ],
             "targets": {
-                "BaseView": {
+                "MasterDetail": {
                     "viewName": "MasterDetail",
                     "viewLevel": 1,
                     "clearControlAggregation": false,
@@ -119,22 +129,31 @@
                     "controlAggregation": "pages",
                     "viewId": "masterdetail"
                 },
-                "TargetMainView": {
-                    "parent": "BaseView",
+                "SingleMainView": {                    
                     "viewType": "XML",
                     "transition": "slide",
+                    "clearControlAggregation": false,
+                    "controlId": "idApp",
+                    "controlAggregation": "pages",
                     "viewId": "MainView",
                     "viewName": "MainView"
                 },
+                "HomepageView": {
+                    "parent": "SingleMainView",
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "viewId": "HomepageView",
+                    "viewName": "Homepage"
+                },
                 "FloorUnitPlannerView": {
-                    "parent": "BaseView",
+                    "parent": "MasterDetail",
                     "viewType": "XML",
                     "transition": "slide",
                     "viewId": "FloorUnitPlanner",
                     "viewName": "FloorUnitPlanner"
                 },
-                "UnitsPlannerBaseView": {
-                    "parent": "BaseView",
+                "UnitsPlannerMasterDetail": {
+                    "parent": "MasterDetail",
                     "viewType": "XML",
                     "transition": "slide",
                     "viewId": "UnitsPlannerBase",
@@ -147,12 +166,19 @@
                     "viewName": "UnitsPlannerMaster"
                 },
                 "ManageVacantUnitView": {
-                    "parent": "BaseView",                    
+                    "parent": "MasterDetail",                    
                     "viewType": "XML",
                     "transition": "slide",
                     "viewId": "ManageVacantUnit",
                     "viewName": "ManageVacantUnit"
-                }
+                },
+                "notFound": {
+                    "parent": "SingleMainView",
+                    "viewType": "XML",
+					"viewId": "notFound",
+					"viewName": "NotFound",
+					"transition": "show"
+				}
             }
         },
         "rootView": {

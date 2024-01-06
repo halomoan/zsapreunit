@@ -2,10 +2,13 @@
 	controllerName="zsapreunit.pages.controller.ManageVacantUnit"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.m"
-	xmlns:t="sap.ui.table"
-    xmlns:f="sap.ui.layout.form"
+	xmlns:t="sap.ui.table"    
     xmlns:l="sap.ui.layout"
-    xmlns:core="sap.ui.core"
+	xmlns:core="sap.ui.core" 
+    core:require="{
+		Integer: 'sap/ui/model/type/Integer',
+		Float: 'sap/ui/model/type/Float'
+	 }"
 	displayBlock="true"
 	height="100%"
 	busyIndicatorDelay="0"
@@ -13,97 +16,60 @@
 >
 
 <l:VerticalLayout class="sapUiContentPadding">
-		<f:Form id="vacantForm" editable="true">
-			<f:toolbar>
-				<Toolbar>
-					<Button icon="sap-icon://nav-back" press=".onNavBack"/>
-					<Title text="{i18n>Label.VacantUnit}"/>
-					<ToolbarSpacer/>
-					   <Button
-	                    icon="sap-icon://alert"
-	                    text="{= ${message>/}.length }"
-	                    visible="{= ${message>/}.length > 0 }"
-	                    type="Emphasized"
-	                    press="onMessagePopoverPress" />
-					<Button icon="sap-icon://add-document" press="onNew"/>
-					<Button icon="sap-icon://save" press="onSave"/>
-				</Toolbar>
-			</f:toolbar>
-			<f:layout>
-				<f:ColumnLayout columnsM="2" columnsL="3" columnsXL="4"/>
-			</f:layout>
-			<f:formContainers>
-				<f:FormContainer>
-					<f:formElements>
-						<f:FormElement label="{i18n>Label.Floor} - {i18n>Label.UnitNo} / {i18n>Label.AreaSize}">
-							<f:fields>
-								<Text text="#" textAlign="End">
-									<layoutData>
-										<f:ColumnElementData cellsSmall="1" cellsLarge="1" />
-									</layoutData>
-								</Text>
-                                <!-- <Input value="{ path: 'form>/Floor' }">
-									<layoutData>
-										<f:ColumnElementData cellsSmall="3" cellsLarge="1" />
-									</layoutData>
-								</Input> -->
-
-                                <ComboBox
-                                    items="{
-                                        path: 'form>/Floor',
-                                        sorter: { path: 'ID' }                                        
-                                    }">
-                                    <core:Item key="{ID}" text="{text}" />
-
-                                    <layoutData>
-										<f:ColumnElementData cellsSmall="3" cellsLarge="1" />
-									</layoutData>
-                                </ComboBox>
-								<Text text="-" textAlign="Center">
-									<layoutData>
-										<f:ColumnElementData cellsSmall="1" cellsLarge="1" />
-									</layoutData>
-								</Text>
-								<Input value="{ path: 'form>/UnitNo' }" visible="true">
-							        <layoutData>
-										<f:ColumnElementData cellsSmall="2" cellsLarge="1" />
-									</layoutData>
-                                </Input>
-
-                                <Text text="/" textAlign="Center">
-									<layoutData>
-										<f:ColumnElementData cellsSmall="1" cellsLarge="1" />
-									</layoutData>
-								</Text>
-
-                                <Input value="{ path: 'form>/AreaSize', type: 'sap.ui.model.odata.type.Single' }" visible="true" description="SF">
-							        <layoutData>
-										<f:ColumnElementData cellsSmall="4" cellsLarge="1" />
-									</layoutData>
-                                </Input>
-							</f:fields>
-						</f:FormElement>
-					</f:formElements>
-				</f:FormContainer>
-			</f:formContainers>
-		</f:Form>
-		<t:Table id="loctbl" rows="{ path:'/LocationSet', filters : [{ path : 'Werks', operator : 'EQ', value1 : ''}]}" selectionMode="MultiToggle" visibleRowCount="7" paste="onPaste" ariaLabelledBy="title">
+		
+		<t:Table id="vacantunitable" rows="{ path:'form>/VacantUnitSet' , sorter: { path: 'Guid'} }" 
+			selectionMode="MultiToggle" visibleRowCount="7" paste="onPaste" ariaLabelledBy="title"
+			rowSelectionChange="onTableSelectionChanged"
+			>
 			<t:extension>
 				<OverflowToolbar style="Clear">
-					<Title id="title" text="{i18n>Location}"/>
+					<Title id="title" text="{i18n>Label.VacantUnit}"/>
+					<ToolbarSpacer/>
+					<Button
+						icon="sap-icon://save"
+						textDirection="Inherit"
+						type="Default"
+						press="onSaveUnits"
+						visible="{viewData>/showSave}"
+					/>
+					<Button
+						icon="sap-icon://delete"
+						textDirection="Inherit"
+						type="Default"
+						press="onDeleteUnits"
+						visible="{viewData>/showDelete}"
+					/>
+					<Button
+						icon="sap-icon://add"
+						textDirection="Inherit"
+						type="Default"
+						press="onAddUnit"
+					/>
 				</OverflowToolbar>
 			</t:extension>
 			<t:columns>
-				<t:Column width="10rem" filterProperty="LocationID">
+				<t:Column width="10rem" filterProperty="Guid">
 					<Label text="{i18n>ID}"/>
 					<t:template>
-						<Text text="{LocationID}" wrapping="false"/>
+						<Label text="{form>Guid}" wrapping="false"/>
 					</t:template>
 				</t:Column>
-				<t:Column width="20rem" filterProperty="Text">
-					<Label text="{i18n>Text}"/>
+				<t:Column width="10rem" filterProperty="Floor">
+					<Label text="{i18n>Label.Floor}"/>
 					<t:template>
-						<Text text="{Text}" wrapping="false"/>
+						<Input value="{ path: 'form>Floor'}" change=".onUnitnochanged" editable="{form>Editable}" maxLength="2" valueState="{form>State/Floor}"/>
+					</t:template>
+				</t:Column>
+				<t:Column width="10rem" filterProperty="Unitno">
+					<Label text="{i18n>Label.UnitNo}"/>
+					<t:template>
+						<Input value="{form>Unitno}" change=".onUnitnochanged"  editable="{form>Editable}"  maxLength="4" valueState="{form>State/Unitno}"/>
+					</t:template>
+				</t:Column>
+				<t:Column width="10rem" filterProperty="Areasize">
+					<Label text="{i18n>Label.AreaSize}"/>
+					<t:template>
+						<Input value="{ path: 'form>Areasize', type: 'Float'}" description="{form>Uom}"  textAlign="End"  editable="{form>Editable}" valueState="{form>State/Areasize}"/>
 					</t:template>
 				</t:Column>
 			</t:columns>

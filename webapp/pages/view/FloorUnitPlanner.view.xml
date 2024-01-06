@@ -2,7 +2,7 @@
 	controllerName="zsapreunit.pages.controller.FloorUnitPlanner"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.uxap"
-	xmlns:ui="sap.ui.table"
+	xmlns:t="sap.ui.table"
 	xmlns:m="sap.m"
 	xmlns:plugins="sap.ui.table.plugins"
 	xmlns:core="sap.ui.core"
@@ -44,7 +44,7 @@
 				press="onDelete3rdTermDialog"
 			/>
 		</m:headerContent>
-		<ui:Table
+		<t:Table
 			id="planTable"
 			rows="{
 				path: 'tableData>/floorData',
@@ -55,7 +55,7 @@
 			visibleRowCount="{viewData>/noRows}"
 			enableBusyIndicator="true"
 		>
-			<ui:plugins>
+			<t:plugins>
 				<plugins:MultiSelectionPlugin
 					limit="20"
 					enableNotification="true"
@@ -63,8 +63,8 @@
 					selectionMode="MultiToggle"
 					selectionChange=".onUnitSelChange"
 				/>
-			</ui:plugins>
-			<ui:extension>
+			</t:plugins>
+			<t:extension>
 				<m:OverflowToolbar style="Clear">
 					<m:ToolbarSpacer/>
 					<m:Button
@@ -74,41 +74,41 @@
 						press="onGotoFirstColumn"
 					/>
 				</m:OverflowToolbar>
-			</ui:extension>
-			<ui:columns>
-				<ui:Column
+			</t:extension>
+			<t:columns>
+				<t:Column
 					width="4rem"
 					filterProperty="Floor"
 				>
 					<m:Label text="{i18n>Label.Floor}"/>
-					<ui:template>
+					<t:template>
 						<m:Label
 							text="{tableData>Floor}"
 							design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
 							width="100%"
 						/>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					width="4rem"
 					filterProperty="Unitno"
 				>
 					<m:Label text="{i18n>Label.UnitNo}"/>
-					<ui:template>
+					<t:template>
 						<m:Label
 							text="{tableData>Unitno}"
 							design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
 							textAlign="{= ${tableData>Term1mode/Main} ? 'Begin': 'End'}"
 							width="100%"
 						/>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					width="18rem"
 					headerSpan="2"
 					filterProperty="Term1/Company"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label
 							text="First Term"
 							textAlign="Center"
@@ -119,35 +119,35 @@
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<m:Label
 							text="{tableData>Term1/Company}"
 							design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
 						/>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					width="12rem"
 					filterProperty="Term1/Tenant"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label text="First Term"/>
 						<m:Label
 							text="{i18n>Contract.Tenant}"
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<m:Label
 							text="{tableData>Term1/Tenant}"
 							design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
 						/>
-					</ui:template>
-				</ui:Column>
-				<ui:Column width="10rem">
-					<ui:multiLabels>
+					</t:template>
+				</t:Column>
+				<t:Column width="10rem">
+					<t:multiLabels>
 						<m:Label
 							text="First Term"
 							textAlign="Center"
@@ -158,16 +158,16 @@
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<m:Label
 							text="{tableData>Term1/Trade}"
 							design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
 						/>
-					</ui:template>
-				</ui:Column>
-				<ui:Column width="6rem">
-					<ui:multiLabels>
+					</t:template>
+				</t:Column>
+				<t:Column width="6rem">
+					<t:multiLabels>
 						<m:Label
 							text="First Term"
 							textAlign="Center"
@@ -178,8 +178,8 @@
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<!-- <m:Label
 							text="{
 								path: 'tableData>Term1/Areasize',
@@ -198,13 +198,13 @@
 							}"
 							unit="{tableData>Term1/Uom}"
 						/>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					width="5rem"
 					hAlign="Center"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label text="First Term"/>
 						<m:Label
 							text="{i18n>Label.Duration}"
@@ -212,8 +212,8 @@
 							width="100%"
 							wrapping="true"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<m:Label
 							text="{
 								parts: [{
@@ -226,21 +226,21 @@
 							design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
 							visible="{tableData>Term1mode/Main}"
 						/>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					hAlign="Center"
 					width="8rem"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label text="First Term"/>
 						<m:Label
 							text="{i18n>Contract.StartDate}"
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<m:Label
 							text="{
 								path: 'tableData>Term1/Startdate',
@@ -249,21 +249,21 @@
 							design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
 							visible="{tableData>Term1mode/Main}"
 						/>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					hAlign="Center"
 					width="8rem"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label text="First Term"/>
 						<m:Label
 							text="{i18n>Contract.EndDate}"
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<m:Label
 							text="{
 								path: 'tableData>Term1/Enddate',
@@ -272,21 +272,21 @@
 							design="{= ${tableData>Term1mode/Main} ? 'Bold': 'Standard'}"
 							visible="{tableData>Term1mode/Main}"
 						/>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					hAlign="Center"
 					width="8rem"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label text="First Term"/>
 						<m:Label
 							text="{i18n>Contract.BaseRent.Avg}"
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<m:Button
 							text="{
 								path: 'tableData>Term1/Avgbaserent',
@@ -295,15 +295,15 @@
 							press="onEditTermDialog"
 							visible="{tableData>Term1mode/Main}"
 						/>
-					</ui:template>
-				</ui:Column>
+					</t:template>
+				</t:Column>
 				<!-- 2nd Term-->
-				<ui:Column
+				<t:Column
 					width="18rem"
 					headerSpan="2"
 					filterProperty="Term2/Company"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label
 							text="{i18n>Label.SecondTerm}"
 							textAlign="Center"
@@ -314,8 +314,8 @@
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<l:VerticalLayout width="100%">
 							<l:content>
 								<!-- <m:Input
@@ -337,21 +337,21 @@
 								/>
 							</l:content>
 						</l:VerticalLayout>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					width="12rem"
 					filterProperty="Term2/Tenant"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label text="{i18n>Label.SecondTerm}"/>
 						<m:Label
 							text="Tenant"
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<l:VerticalLayout width="100%">
 							<l:content>
 								<!-- <m:Input
@@ -373,13 +373,13 @@
 								/>
 							</l:content>
 						</l:VerticalLayout>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					width="13rem"
 					filterProperty="Term2/Tenant"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label
 							text="{i18n>Label.SecondTerm}"
 							width="100%"
@@ -390,8 +390,8 @@
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<l:VerticalLayout width="100%">
 							<l:content>
 								<!-- <m:Select
@@ -424,13 +424,13 @@
 								/>
 							</l:content>
 						</l:VerticalLayout>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					width="8rem"
 					hAlign="End"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label
 							text="{i18n>Label.SecondTerm}"
 							textAlign="Center"
@@ -442,8 +442,8 @@
 							width="100%"
 							tooltip="{i18n>Label.Optional}"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<l:VerticalLayout width="100%">
 							<l:content>
 								<m:ObjectNumber
@@ -470,13 +470,13 @@
 								/>
 							</l:content>
 						</l:VerticalLayout>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					width="5rem"
 					hAlign="Center"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label text="{i18n>Label.SecondTerm}"/>
 						<m:Label
 							text="{i18n>Label.Duration}"
@@ -484,8 +484,8 @@
 							width="100%"
 							wrapping="true"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<m:Label
 							text="{
 								parts: [{
@@ -498,14 +498,14 @@
 							design="{= ${tableData>Term2mode/Main} ? 'Bold': 'Standard'}"
 							visible="{= ${tableData>Term2mode/Main} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
 						/>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					width="8rem"
 					hAlign="Center"
 					filterProperty="Term2/Startdate"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label
 							text="{i18n>Label.SecondTerm}"
 							textAlign="Center"
@@ -516,8 +516,8 @@
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<l:VerticalLayout width="100%">
 							<l:content>
 								<m:Link
@@ -540,14 +540,14 @@
 								/>
 							</l:content>
 						</l:VerticalLayout>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					width="8rem"
 					hAlign="Center"
 					filterProperty="Term2/Startdate"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label
 							text="{i18n>Label.SecondTerm}"
 							textAlign="Center"
@@ -558,8 +558,8 @@
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<l:VerticalLayout width="100%">
 							<l:content>
 								<m:Link
@@ -582,21 +582,21 @@
 								/>
 							</l:content>
 						</l:VerticalLayout>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					hAlign="Center"
 					width="8rem"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label text="{i18n>Label.SecondTerm}"/>
 						<m:Label
 							text="{i18n>Contract.BaseRent.Avg}"
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<m:Button
 							text="{
 								path: 'tableData>Term2/Avgbaserent',
@@ -605,15 +605,15 @@
 							press="onEditTermDialog"
 							visible="{= ${tableData>Term2mode/Main} &amp;&amp; ${tableData>Term2mode/Hasdata} }"
 						/>
-					</ui:template>
-				</ui:Column>
+					</t:template>
+				</t:Column>
 				<!-- 3rd Term-->
-				<ui:Column
+				<t:Column
 					width="18rem"
 					headerSpan="2"
 					filterProperty="Term3/Company"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label
 							text="{i18n>Label.ThirdTerm}"
 							textAlign="Center"
@@ -624,8 +624,8 @@
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<l:VerticalLayout width="100%">
 							<l:content>
 								<!-- <m:Input
@@ -647,21 +647,21 @@
 								/>
 							</l:content>
 						</l:VerticalLayout>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					width="12rem"
 					filterProperty="Term3/Tenant"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label text="{i18n>Label.ThirdTerm}"/>
 						<m:Label
 							text="Tenant"
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<l:VerticalLayout width="100%">
 							<l:content>
 								<!-- <m:Input
@@ -683,13 +683,13 @@
 								/>
 							</l:content>
 						</l:VerticalLayout>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					width="13rem"
 					filterProperty="Term3/Tenant"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label
 							text="{i18n>Label.ThirdTerm}"
 							width="100%"
@@ -700,8 +700,8 @@
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<l:VerticalLayout width="100%">
 							<l:content>
 								<!-- <m:Select
@@ -734,13 +734,13 @@
 								/>
 							</l:content>
 						</l:VerticalLayout>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					width="8rem"
 					hAlign="End"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label
 							text="{i18n>Label.ThirdTerm}"
 							textAlign="Center"
@@ -752,8 +752,8 @@
 							width="100%"
 							tooltip="{i18n>Label.Optional}"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<l:VerticalLayout width="100%">
 							<l:content>
 								<!-- <m:Link
@@ -799,13 +799,13 @@
 								/>
 							</l:content>
 						</l:VerticalLayout>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					width="5rem"
 					hAlign="Center"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label text="{i18n>Label.ThirdTerm}"/>
 						<m:Label
 							text="{i18n>Label.Duration}"
@@ -813,8 +813,8 @@
 							width="100%"
 							wrapping="true"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<m:Label
 							text="{
 								parts: [{
@@ -827,14 +827,14 @@
 							design="{= ${tableData>Term3mode/Main} ? 'Bold': 'Standard'}"
 							visible="{= ${tableData>Term3mode/Main} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
 						/>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					width="8rem"
 					hAlign="Center"
 					filterProperty="Term3/Startdate"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label
 							text="{i18n>Label.ThirdTerm}"
 							textAlign="Center"
@@ -845,8 +845,8 @@
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<l:VerticalLayout width="100%">
 							<l:content>
 								<m:Link
@@ -869,14 +869,14 @@
 								/>
 							</l:content>
 						</l:VerticalLayout>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					width="8rem"
 					hAlign="Center"
 					filterProperty="Term3/Startdate"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label
 							text="{i18n>Label.ThirdTerm}"
 							textAlign="Center"
@@ -887,8 +887,8 @@
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<l:VerticalLayout width="100%">
 							<l:content>
 								<m:Link
@@ -911,21 +911,21 @@
 								/>
 							</l:content>
 						</l:VerticalLayout>
-					</ui:template>
-				</ui:Column>
-				<ui:Column
+					</t:template>
+				</t:Column>
+				<t:Column
 					hAlign="Center"
 					width="8rem"
 				>
-					<ui:multiLabels>
+					<t:multiLabels>
 						<m:Label text="{i18n>Label.ThirdTerm}"/>
 						<m:Label
 							text="{i18n>Contract.BaseRent.Avg}"
 							textAlign="Center"
 							width="100%"
 						/>
-					</ui:multiLabels>
-					<ui:template>
+					</t:multiLabels>
+					<t:template>
 						<m:Button
 							text="{
 								path: 'tableData>Term3/Avgbaserent',
@@ -934,10 +934,10 @@
 							press="onEditTermDialog"
 							visible="{= ${tableData>Term3mode/Main} &amp;&amp; ${tableData>Term3mode/Hasdata} }"
 						/>
-					</ui:template>
-				</ui:Column>
-			</ui:columns>
-		</ui:Table>
+					</t:template>
+				</t:Column>
+			</t:columns>
+		</t:Table>
 	</m:Page>
 	<m:DatePicker
 		id="HiddenDP"

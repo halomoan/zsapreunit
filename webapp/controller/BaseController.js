@@ -34,21 +34,14 @@ sap.ui.define(
 
       getRouter: function () {
         return UIComponent.getRouterFor(this);
-      },
-
-      getKeyDate: function () {
-        return new Date("2017-08-01");
-      },
-
-      getServiceKeys: function () {
-        var oKeys = {
-          Bukrs: "1001",
-          Busentity: "1001",
-          Contrtype: "L002",
-          Keydate: this.getKeyDate(),
-        };
-        return oKeys;
-      },
+      },    
+    
+      getKeyDate: function () {       
+        var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+          pattern: "yyyy-MM-dd"
+        });
+        return oDateFormat.format(new Date("2017-08-01"));
+      },     
 
       yearDiff: function (oSDate, oEDate) {
         if (oSDate instanceof Date && oEDate instanceof Date) {

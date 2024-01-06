@@ -1,0 +1,36 @@
+{
+    "VacantUnitSet": [
+      {
+        "Guid": "#01-03",
+        "Floor": "01",
+        "Unitno": "03",
+        "Areasize": "144",
+        "Uom": "SF",
+        "Editable": false       
+      },
+      {
+        "Guid": "#02-01",
+        "Floor": "02",
+        "Unitno": "01",
+        "Areasize": "141",
+        "Uom": "SF",
+        "Editable": false
+      },
+      {
+        "Guid": "#03-01",
+        "Floor": "03",
+        "Unitno": "01",
+        "Areasize": "114",
+        "Uom": "SF",
+        "Editable": false
+      },
+      {
+        "Guid": "#B1-20A",
+        "Floor": "B1",
+        "Unitno": "20A",
+        "Areasize": "64",
+        "Uom": "SF",
+        "Editable": false
+      }
+    ]
+}

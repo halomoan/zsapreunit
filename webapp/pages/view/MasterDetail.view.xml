@@ -8,7 +8,13 @@
 						<OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData1" priority="NeverOverflow"/>
 					</layoutData>
 				</Button>
-				<ToolbarSpacer id="_IDGenToolbarSpacer1" width="20px"/>
+				<ToolbarSpacer id="_IDGenToolbarSpacer1"/>
+
+				<Button id="sideNavigationHomeButton" icon="sap-icon://home" type="Transparent" press=".onHomeSideNavPress" tooltip="Home">
+					<layoutData>
+						<OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData2" priority="Low"/>
+					</layoutData>
+				</Button>
 			</tnt:ToolHeader>
 		</tnt:header>
 		<tnt:sideContent>

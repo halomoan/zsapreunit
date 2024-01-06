@@ -9,10 +9,12 @@ sap.ui.define([
     function (BaseController,Filter,FilterOperator) {
         "use strict";
 
+        var _oParams = null;
+
         return BaseController.extend("zsapreunit.pages.controller.MasterDetail", {
             onInit: function () {
                 this._oRouter = this.getRouter();
-                this._oRouter.getRoute("RouteMainView").attachPatternMatched(this.__onRouteMatched, this);
+                this._oRouter.getRoute("FloorUnitPlanner").attachPatternMatched(this.__onRouteMatched, this);
             },
 
             onToggleSideNavPress: function(){
@@ -29,16 +31,13 @@ sap.ui.define([
                 var oItem = oEvent.getParameter("item"),
                     //oCtx = oItem.getBindingContext(),
                     //sMenu = oItem.getText(),
-                    sTarget = oItem.getTarget();
-
-               
+                    sTarget = oItem.getTarget();               
                     
                 switch(sTarget){
                     case "G001:RECNPLAN":			
-                        this._oRouter.navTo("RouteMainView"); break;
-                    case "G001:VACANTUNITS":	
-                    console.log(sTarget)		
-                        this._oRouter.navTo("ManageVacantUnit"); break;	
+                        this._oRouter.navTo("FloorUnitPlanner",_oParams); break;
+                    case "G001:VACANTUNITS":	                   		
+                        this._oRouter.navTo("ManageVacantUnit",_oParams); break;	
                     case "G002:RPTRANGE":	
                         this._oRouter.navTo("rptrange"); break;	
                     case "SAPG1:PLANT":			
@@ -64,8 +63,12 @@ sap.ui.define([
                 }		
                         
             },
-            __onRouteMatched: function(oEvent){
-               // this._refreshSloorUnit(); 
+
+            onHomeSideNavPress: function(){
+                this._oRouter.navTo("RouteMainView");
+            },
+            __onRouteMatched: function(oEvent){               
+                _oParams = oEvent.getParameter("arguments");
                    
             },
 
