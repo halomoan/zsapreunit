@@ -126,6 +126,11 @@ sap.ui.define([
 			var bValid = this._validate();
 			if (bValid){
 
+				var oView = this.getView();
+				var oModel = oView.getModel("viewData");
+
+				oModel.setProperty("/showSave",false);
+
 			} else {
 				MessageBox.error(_oi18Bundle.getText("Error.NoEmpty"));
 			}

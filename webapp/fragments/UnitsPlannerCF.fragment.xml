@@ -12,7 +12,7 @@
 			
 		</headerContent>
 		<HeaderContainer id="container2" >
-			<TileContent unit="{selectedCond>/Currency}" footer="{i18n>CashFlow.TotalRent}">
+			<TileContent unit="{selectedCond>/Currency}" footer="{i18n>Contract.TotalRent}">
 				<content>
 					<NumericContent 
 						icon="sap-icon://lead"
@@ -22,7 +22,7 @@
 						withMargin="true"/>
 				</content>
 			</TileContent>	
-			<TileContent unit="{selectedCond>/Currency}" footer="{i18n>CashFlow.BaseRent}">
+			<TileContent unit="{selectedCond>/Currency}" footer="{i18n>Contract.BaseRent}">
 				<content>
 					<NumericContent 
 						tooltip="{path: 'viewData>/TBaseRent', formatter:'.formatNumber'}"
@@ -30,7 +30,7 @@
 						withMargin="true"/>
 				</content>
 			</TileContent>		
-			<TileContent unit="{selectedCond>/Currency}" footer="{i18n>CashFlow.SvcRent}">
+			<TileContent unit="{selectedCond>/Currency}" footer="{i18n>Contract.SvcRent}">
 				<content>
 					<NumericContent 
 						tooltip="{path: 'viewData>/TSvcRent', formatter:'.formatNumber'}"						
@@ -38,7 +38,7 @@
 						withMargin="true"/>
 				</content>
 			</TileContent>	
-			<TileContent unit="{selectedCond>/Currency}" footer="{i18n>CashFlow.AnpRent}">
+			<TileContent unit="{selectedCond>/Currency}" footer="{i18n>Contract.AnpRent}">
 				<content>
 					<NumericContent 
 						tooltip="{path: 'viewData>/TAnpRent', formatter:'.formatNumber'}"	
@@ -82,7 +82,7 @@
 					<Text text="Month/Year"/>
 				</Column>
 				<Column hAlign="End">
-					<Text text="{i18n>CashFlow.TotalRent}"/>
+					<Text text="{i18n>Contract.TotalRent}"/>
 				</Column>
 				<Column
 					hAlign="End"
@@ -90,21 +90,21 @@
 					minScreenWidth="Tablet"
 					
 				>				
-					<Text text="{i18n>CashFlow.BaseRent}"/>
+					<Text text="{i18n>Contract.BaseRent}"/>
 				</Column>
 				<Column
 					hAlign="End"
 					demandPopin="true"
 					minScreenWidth="Tablet"
 				>
-					<Text text="{i18n>CashFlow.SvcRent}"/>
+					<Text text="{i18n>Contract.SvcRent}"/>
 				</Column>
 				<Column
 					hAlign="End"
 					demandPopin="true"
 					minScreenWidth="Tablet"
 				>
-					<Text text="{i18n>CashFlow.AnpRent}"/>
+					<Text text="{i18n>Contract.AnpRent}"/>
 				</Column>
 				
 			</columns>

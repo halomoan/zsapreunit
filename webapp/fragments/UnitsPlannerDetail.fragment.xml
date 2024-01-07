@@ -126,6 +126,18 @@
 									}"
 								/>
 							</HBox>
+							<ObjectStatus
+									title="{i18n>Label.Duration}"
+									text="{
+								parts: [{
+									path: 'selectedCustomer>/Startdate'
+								}, {
+									path: 'selectedCustomer>/Lastdate'
+								}],
+								formatter: '.yearDiff'
+							}"
+									class="sapUiTinyMarginEnd"
+								/>
 						</l:VerticalLayout>
 					</l:HorizontalLayout>
 				</FlexBox>

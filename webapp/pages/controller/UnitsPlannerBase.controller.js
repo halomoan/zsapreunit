@@ -12,6 +12,8 @@ sap.ui.define([
     function (BaseController,JSONModel,fioriLibrary,Filter,FilterOperator) {
         "use strict";
           
+        var _oi18Bundle;
+        var _oParams = null;
 
         return BaseController.extend("zsapreunit.pages.controller.UnitsPlannerBase", {
             
@@ -42,8 +44,32 @@ sap.ui.define([
                 
                 //var oModel = new JSONModel(sap.ui.require.toUrl("zsapreunit/mockdata/unitplannermaster.json"));
                 //oModel.attachRequestCompleted(convertData);
-			    //this.getView().setModel(oModel);                
+			    //this.getView().setModel(oModel);
+                this._oRouter = this.getRouter();
+                this._oRouter
+                .getRoute("UnitsPlannerBase")
+                .attachPatternMatched(this.__onRouteMatched, this);                
 
+            },
+
+            __onRouteMatched: function (oEvent) {
+                _oi18Bundle = this.getResourceBundle();
+                _oParams = oEvent.getParameter("arguments");
+                this._refreshFloorUnits();
+            },
+
+            _refreshFloorUnits: function(){
+                var oList = sap.ui.core.Fragment.byId("container-zsapreunit---UnitsPlannerBase","sfloorunit");
+                var aFilters = [];
+                var oFilter = new sap.ui.model.Filter([
+                    new sap.ui.model.Filter("Bukrs", FilterOperator.EQ, _oParams.Bukrs),
+                    new sap.ui.model.Filter("Busentity", FilterOperator.EQ, _oParams.Busentity),
+                    new sap.ui.model.Filter("Contrtype", FilterOperator.EQ, _oParams.Contrtype),
+                    new sap.ui.model.Filter("Keydate", FilterOperator.EQ, _oParams.Keydate)
+                ],true);
+                aFilters.push(oFilter)
+                var oBinding = oList.getBinding("items");                
+                oBinding.filter(aFilters, sap.ui.model.FilterType.Application);
             },
 
             onListSearch: function (oEvent) {
@@ -103,6 +129,8 @@ sap.ui.define([
                 var oFCL =  this.getView().byId("fcl");
     
                 oFCL.setLayout(fioriLibrary.LayoutType.ThreeColumnsEndExpanded);
+
+                console.log(oItem);
 
                 this._refershCFEndTable(oItem.Bukrs,oItem.Busentity,oItem.Rentalkeys,oItem.Startdate,oItem.Enddate);
             },

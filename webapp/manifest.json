@@ -118,6 +118,20 @@
                     "target": [
                         "ManageVacantUnitView"
                     ]
+                },
+                {
+                    "name": "UnitsPlannerBase",
+                    "pattern": "UnitsPlannerBase/{Bukrs}/{Busentity}/{Contrtype}/:Keydate:",
+                    "target": [
+                        "UnitsPlannerBaseView"
+                    ]
+                },
+                {
+                    "pattern" : ["", ":all*:"],
+                    "name" : "NotFound",
+                    "target": [
+                        "HomepageView"
+                    ]
                 }
             ],
             "targets": {
@@ -152,19 +166,13 @@
                     "viewId": "FloorUnitPlanner",
                     "viewName": "FloorUnitPlanner"
                 },
-                "UnitsPlannerMasterDetail": {
+                "UnitsPlannerBaseView": {
                     "parent": "MasterDetail",
                     "viewType": "XML",
                     "transition": "slide",
                     "viewId": "UnitsPlannerBase",
                     "viewName": "UnitsPlannerBase"
-                },
-                "UnitsPlannerMasterView": {
-                    "viewType": "XML",
-                    "transition": "slide",
-                    "viewId": "UnitsPlannerMaster",
-                    "viewName": "UnitsPlannerMaster"
-                },
+                },               
                 "ManageVacantUnitView": {
                     "parent": "MasterDetail",                    
                     "viewType": "XML",

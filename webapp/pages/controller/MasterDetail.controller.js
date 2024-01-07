@@ -35,15 +35,30 @@ sap.ui.define([
                     
                 switch(sTarget){
                     case "G001:RECNPLAN":			
-                        this._oRouter.navTo("FloorUnitPlanner",_oParams); break;
-                    case "G001:VACANTUNITS":	                   		
-                        this._oRouter.navTo("ManageVacantUnit",_oParams); break;	
-                    case "G002:RPTRANGE":	
-                        this._oRouter.navTo("rptrange"); break;	
+                        if (_oParams) {
+                            this._oRouter.navTo("FloorUnitPlanner",_oParams); 
+                        } else {
+                            this._oRouter.navTo("NotFound");
+                        }
+                        break;
+                    case "G001:VACANTUNITS":	        
+                        if (_oParams) {
+                            
+                            this._oRouter.navTo("ManageVacantUnit",_oParams);
+                        } else {
+                            this._oRouter.navTo("NotFound");
+                        }
+                        break;           		
+                    case "G002:CFMONTHLY":	
+                        if (_oParams) {
+                            this._oRouter.navTo("UnitsPlannerBase",_oParams);                                                        
+                        } else {
+                            this._oRouter.navTo("NotFound");
+                        }
                     case "SAPG1:PLANT":			
                         this._oRouter.navTo("planttopurchorg"); break;
                     default:
-                        this._oRouter.navTo("notFound");break;
+                        this._oRouter.navTo("NotFound");break;
                 }
             },
 
