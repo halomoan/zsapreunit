@@ -1,0 +1,41 @@
+<mvc:View
+	controllerName="zsapreunit.pages.controller.LeaseCommission"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+    xmlns:t="sap.ui.table"
+    xmlns:l="sap.ui.layout"
+	displayBlock="true"
+	height="100%"
+	busyIndicatorDelay="0"
+>
+<l:VerticalLayout class="sapUiContentPadding">
+		
+		<t:Table id="leasecomm" rows="{ path:'/ZSLEASECOMM' , sorter: [{ path: 'Floor'}, {path: 'Unitno'}] }" 
+			selectionMode="MultiToggle" visibleRowCount="7" paste="onPaste" ariaLabelledBy="title"
+			rowSelectionChange="onTableSelectionChanged"
+			>
+			<t:extension>
+				<OverflowToolbar style="Clear">
+					<Title id="title" text="{i18n>Label.LeaseComm}"/>
+					<ToolbarSpacer/>
+					<Button
+						icon="sap-icon://save"
+						textDirection="Inherit"
+						type="Default"
+						press="onSaveUnits"
+						visible="{viewData>/showSave}"
+					/>					
+				</OverflowToolbar>
+			</t:extension>
+			<t:columns>
+				<t:Column width="10rem" filterProperty="Unitnotxt">
+					<Label text="{i18n>Label.UnitNo}"/>
+					<t:template>
+						<Label text="{Unitnotxt}" wrapping="false"/>
+					</t:template>
+				</t:Column>				
+			</t:columns>
+		</t:Table>
+	</l:VerticalLayout>
+</mvc:View>

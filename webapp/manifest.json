@@ -120,6 +120,13 @@
                     ]
                 },
                 {
+                    "name": "LeaseCommission",
+                    "pattern": "LeaseCommission/{Bukrs}/{Busentity}/{Contrtype}/:Keydate:",
+                    "target": [
+                        "LeaseCommissionView"
+                    ]
+                },
+                {
                     "name": "UnitsPlannerBase",
                     "pattern": "UnitsPlannerBase/{Bukrs}/{Busentity}/{Contrtype}/:Keydate:",
                     "target": [
@@ -179,6 +186,13 @@
                     "transition": "slide",
                     "viewId": "ManageVacantUnit",
                     "viewName": "ManageVacantUnit"
+                },
+                "LeaseCommissionView": {
+                    "parent": "MasterDetail",                    
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "viewId": "LeaseCommission",
+                    "viewName": "LeaseCommission"
                 },
                 "notFound": {
                     "parent": "SingleMainView",

@@ -48,6 +48,14 @@ sap.ui.define([
                         } else {
                             this._oRouter.navTo("NotFound");
                         }
+                        break;    
+                    case "G001:LEASECOMM":	        
+                        if (_oParams) {
+                            
+                            this._oRouter.navTo("LeaseCommission",_oParams);
+                        } else {
+                            this._oRouter.navTo("NotFound");
+                        }
                         break;           		
                     case "G002:CFMONTHLY":	
                         if (_oParams) {
