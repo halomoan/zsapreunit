@@ -18,7 +18,7 @@
 				visible="{viewData>/isDirty}"
 				press="onUploadToServer"
 			/>
-			<m:ToolbarSpacer/>
+			<m:ToolbarSpacer />
 			<m:Button
 				text="{i18n>Label.SecondTerm}"
 				tooltip="2nd Term"
@@ -66,7 +66,7 @@
 			</t:plugins>
 			<t:extension>
 				<m:OverflowToolbar style="Clear">
-					<m:ToolbarSpacer/>
+					<m:ToolbarSpacer />
 					<m:Button
 						icon="sap-icon://close-command-field"
 						textDirection="Inherit"
@@ -80,7 +80,7 @@
 					width="4rem"
 					filterProperty="Floor"
 				>
-					<m:Label text="{i18n>Label.Floor}"/>
+					<m:Label text="{i18n>Label.Floor}" />
 					<t:template>
 						<m:Label
 							text="{tableData>Floor}"
@@ -93,7 +93,7 @@
 					width="4rem"
 					filterProperty="Unitno"
 				>
-					<m:Label text="{i18n>Label.UnitNo}"/>
+					<m:Label text="{i18n>Label.UnitNo}" />
 					<t:template>
 						<m:Label
 							text="{tableData>Unitno}"
@@ -132,7 +132,7 @@
 					filterProperty="Term1/Tenant"
 				>
 					<t:multiLabels>
-						<m:Label text="First Term"/>
+						<m:Label text="First Term" />
 						<m:Label
 							text="{i18n>Contract.Tenant}"
 							textAlign="Center"
@@ -205,7 +205,7 @@
 					hAlign="Center"
 				>
 					<t:multiLabels>
-						<m:Label text="First Term"/>
+						<m:Label text="First Term" />
 						<m:Label
 							text="{i18n>Label.Duration}"
 							textAlign="Center"
@@ -233,7 +233,7 @@
 					width="8rem"
 				>
 					<t:multiLabels>
-						<m:Label text="First Term"/>
+						<m:Label text="First Term" />
 						<m:Label
 							text="{i18n>Contract.StartDate}"
 							textAlign="Center"
@@ -256,7 +256,7 @@
 					width="8rem"
 				>
 					<t:multiLabels>
-						<m:Label text="First Term"/>
+						<m:Label text="First Term" />
 						<m:Label
 							text="{i18n>Contract.EndDate}"
 							textAlign="Center"
@@ -279,7 +279,7 @@
 					width="8rem"
 				>
 					<t:multiLabels>
-						<m:Label text="First Term"/>
+						<m:Label text="First Term" />
 						<m:Label
 							text="{i18n>Contract.BaseRent.Avg}"
 							textAlign="Center"
@@ -344,7 +344,7 @@
 					filterProperty="Term2/Tenant"
 				>
 					<t:multiLabels>
-						<m:Label text="{i18n>Label.SecondTerm}"/>
+						<m:Label text="{i18n>Label.SecondTerm}" />
 						<m:Label
 							text="Tenant"
 							textAlign="Center"
@@ -477,7 +477,7 @@
 					hAlign="Center"
 				>
 					<t:multiLabels>
-						<m:Label text="{i18n>Label.SecondTerm}"/>
+						<m:Label text="{i18n>Label.SecondTerm}" />
 						<m:Label
 							text="{i18n>Label.Duration}"
 							textAlign="Center"
@@ -589,7 +589,7 @@
 					width="8rem"
 				>
 					<t:multiLabels>
-						<m:Label text="{i18n>Label.SecondTerm}"/>
+						<m:Label text="{i18n>Label.SecondTerm}" />
 						<m:Label
 							text="{i18n>Contract.BaseRent.Avg}"
 							textAlign="Center"
@@ -654,7 +654,7 @@
 					filterProperty="Term3/Tenant"
 				>
 					<t:multiLabels>
-						<m:Label text="{i18n>Label.ThirdTerm}"/>
+						<m:Label text="{i18n>Label.ThirdTerm}" />
 						<m:Label
 							text="Tenant"
 							textAlign="Center"
@@ -806,7 +806,7 @@
 					hAlign="Center"
 				>
 					<t:multiLabels>
-						<m:Label text="{i18n>Label.ThirdTerm}"/>
+						<m:Label text="{i18n>Label.ThirdTerm}" />
 						<m:Label
 							text="{i18n>Label.Duration}"
 							textAlign="Center"
@@ -918,7 +918,7 @@
 					width="8rem"
 				>
 					<t:multiLabels>
-						<m:Label text="{i18n>Label.ThirdTerm}"/>
+						<m:Label text="{i18n>Label.ThirdTerm}" />
 						<m:Label
 							text="{i18n>Contract.BaseRent.Avg}"
 							textAlign="Center"

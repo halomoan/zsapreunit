@@ -3,38 +3,203 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.m"
 	xmlns:c="sap.ui.core"
-    xmlns:t="sap.ui.table"
-    xmlns:l="sap.ui.layout"
+	xmlns:t="sap.ui.table"
+	xmlns:l="sap.ui.layout"
 	displayBlock="true"
 	height="100%"
+	c:require="{
+		Integer: 'sap/ui/model/type/Integer',
+		Float: 'sap/ui/model/type/Float'
+	 }"
 	busyIndicatorDelay="0"
 >
-<l:VerticalLayout class="sapUiContentPadding">
-		
-		<t:Table id="leasecomm" rows="{ path:'/ZSLEASECOMM' , sorter: [{ path: 'Floor'}, {path: 'Unitno'}] }" 
-			selectionMode="MultiToggle" visibleRowCount="7" paste="onPaste" ariaLabelledBy="title"
+	<l:VerticalLayout class="sapUiContentPadding">
+		<t:Table
+			id="leasecommtbl"			
+			selectionMode="MultiToggle"
+			visibleRowCount="7"
+			paste="onPaste"
+			ariaLabelledBy="title"
 			rowSelectionChange="onTableSelectionChanged"
-			>
+		>
 			<t:extension>
 				<OverflowToolbar style="Clear">
-					<Title id="title" text="{i18n>Label.LeaseComm}"/>
-					<ToolbarSpacer/>
+					<Title
+						id="title"
+						text="{i18n>Label.LeaseComm}"
+					/>
+					<ToolbarSpacer />
 					<Button
 						icon="sap-icon://save"
 						textDirection="Inherit"
 						type="Default"
 						press="onSaveUnits"
 						visible="{viewData>/showSave}"
-					/>					
+					/>
 				</OverflowToolbar>
 			</t:extension>
 			<t:columns>
-				<t:Column width="10rem" filterProperty="Unitnotxt">
-					<Label text="{i18n>Label.UnitNo}"/>
+				<t:Column
+					width="10rem"
+					filterProperty="Unitnotxt"
+				>
+					<Label text="{i18n>Label.UnitNo}" />
 					<t:template>
-						<Label text="{Unitnotxt}" wrapping="false"/>
+						<Label
+							text="{Unitnotxt}"
+							wrapping="false"
+						/>
 					</t:template>
-				</t:Column>				
+				</t:Column>
+				<t:Column
+					width="10rem"
+					filterProperty="Bupano"
+				>
+					<Label text="{i18n>Label.Bupano}" />
+					<t:template>
+						<Label
+							text="{Bupano}"
+							wrapping="false"
+						/>
+					</t:template>
+				</t:Column>
+				<t:Column
+					width="10rem"
+					filterProperty="Company"
+				>
+					<Label text="{i18n>Contract.Company}" />
+					<t:template>
+						<Label
+							text="{Company}"
+							wrapping="false"
+						/>
+					</t:template>
+				</t:Column>
+				<t:Column
+					width="10rem"
+					filterProperty="Tenant"
+				>
+					<Label text="{i18n>Contract.Tenant}" />
+					<t:template>
+						<Label
+							text="{Tenant}"
+							wrapping="false"
+						/>
+					</t:template>
+				</t:Column>
+				<t:Column
+					width="10rem"
+					filterProperty="Trade"
+				>
+					<Label text="{i18n>Contract.Trade}" />
+					<t:template>
+						<Label
+							text="{Trade}"
+							wrapping="false"
+						/>
+					</t:template>
+				</t:Column>
+				<t:Column width="10rem">
+					<Label text="{i18n>Contract.AreaSize}" />
+					<t:template>
+						<ObjectNumber
+							textAlign="End"
+							number="{
+								path: 'Areasize',
+								formatter: '.formatNoDecimals'
+							}"
+							unit="{Uom}"
+							state="Information"
+						/>
+					</t:template>
+				</t:Column>
+				<t:Column
+					width="10rem"
+					
+				>
+					<Label text="{i18n>Contract.StartDate}" />
+					<t:template>
+						<Label text="{
+							path: 'Startdate',
+							formatter: '.formatDateTime'
+						}" />
+					</t:template>
+				</t:Column>
+				<t:Column
+					width="10rem"
+					
+				>
+					<Label text="{i18n>Contract.EndDate}" />
+					<t:template>
+						<Label text="{
+							path: 'Enddate',
+							formatter: '.formatDateTime'
+						}" />
+					</t:template>
+				</t:Column>
+				<t:Column
+					width="10rem"
+					
+				>
+					<Label text="{i18n>Label.CommPeriod}" />
+					<t:template>
+						<DatePicker value="{
+							path: 'Commperiod',
+							type: 'sap.ui.model.type.Date',
+							formatOptions: {
+								pattern: 'yyyy-MM-dd'
+							}
+						}" />
+					</t:template>
+				</t:Column>
+				<t:Column
+					width="10rem"
+					
+				>
+					<Label text="{i18n>Label.NoOfMonts}" />
+					<t:template>
+						<Input value="{path:'Noofmonth', type: 'Integer'}"/>
+					</t:template>
+				</t:Column>
+
+				<t:Column
+					width="10rem"
+					
+				>
+					<Label text="{i18n>Label.RenewType}" />
+					<t:template>
+						<Select
+                        id="Renewtype"                       
+                        selectedKey="{Renewtype}"
+                    >
+                        <c:ListItem
+                            key="1"
+                            text="{i18n>Label.New}"
+                        />
+                        <c:ListItem
+                            key="2"
+                            text="{i18n>Label.Renew}"
+                        />
+                    </Select>
+					</t:template>
+				</t:Column>
+
+				<t:Column
+					width="10rem"					
+				>
+					<Label text="{i18n>Label.RenewYear}" />
+					<t:template>
+						<Input value="{path:'Renewyear', type: 'Integer'}"/>
+					</t:template>
+				</t:Column>
+				<t:Column
+					width="10rem"					
+				>
+					<Label text="{i18n>Label.RenewRate}" />
+					<t:template>
+						<Input value="{path:'Renewrate', type: 'Float'}"/>
+					</t:template>
+				</t:Column>
 			</t:columns>
 		</t:Table>
 	</l:VerticalLayout>
