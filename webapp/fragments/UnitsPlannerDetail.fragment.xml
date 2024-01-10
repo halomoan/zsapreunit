@@ -11,7 +11,7 @@
 				<f:heading>
 					<Title
 						id="_IDGenTitle1"
-						text="{selectedCustomer>/Tenant}"
+						text="{selectedCustomer>/Company}"
 						wrapping="true"
 						class="sapUiSmallMarginEnd"
 						titleStyle="H1"
@@ -19,7 +19,7 @@
 				</f:heading>
 				<f:expandedContent>
 					<GenericTag
-						text="{selectedCustomer>/Unitno}"
+						text="{selectedCustomer>/Unitnos}"
 						design="StatusIconHidden"
 						status="Information"
 						class=""

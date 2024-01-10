@@ -42,13 +42,13 @@
 							class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom"
 						>
 							<Title
-								text="{Tenant}"
+								text="{Company}"
 								wrapping="true"
 								titleStyle="H3"
 								class=""
 							/>
 							<GenericTag
-								text="{Unitno}"
+								text="{Unitnos}"
 								design="StatusIconHidden"
 								status="Information"
 								class="sapUiSmallMarginBottom"
@@ -62,7 +62,7 @@
 							</GenericTag>
 							<Label
 								id="_IDGenLabel1"
-								text="{Company}"
+								text="{Tenant}"
 							/>
 						</VBox>
 						<VBox

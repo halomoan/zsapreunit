@@ -26,6 +26,7 @@ sap.ui.define(
           _oi18Bundle = this.getResourceBundle();
           _oTable = this.byId("leasecommtbl");
           _oParams = oEvent.getParameter("arguments");
+          
 
           this._refreshTable();
         },
@@ -42,6 +43,8 @@ sap.ui.define(
           aFilters.push(
             new Filter("Keydate", FilterOperator.EQ, _oParams.Keydate)
           );
+
+          console.log(aFilters);
 
           _oTable.bindAggregation("rows", {
             path: "/ZSLEASECOMMSet",
